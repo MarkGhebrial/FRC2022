@@ -15,6 +15,16 @@ import edu.wpi.first.math.geometry.Translation2d;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    /**
+     * Constants that do not belong to a subsystem
+     */
+    public static final double JOYSTICK_DEADBAND = 0.1;
+    public static final double XBOX_DEADBAND = 0.05;
+
+    /**
+     * Constants for the Drivetrain
+     */
     public static class Drive {
         /********** CAN ID's **********/
         public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR_ID = 1;
