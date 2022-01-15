@@ -25,7 +25,7 @@ public class PhotonCameraWrapper implements VisionCamera {
      */
     @Override
     public boolean hasTargets() {
-        return camera.hasTargets();
+        return camera.getLatestResult().hasTargets();
     }
 
     /**
