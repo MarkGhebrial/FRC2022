@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -44,5 +47,16 @@ public final class Constants {
         public static final Translation2d FRONT_RIGHT_MODULE_TRANSLATION = new Translation2d(.5, -.5);
         public static final Translation2d BACK_LEFT_MODULE_TRANSLATION = new Translation2d(-.5, .5);
         public static final Translation2d BACK_RIGHT_MODULE_TRANSLATION = new Translation2d(-.5, -.5);
+
+        /********** Autonomous Motion Envelope **********/
+        public static final double MAX_AUTON_SPEED = 4; // Meters/second
+        public static final double MAX_AUTON_ACCELERATION = 4; // Meters/second squared
+        public static final double MAX_AUTON_ANGULAR_SPEED = 400; // Degrees/second
+        public static final double MAX_AUTON_ANGULAR_ACCELERATION = 200; // Degrees/second squared
+
+        /********** Holonomic Controller Gains **********/
+        public static final PIDController HOLONOMIC_CONTROLLER_PID_X = new PIDController(9, 3, 0);
+        public static final PIDController HOLONOMIC_CONTROLLER_PID_Y = new PIDController(9, 3, 0);
+        public static final ProfiledPIDController HOLONOMIC_PINTROLLER_PID_THETA = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(MAX_AUTON_ANGULAR_SPEED, MAX_AUTON_ANGULAR_ACCELERATION));
     }
 }
