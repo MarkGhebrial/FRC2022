@@ -34,13 +34,19 @@ public class HeadingFollowsDirectionOfTravel extends CommandBase {
         double currentHeading = drive.getRobotRotation().getDegrees();
 
         // Do some math to calculate the appropriate target heading.
-        double directionOfTravel = Math.toDegrees(Math.atan2(xSpeed, ySpeed));
+        double directionOfTravel = Math.toDegrees(Math.atan2(xSpeed, ySpeed)) + 90; // Add 90 degrees because robot heading 0 is forward, and mathematical 0 is to the right
+
         double adjustedDirection = CTREModuleState.placeInAppropriate0To360Scope(currentHeading, directionOfTravel);
 
-        // Calculate the rotational speed to acheive the desired heading
-        double rotationalSpeed = Constants.Drive.HOLONOMIC_CONTROLLER_PID_THETA.calculate(drive.getRobotRotation().getDegrees(), adjustedDirection);
+        double rotationalSpeedDegs;
+        if (xSpeed == 0 && ySpeed == 0) { // If the robot is sitting still...
+            rotationalSpeedDegs = 0; // ...then don't change the heading
+        } else {
+            rotationalSpeedDegs = Constants.Drive.HOLONOMIC_CONTROLLER_PID_THETA.calculate(currentHeading, adjustedDirection);
+        }
+        double rotationalSpeedRads = Math.toRadians(rotationalSpeedDegs);
 
-        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotationalSpeed, drive.getRobotRotation());
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotationalSpeedRads, drive.getRobotRotation());
 
         drive.setChassisSpeeds(speeds);
     }
