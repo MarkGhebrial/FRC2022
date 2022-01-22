@@ -42,7 +42,7 @@ public final class Constants {
         public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR_ID = 7;
         public static final int BACK_RIGHT_MODULE_ROTATION_MOTOR_ID = 8;
 
-        /********** Motor Translations **********/
+        /********** Module Translations **********/
         public static final Translation2d FRONT_LEFT_MODULE_TRANSLATION = new Translation2d(.5, .5);
         public static final Translation2d FRONT_RIGHT_MODULE_TRANSLATION = new Translation2d(.5, -.5);
         public static final Translation2d BACK_LEFT_MODULE_TRANSLATION = new Translation2d(-.5, .5);
@@ -57,6 +57,10 @@ public final class Constants {
         /********** Holonomic Controller Gains **********/
         public static final PIDController HOLONOMIC_CONTROLLER_PID_X = new PIDController(9, 3, 0);
         public static final PIDController HOLONOMIC_CONTROLLER_PID_Y = new PIDController(9, 3, 0);
-        public static final ProfiledPIDController HOLONOMIC_PINTROLLER_PID_THETA = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(MAX_AUTON_ANGULAR_SPEED, MAX_AUTON_ANGULAR_ACCELERATION));
+        public static final ProfiledPIDController HOLONOMIC_CONTROLLER_PID_THETA = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(MAX_AUTON_ANGULAR_SPEED, MAX_AUTON_ANGULAR_ACCELERATION));
+
+        /********** Teleop Control Adjustment **********/
+        public static final double MAX_TELEOP_SPEED = 6; // Meters/second
+        public static final double MAX_TELEOP_ROTATIONAL_SPEED = Math.toRadians(700); // Radians/second
     }
 }

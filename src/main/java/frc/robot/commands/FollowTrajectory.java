@@ -37,7 +37,7 @@ public class FollowTrajectory extends CommandBase {
         holonomicController = new HolonomicDriveController(
             Constants.Drive.HOLONOMIC_CONTROLLER_PID_X, 
             Constants.Drive.HOLONOMIC_CONTROLLER_PID_Y, 
-            Constants.Drive.HOLONOMIC_PINTROLLER_PID_THETA
+            Constants.Drive.HOLONOMIC_CONTROLLER_PID_THETA
         );
         // Set the range where the holonomic controller considers itself at its target location
         holonomicController.setTolerance(new Pose2d(new Translation2d(.09, .09), Rotation2d.fromDegrees(30)));
