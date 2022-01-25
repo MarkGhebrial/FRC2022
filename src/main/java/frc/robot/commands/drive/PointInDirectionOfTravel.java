@@ -16,11 +16,11 @@ import friarLib2.math.CTREModuleState;
  * i.e., the robot will move in whatever direction the stick is pushed,
  * and its heading will automatically change to point in that direction.
  */
-public class HeadingFollowsDirectionOfTravel extends CommandBase {
+public class PointInDirectionOfTravel extends CommandBase {
 
     private DriveSubsystem drive;
 
-    public HeadingFollowsDirectionOfTravel(DriveSubsystem drive) {
+    public PointInDirectionOfTravel(DriveSubsystem drive) {
         this.drive = drive;
 
         addRequirements(drive);

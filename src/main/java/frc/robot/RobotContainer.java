@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.drive.FieldRelativeTeleopControl;
-import frc.robot.commands.drive.HeadingFollowsDirectionOfTravel;
+import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import friarLib2.hid.LambdaTrigger;
@@ -45,7 +45,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         new LambdaTrigger(() -> OI.leftStick.getTrigger() || OI.rightStick.getTrigger())
-        .whileActiveContinuous(new HeadingFollowsDirectionOfTravel(drive));
+        .whileActiveContinuous(new PointInDirectionOfTravel(drive));
     }
 
     /**

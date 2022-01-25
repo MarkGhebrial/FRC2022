@@ -1,4 +1,4 @@
-package friarLib2.utility;
+package friarLib2.hardware;
 
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
@@ -8,7 +8,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 public interface SwerveModule {
     public void setState (SwerveModuleState state);
     public SwerveModuleState getState ();
-    
+
     default public boolean steeringHasSlipped () {
         return false;
     }

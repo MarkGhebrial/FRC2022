@@ -8,7 +8,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModule3309;
-import friarLib2.utility.SwerveModule;
+import friarLib2.hardware.SwerveModule;
 
 import static frc.robot.Constants.Drive.*;
 

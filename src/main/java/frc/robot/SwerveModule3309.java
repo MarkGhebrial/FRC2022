@@ -7,9 +7,9 @@ import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import friarLib2.hardware.SwerveModule;
 import friarLib2.math.CTREModuleState;
 import friarLib2.utility.PIDParameters;
-import friarLib2.utility.SwerveModule;
 
 /**
  * Represents the 2022 revision of our swerve module.
