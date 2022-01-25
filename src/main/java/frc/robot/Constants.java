@@ -32,15 +32,19 @@ public final class Constants {
         /********** CAN ID's **********/
         public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR_ID = 1;
         public static final int FRONT_LEFT_MODULE_ROTATION_MOTOR_ID = 2;
+        public static final int FRONT_LEFT_MODULE_ENCODER_ID = 9;
 
         public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR_ID = 3;
         public static final int FRONT_RIGHT_MODULE_ROTATION_MOTOR_ID = 4;
+        public static final int FRONT_RIGHT_MODULE_ENCODER_ID = 10;
 
         public static final int BACK_LEFT_MODULE_DRIVE_MOTOR_ID = 5;
         public static final int BACK_LEFT_MODULE_ROTATION_MOTOR_ID = 6;
+        public static final int BACK_LEFT_MODULE_ENCODER_ID = 11;
 
         public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR_ID = 7;
         public static final int BACK_RIGHT_MODULE_ROTATION_MOTOR_ID = 8;
+        public static final int BACK_RIGHT_MODULE_ENCODER_ID = 12;
 
         /********** Module Translations **********/
         public static final Translation2d FRONT_LEFT_MODULE_TRANSLATION = new Translation2d(.5, .5);

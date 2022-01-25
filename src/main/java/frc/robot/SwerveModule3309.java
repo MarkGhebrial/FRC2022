@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -10,24 +11,46 @@ import friarLib2.math.CTREModuleState;
 import friarLib2.utility.PIDParameters;
 import friarLib2.utility.SwerveModule;
 
+/**
+ * Represents the 2022 revision of our swerve module.
+ * 
+ * <p>
+ * This year's version features an improved powertrain for the drive motor
+ * (reduced slippage through the use of 5mm GT2 belts) and a CTRE CANCoder
+ * on the steering axis. In addition, the drivetrain has been geared up
+ * to 23 ft/s (~7 m/s).
+ * 
+ * <p>
+ * The CANCoder is used to dectect any slippage in the module's steering 
+ * axis. It is found by comparing the Falcon 500's integrated encoder value to 
+ * that of the CANCoder. If there is a difference, then the robot knows that 
+ * the belts have slipped and can alert the operators accordingly.
+ */
 public class SwerveModule3309 implements SwerveModule {
-    /********* Constants *********/
+    /********** Constants **********/
     public static final double WHEEL_DIAMETER_INCHES = 3.8;
-    public static final double DRIVE_GEAR_RATIO = 5.47;
-    public static final PIDParameters DRIVE_PID_GAINS = new PIDParameters(.1, 0.0007, 0.1, "Swerve Drive PID");
-    public static final PIDParameters ROTATION_PID_GAINS = new PIDParameters(.1, 0.002, 0, "Swerve Rotation PID");
-    public static final double ABSOLUTE_MAX_DRIVE_SPEED = 4; // meters/sec
+    public static final double DRIVE_GEAR_RATIO = (60. / 20.) * (16. / 34.) * (45. / 15.);
+    public static final double STEERING_GEAR_RATIO_FALCON = (100. / 24.) * (48. / 16.); // Gear ratio between the Falcon's shaft and the steering axis
+    public static final double STEERING_GEAR_RATIO_ENCODER = (1. / 1.); // Gear ratio between the CANCoder and the steering axis
+    public static final double SLIP_THRESHOLD = 5; // Steering axis will be considered to have slipped if the 
 
+    public static final PIDParameters DRIVE_PID_GAINS = new PIDParameters(.1, 0.0007, 0.1, "Swerve Drive PID");
+    public static final PIDParameters STEERING_PID_GAINS = new PIDParameters(.1, 0.002, 0, "Swerve Steering PID");
+    public static final double ABSOLUTE_MAX_DRIVE_SPEED = 7; // meters/sec
+
+    /********** Member Variables **********/
     public String name; // Used for diplaying values on SmartDashboard
-    public WPI_TalonFX driveMotor;
-    public WPI_TalonFX rotationMotor;
+    private WPI_TalonFX driveMotor;
+    private WPI_TalonFX steeringMotor;
+    private CANCoder steeringEncoder;
 
     private double lastAngle = 0.0;
 
-    public SwerveModule3309 (int driveMotorID, int rotationMotorID, String name) {
+    public SwerveModule3309 (int driveMotorID, int steeringMotorID, int encoderID, String name) {
         this.name = name;
         driveMotor = new WPI_TalonFX(driveMotorID);
-        rotationMotor = new WPI_TalonFX(rotationMotorID);
+        steeringMotor = new WPI_TalonFX(steeringMotorID);
+        steeringEncoder = new CANCoder(encoderID);
         configMotors();
     }
 
@@ -39,15 +62,15 @@ public class SwerveModule3309 implements SwerveModule {
         DRIVE_PID_GAINS.configureMotorPID(driveMotor);
         driveMotor.config_IntegralZone(0, 500);
 
-        rotationMotor.configFactoryDefault();
-        ROTATION_PID_GAINS.configureMotorPID(rotationMotor);
-        rotationMotor.config_IntegralZone(0, 500);
+        steeringMotor.configFactoryDefault();
+        STEERING_PID_GAINS.configureMotorPID(steeringMotor);
+        steeringMotor.config_IntegralZone(0, 500);
     }
 
     /**
      * Set the state of the swerve module. Credit to team 364 for CTREModuleState
      * 
-     * @param state the new target state for the module
+     * @param state The new target state for the module
      */
     public void setState (SwerveModuleState state) {
         
@@ -57,22 +80,35 @@ public class SwerveModule3309 implements SwerveModule {
         driveMotor.set(ControlMode.Velocity, velocity);
 
         double angle = (Math.abs(state.speedMetersPerSecond) <= (ABSOLUTE_MAX_DRIVE_SPEED * 0.01)) ? lastAngle : state.angle.getDegrees(); // Prevent rotating module if speed is less than 1%. Prevents Jittering.
-        rotationMotor.set(ControlMode.Position, Conversions.degreesToEncoderTicks(angle)); 
+        steeringMotor.set(ControlMode.Position, Conversions.degreesToEncoderTicksFalcon(angle)); 
         lastAngle = angle;
     }
 
     /**
      * Get the physical position of the module
      * 
-     * @return the module's position
+     * @return The module's position
      */
     public SwerveModuleState getState () {
         return new SwerveModuleState(
-                Conversions.encoderTicksPer100msToMps(driveMotor.getSelectedSensorVelocity()), 
-                Rotation2d.fromDegrees(Conversions.encoderTicksToDegrees(rotationMotor.getSelectedSensorPosition()))
+            Conversions.encoderTicksPer100msToMps(driveMotor.getSelectedSensorVelocity()), 
+            Rotation2d.fromDegrees(Conversions.encoderTicksToDegreesFalcon(steeringMotor.getSelectedSensorPosition()))
         );
     }
 
+    /**
+     * @return If the belts for the steering axis hav slipped
+     */
+    public boolean steeringHasSlipped () {
+        return Math.abs(
+            Conversions.encoderTicksToDegreesFalcon(steeringMotor.getSelectedSensorPosition()) -
+            Conversions.encoderTicksToDegreesCANCoder(steeringEncoder.getPosition())
+            ) >= SLIP_THRESHOLD;
+    }
+
+    /**
+     * Unit conversions for the swerve module
+     */
     public static class Conversions {
         public static double mpsToEncoderTicksPer100ms (double mps) {
             double wheelDiameterMeters = Units.inchesToMeters(WHEEL_DIAMETER_INCHES);
@@ -83,12 +119,20 @@ public class SwerveModule3309 implements SwerveModule {
             return encoderTicksPer100ms / mpsToEncoderTicksPer100ms(1);
         }
 
-        public static double degreesToEncoderTicks (double degrees) {
-            return degrees * (2048.0 / 360.0);
+        public static double degreesToEncoderTicksFalcon (double degrees) {
+            return degrees * (2048.0 / 360.0) * STEERING_GEAR_RATIO_FALCON;
         }
 
-        public static double encoderTicksToDegrees (double encoderTicks) {
-            return encoderTicks / degreesToEncoderTicks(1);
+        public static double encoderTicksToDegreesFalcon (double encoderTicks) {
+            return encoderTicks / degreesToEncoderTicksFalcon(1);
+        }
+
+        public static double degreesToEncoderTicksCANCoder (double degrees) {
+            return degrees * (4096.0 / 360.0) * STEERING_GEAR_RATIO_ENCODER;
+        }
+
+        public static double encoderTicksToDegreesCANCoder (double encoderTicks) {
+            return encoderTicks / degreesToEncoderTicksCANCoder(1);
         }
     }
 }

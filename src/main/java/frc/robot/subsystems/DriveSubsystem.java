@@ -27,10 +27,10 @@ public class DriveSubsystem extends SubsystemBase {
      * Initialize the swerve modules and Kinematics/Odometry objects
      */
     public DriveSubsystem() {
-        frontLeftModule = new SwerveModule3309(FRONT_LEFT_MODULE_DRIVE_MOTOR_ID, FRONT_LEFT_MODULE_ROTATION_MOTOR_ID, "Front left");
-        frontRightModule = new SwerveModule3309(FRONT_RIGHT_MODULE_DRIVE_MOTOR_ID, FRONT_RIGHT_MODULE_ROTATION_MOTOR_ID, "Front right");
-        backLeftModule = new SwerveModule3309(BACK_LEFT_MODULE_DRIVE_MOTOR_ID, BACK_LEFT_MODULE_ROTATION_MOTOR_ID, "Back left");
-        backRightModule = new SwerveModule3309(BACK_RIGHT_MODULE_DRIVE_MOTOR_ID, BACK_RIGHT_MODULE_ROTATION_MOTOR_ID, "Back right");
+        frontLeftModule = new SwerveModule3309(FRONT_LEFT_MODULE_DRIVE_MOTOR_ID, FRONT_LEFT_MODULE_ROTATION_MOTOR_ID, FRONT_LEFT_MODULE_ENCODER_ID, "Front left");
+        frontRightModule = new SwerveModule3309(FRONT_RIGHT_MODULE_DRIVE_MOTOR_ID, FRONT_RIGHT_MODULE_ROTATION_MOTOR_ID, FRONT_RIGHT_MODULE_ENCODER_ID, "Front right");
+        backLeftModule = new SwerveModule3309(BACK_LEFT_MODULE_DRIVE_MOTOR_ID, BACK_LEFT_MODULE_ROTATION_MOTOR_ID, BACK_LEFT_MODULE_ENCODER_ID, "Back left");
+        backRightModule = new SwerveModule3309(BACK_RIGHT_MODULE_DRIVE_MOTOR_ID, BACK_RIGHT_MODULE_ROTATION_MOTOR_ID, BACK_RIGHT_MODULE_ENCODER_ID, "Back right");
 
         swerveKinematics = new SwerveDriveKinematics(
             FRONT_LEFT_MODULE_TRANSLATION,

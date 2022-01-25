@@ -8,4 +8,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 public interface SwerveModule {
     public void setState (SwerveModuleState state);
     public SwerveModuleState getState ();
+    
+    default public boolean steeringHasSlipped () {
+        return false;
+    }
 }
