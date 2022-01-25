@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.swerve;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -51,6 +51,14 @@ public class SwerveModule3309 implements SwerveModule {
         driveMotor = new WPI_TalonFX(driveMotorID);
         steeringMotor = new WPI_TalonFX(steeringMotorID);
         steeringEncoder = new CANCoder(encoderID);
+        configMotors();
+    }
+
+    public SwerveModule3309 (SwerveCANIDs IDs, String name) {
+        this.name = name;
+        driveMotor = new WPI_TalonFX(IDs.driveMotorID);
+        steeringMotor = new WPI_TalonFX(IDs.steeringMotorID);
+        steeringEncoder = new CANCoder(IDs.CANCoderID);
         configMotors();
     }
 

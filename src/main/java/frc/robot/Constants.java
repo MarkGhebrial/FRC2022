@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import frc.robot.swerve.SwerveCANIDs;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -32,21 +33,10 @@ public final class Constants {
      */
     public static class Drive {
         /********** CAN ID's **********/
-        public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR_ID = 1;
-        public static final int FRONT_LEFT_MODULE_ROTATION_MOTOR_ID = 2;
-        public static final int FRONT_LEFT_MODULE_ENCODER_ID = 9;
-
-        public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR_ID = 3;
-        public static final int FRONT_RIGHT_MODULE_ROTATION_MOTOR_ID = 4;
-        public static final int FRONT_RIGHT_MODULE_ENCODER_ID = 10;
-
-        public static final int BACK_LEFT_MODULE_DRIVE_MOTOR_ID = 5;
-        public static final int BACK_LEFT_MODULE_ROTATION_MOTOR_ID = 6;
-        public static final int BACK_LEFT_MODULE_ENCODER_ID = 11;
-
-        public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR_ID = 7;
-        public static final int BACK_RIGHT_MODULE_ROTATION_MOTOR_ID = 8;
-        public static final int BACK_RIGHT_MODULE_ENCODER_ID = 12;
+        public static final SwerveCANIDs FRONT_LEFT_MODULE_IDS = new SwerveCANIDs(1, 2, 9);
+        public static final SwerveCANIDs FRONT_RIGHT_MODULE_IDS = new SwerveCANIDs(3, 4, 10);
+        public static final SwerveCANIDs BACK_LEFT_MODULE_IDS = new SwerveCANIDs(5, 6, 11);
+        public static final SwerveCANIDs BACK_RIGHT_MODULE_IDS = new SwerveCANIDs(7, 8, 12);
 
         /********** Module Translations **********/
         public static final Translation2d FRONT_LEFT_MODULE_TRANSLATION = new Translation2d(.5, .5);

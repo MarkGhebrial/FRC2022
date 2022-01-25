@@ -8,7 +8,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.IMU;
-import frc.robot.SwerveModule3309;
+import frc.robot.swerve.SwerveModule3309;
 import friarLib2.hardware.SwerveModule;
 
 import static frc.robot.Constants.Drive.*;
@@ -28,10 +28,10 @@ public class DriveSubsystem extends SubsystemBase {
      * Initialize the swerve modules, imu, and Kinematics/Odometry objects
      */
     public DriveSubsystem() {
-        frontLeftModule = new SwerveModule3309(FRONT_LEFT_MODULE_DRIVE_MOTOR_ID, FRONT_LEFT_MODULE_ROTATION_MOTOR_ID, FRONT_LEFT_MODULE_ENCODER_ID, "Front left");
-        frontRightModule = new SwerveModule3309(FRONT_RIGHT_MODULE_DRIVE_MOTOR_ID, FRONT_RIGHT_MODULE_ROTATION_MOTOR_ID, FRONT_RIGHT_MODULE_ENCODER_ID, "Front right");
-        backLeftModule = new SwerveModule3309(BACK_LEFT_MODULE_DRIVE_MOTOR_ID, BACK_LEFT_MODULE_ROTATION_MOTOR_ID, BACK_LEFT_MODULE_ENCODER_ID, "Back left");
-        backRightModule = new SwerveModule3309(BACK_RIGHT_MODULE_DRIVE_MOTOR_ID, BACK_RIGHT_MODULE_ROTATION_MOTOR_ID, BACK_RIGHT_MODULE_ENCODER_ID, "Back right");
+        frontLeftModule = new SwerveModule3309(FRONT_LEFT_MODULE_IDS, "Front left");
+        frontRightModule = new SwerveModule3309(FRONT_RIGHT_MODULE_IDS, "Front right");
+        backLeftModule = new SwerveModule3309(BACK_LEFT_MODULE_IDS, "Back left");
+        backRightModule = new SwerveModule3309(BACK_RIGHT_MODULE_IDS, "Back right");
 
         swerveKinematics = new SwerveDriveKinematics(
             FRONT_LEFT_MODULE_TRANSLATION,
