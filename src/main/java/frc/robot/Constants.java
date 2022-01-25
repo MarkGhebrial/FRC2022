@@ -25,6 +25,8 @@ public final class Constants {
     public static final double JOYSTICK_DEADBAND = 0.1;
     public static final double XBOX_DEADBAND = 0.05;
 
+    public static final int PIGEON_IMU_ID = 13;
+
     /**
      * Constants for the Drivetrain
      */

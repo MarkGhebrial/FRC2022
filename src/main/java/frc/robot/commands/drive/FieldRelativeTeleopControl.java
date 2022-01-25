@@ -3,6 +3,7 @@ package frc.robot.commands.drive;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.IMU;
 import frc.robot.OI;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -31,7 +32,7 @@ public class FieldRelativeTeleopControl extends CommandBase {
         double ySpeed = Constants.Drive.MAX_TELEOP_SPEED * OI.leftStick.getYWithDeadband();
         double rotationalSpeed = Constants.Drive.MAX_TELEOP_ROTATIONAL_SPEED * OI.rightStick.getXWithDeadband();
 
-        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotationalSpeed, drive.getRobotRotation());
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotationalSpeed, IMU.getRobotYaw());
 
         drive.setChassisSpeeds(speeds);
     }

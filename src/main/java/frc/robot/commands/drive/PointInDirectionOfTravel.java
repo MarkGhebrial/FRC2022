@@ -3,6 +3,7 @@ package frc.robot.commands.drive;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.IMU;
 import frc.robot.OI;
 import frc.robot.subsystems.DriveSubsystem;
 import friarLib2.math.CTREModuleState;
@@ -31,7 +32,7 @@ public class PointInDirectionOfTravel extends CommandBase {
         double xSpeed = Constants.Drive.MAX_TELEOP_SPEED * -OI.leftStick.getXWithDeadband();
         double ySpeed = Constants.Drive.MAX_TELEOP_SPEED * OI.leftStick.getYWithDeadband();
 
-        double currentHeading = drive.getRobotRotation().getDegrees();
+        double currentHeading = IMU.getRobotYaw().getDegrees();
 
         // Do some math to calculate the appropriate target heading.
         double directionOfTravel = Math.toDegrees(Math.atan2(xSpeed, ySpeed)) + 90; // Add 90 degrees because robot heading 0 is forward, and mathematical 0 is to the right
@@ -46,7 +47,7 @@ public class PointInDirectionOfTravel extends CommandBase {
         }
         double rotationalSpeedRads = Math.toRadians(rotationalSpeedDegs);
 
-        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotationalSpeedRads, drive.getRobotRotation());
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotationalSpeedRads, IMU.getRobotYaw());
 
         drive.setChassisSpeeds(speeds);
     }

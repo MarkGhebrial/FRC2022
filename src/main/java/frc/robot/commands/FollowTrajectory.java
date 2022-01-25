@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.IMU;
 import frc.robot.subsystems.DriveSubsystem;
 
 /**
@@ -62,7 +63,7 @@ public class FollowTrajectory extends CommandBase {
         drive.setChassisSpeeds(holonomicController.calculate(
             drive.getRobotPose(), 
             goal, 
-            drive.getRobotRotation()
+            IMU.getRobotYaw()
         ));
         
         SmartDashboard.putString("Holonomic controller error", drive.getRobotPose().minus(goal.poseMeters).toString());
