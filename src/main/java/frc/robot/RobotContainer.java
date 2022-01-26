@@ -6,11 +6,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.drive.FieldRelativeTeleopControl;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import friarLib2.hid.LambdaTrigger;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -24,11 +28,18 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
     private final DriveSubsystem drive = new DriveSubsystem();
+    private final ClimberSubsystem climber = new ClimberSubsystem();
+    private final IntakeSubsystem intake = new IntakeSubsystem();
+    private final ShooterSubsystem shooter = new ShooterSubsystem();
 
-    private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+    private SendableChooser<Command> autoChooser = new SendableChooser<Command>();
+    private final ExampleCommand autoCommand = new ExampleCommand(m_exampleSubsystem);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        // Add autos to SmartDashboard
+        autoChooser.setDefaultOption("No auto", autoCommand);
+
         configureDefaultCommands();
         configureButtonBindings();
     }
@@ -55,6 +66,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return m_autoCommand;
+        return autoChooser.getSelected();
     }
 }
