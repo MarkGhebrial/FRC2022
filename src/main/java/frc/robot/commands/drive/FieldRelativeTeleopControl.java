@@ -6,6 +6,7 @@ import frc.robot.Constants;
 import frc.robot.IMU;
 import frc.robot.OI;
 import frc.robot.subsystems.DriveSubsystem;
+import friarLib2.utility.Vector3309;
 
 /**
  * Use the left joystick position to control the robot's direction of 
@@ -28,11 +29,17 @@ public class FieldRelativeTeleopControl extends CommandBase {
 
     @Override
     public void execute() {
-        double xSpeed = Constants.Drive.MAX_TELEOP_SPEED * -OI.leftStick.getXWithDeadband();
-        double ySpeed = Constants.Drive.MAX_TELEOP_SPEED * OI.leftStick.getYWithDeadband();
+        Vector3309 translationalSpeeds = Vector3309.fromCartesianCoords(
+            OI.leftStick.getXWithDeadband(), 
+            -OI.leftStick.getYWithDeadband()).capMagnitude(1).scale(Constants.Drive.MAX_TELEOP_SPEED);
+
         double rotationalSpeed = Constants.Drive.MAX_TELEOP_ROTATIONAL_SPEED * OI.rightStick.getXWithDeadband();
 
-        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotationalSpeed, IMU.getRobotYaw());
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+            translationalSpeeds.getXComponent(), 
+            translationalSpeeds.getYComponent(), 
+            rotationalSpeed, 
+            IMU.getRobotYaw());
 
         drive.setChassisSpeeds(speeds);
     }

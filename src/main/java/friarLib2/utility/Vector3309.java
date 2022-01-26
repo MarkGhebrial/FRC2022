@@ -56,6 +56,28 @@ public class Vector3309 {
         return Vector3309.fromRadialCoords(direction, 1);
     }
 
+    /**
+     * Reduce the magnitude if it is above the specified threshold
+     * 
+     * @param maxValue
+     * @return A new vector with the proper magnitude
+     */
+    public Vector3309 capMagnitude (double maxValue) {
+        double newMagnitude = (magnitude < maxValue) ? magnitude : maxValue;
+
+        return Vector3309.fromRadialCoords(direction, newMagnitude);
+    }
+
+    /**
+     * Scale the magnitude of the vector by the given factor
+     *  
+     * @param factor Multiply the magnitude by this value
+     * @return A new, porperly scaled vector
+     */
+    public Vector3309 scale (double factor) {
+        return Vector3309.fromRadialCoords(direction, magnitude * factor);
+    }
+
     public Translation2d getCartesanCoords () {
         return new Translation2d(xComponent, yComponent);
     }

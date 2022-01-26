@@ -7,6 +7,7 @@ import frc.robot.IMU;
 import frc.robot.OI;
 import frc.robot.subsystems.DriveSubsystem;
 import friarLib2.math.CTREModuleState;
+import friarLib2.utility.Vector3309;
 
 /**
  * Use the left joystick position to control the robot's direction of 
@@ -29,25 +30,30 @@ public class PointInDirectionOfTravel extends CommandBase {
 
     @Override
     public void execute() {
-        double xSpeed = Constants.Drive.MAX_TELEOP_SPEED * -OI.leftStick.getXWithDeadband();
-        double ySpeed = Constants.Drive.MAX_TELEOP_SPEED * OI.leftStick.getYWithDeadband();
+        Vector3309 translationalSpeeds = Vector3309.fromCartesianCoords(
+            OI.leftStick.getXWithDeadband(), 
+            -OI.leftStick.getYWithDeadband()).capMagnitude(1).scale(Constants.Drive.MAX_TELEOP_SPEED);
 
         double currentHeading = IMU.getRobotYaw().getDegrees();
 
         // Do some math to calculate the appropriate target heading.
-        double directionOfTravel = Math.toDegrees(Math.atan2(xSpeed, ySpeed)) + 90; // Add 90 degrees because robot heading 0 is forward, and mathematical 0 is to the right
+        double directionOfTravel = translationalSpeeds.getDegrees() + 90; // Add 90 degrees because robot heading 0 is forward, and mathematical 0 is to the right
 
         double adjustedDirection = CTREModuleState.placeInAppropriate0To360Scope(currentHeading, directionOfTravel);
 
         double rotationalSpeedDegs;
-        if (xSpeed == 0 && ySpeed == 0) { // If the robot is sitting still...
+        if (translationalSpeeds.getMagnitude() == 0) { // If the robot is sitting still...
             rotationalSpeedDegs = 0; // ...then don't change the heading
         } else {
             rotationalSpeedDegs = Constants.Drive.HOLONOMIC_CONTROLLER_PID_THETA.calculate(currentHeading, adjustedDirection);
         }
         double rotationalSpeedRads = Math.toRadians(rotationalSpeedDegs);
 
-        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotationalSpeedRads, IMU.getRobotYaw());
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+            translationalSpeeds.getXComponent(), 
+            translationalSpeeds.getYComponent(), 
+            rotationalSpeedRads, 
+            IMU.getRobotYaw());
 
         drive.setChassisSpeeds(speeds);
     }
