@@ -1,6 +1,7 @@
 package friarLib2.hid;
 
 import edu.wpi.first.wpilibj.XboxController;
+import friarLib2.utility.Vector3309;
 
 /**
  * Represents an Xbox controller, but with built in deadband calculation
@@ -37,6 +38,38 @@ public class XboxController3309 extends XboxController {
 
     public double getRightTriggerAxisWithDeadband () {
         return applyDeadband(super.getRightTriggerAxis(), deadband);
+    }
+
+    /**
+     * @return A vector that represents the position of the left joystick,
+     * without deadband
+     */
+    public Vector3309 getLeftVector () {
+        return Vector3309.fromCartesianCoords(getLeftX(), -getLeftY());
+    }
+
+    /**
+     * @return A vector that represents the position of the left joystick,
+     * with deadband
+     */
+    public Vector3309 getLeftVectorWithDeadband () {
+        return Vector3309.fromCartesianCoords(getLeftXWithDeadband(), -getLeftYWithDeadband());
+    }
+
+    /**
+     * @return A vector that represents the position of the right joystick,
+     * without deadband
+     */
+    public Vector3309 getRightVector () {
+        return Vector3309.fromCartesianCoords(getRightX(), -getRightY());
+    }
+
+    /**
+     * @return A vector that represents the position of the right joystick,
+     * with deadband
+     */
+    public Vector3309 getRightVectorWithDeadband () {
+        return Vector3309.fromCartesianCoords(getRightXWithDeadband(), -getRightYWithDeadband());
     }
 
     /**

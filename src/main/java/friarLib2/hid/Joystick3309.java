@@ -1,6 +1,7 @@
 package friarLib2.hid;
 
 import edu.wpi.first.wpilibj.Joystick;
+import friarLib2.utility.Vector3309;
 
 /**
  * Represents a joystick, but with built in deadband calculation
@@ -21,6 +22,22 @@ public class Joystick3309 extends Joystick {
 
     public double getYWithDeadband () {
         return applyDeadband(super.getY(), deadband);
+    }
+
+    /**
+     * @return A vector that represents the position of the joystick,
+     * without deadband
+     */
+    public Vector3309 getVector () {
+        return Vector3309.fromCartesianCoords(getX(), -getY());
+    }
+
+    /**
+     * @return A vector that represents the position of the joystick,
+     * with deadband
+     */
+    public Vector3309 getVectorWithDeadband () {
+        return Vector3309.fromCartesianCoords(getXWithDeadband(), -getYWithDeadband());
     }
 
     /**
