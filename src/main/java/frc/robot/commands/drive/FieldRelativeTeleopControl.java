@@ -17,10 +17,16 @@ import friarLib2.utility.Vector3309;
  * <p>
  * i.e., the robot will move in whatever direction the stick is pushed,
  * regardless of its orientation on te field.
+ * 
+ * <p>
+ * This class is designed to be subclassed so that other commands can 
+ * use the same translational velcoity calculations for field-relative 
+ * teleop control while being able to set the rotational speed 
+ * independently (based on vision data for example).
  */
 public class FieldRelativeTeleopControl extends CommandBase {
 
-    private DriveSubsystem drive;
+    protected DriveSubsystem drive;
 
     private SlewRateLimiter xAccelLimiter;
     private SlewRateLimiter yAccelLimiter;
@@ -50,15 +56,26 @@ public class FieldRelativeTeleopControl extends CommandBase {
         translationalSpeeds.setXComponent(xAccelLimiter.calculate(translationalSpeeds.getXComponent()));
         translationalSpeeds.setYComponent(yAccelLimiter.calculate(translationalSpeeds.getYComponent()));
 
-        double rotationalSpeed = Constants.Drive.MAX_TELEOP_ROTATIONAL_SPEED * OI.rightStick.getXWithDeadband();
-
         ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
             translationalSpeeds.getXComponent(), 
             translationalSpeeds.getYComponent(), 
-            rotationalSpeed, 
+            calculateRotationalSpeed(translationalSpeeds), 
             IMU.getRobotYaw());
 
         drive.setChassisSpeeds(speeds);
+    }
+
+    /**
+     * Given the field-relative translational speeds requested by the
+     * operators, calculate the rotational speed of the robot.
+     * 
+     * @param translationalSpeeds
+     * @return The rotational speed in radians/second
+     */
+    protected double calculateRotationalSpeed (Vector3309 translationalSpeeds) {
+        double rotationalSpeed = Constants.Drive.MAX_TELEOP_ROTATIONAL_SPEED * OI.rightStick.getXWithDeadband();
+
+        return rotationalSpeed;
     }
 
     @Override
