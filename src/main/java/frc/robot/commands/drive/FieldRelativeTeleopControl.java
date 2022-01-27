@@ -1,5 +1,6 @@
 package frc.robot.commands.drive;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -21,10 +22,22 @@ public class FieldRelativeTeleopControl extends CommandBase {
 
     private DriveSubsystem drive;
 
+    private SlewRateLimiter xAccelLimiter;
+    private SlewRateLimiter yAccelLimiter;
+
     public FieldRelativeTeleopControl(DriveSubsystem drive) {
         this.drive = drive;
 
+        xAccelLimiter = new SlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION);
+        yAccelLimiter = new SlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION);
+
         addRequirements(drive);
+    }
+
+    @Override
+    public void initialize() {
+        xAccelLimiter.reset(0);
+        yAccelLimiter.reset(0);
     }
 
     @Override
@@ -32,6 +45,10 @@ public class FieldRelativeTeleopControl extends CommandBase {
         Vector3309 translationalSpeeds = Vector3309.fromCartesianCoords(
             OI.leftStick.getXWithDeadband(), 
             -OI.leftStick.getYWithDeadband()).capMagnitude(1).scale(Constants.Drive.MAX_TELEOP_SPEED);
+
+        // Limit the drivebase's acceleration to reduce wear on the swerve modules
+        translationalSpeeds.setXComponent(xAccelLimiter.calculate(translationalSpeeds.getXComponent()));
+        translationalSpeeds.setYComponent(yAccelLimiter.calculate(translationalSpeeds.getYComponent()));
 
         double rotationalSpeed = Constants.Drive.MAX_TELEOP_ROTATIONAL_SPEED * OI.rightStick.getXWithDeadband();
 

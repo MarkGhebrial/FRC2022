@@ -19,6 +19,8 @@ public class Vector3309 {
         this.magnitude = magnitude;
     }
 
+    private Vector3309 () {}
+
     /**
      * Create a new vector from cartesian coordinates
      * 
@@ -27,10 +29,7 @@ public class Vector3309 {
      * @return A new Vector3309
      */
     public static Vector3309 fromCartesianCoords (double xCoordinate, double yCoordinate) {
-        Rotation2d direction = new Rotation2d(Math.atan2(yCoordinate, xCoordinate));
-        double magnitude = Math.sqrt((yCoordinate * yCoordinate) + (xCoordinate * xCoordinate));
-
-        return new Vector3309(xCoordinate, yCoordinate, direction, magnitude);
+        return new Vector3309().setCartesianCoords(xCoordinate, yCoordinate);
     }
 
     /**
@@ -48,12 +47,50 @@ public class Vector3309 {
     }
 
     /**
+     * Move the vector to the specified coordinates
+     * 
+     * @param xCoordinate
+     * @param yCoordinate
+     * @return Self
+     */
+    public Vector3309 setCartesianCoords (double xCoordinate, double yCoordinate) {
+        Rotation2d direction = new Rotation2d(Math.atan2(yCoordinate, xCoordinate));
+        double magnitude = Math.sqrt((yCoordinate * yCoordinate) + (xCoordinate * xCoordinate));
+
+        xComponent = xCoordinate;
+        yComponent = yCoordinate;
+        this.direction = direction;
+        this.magnitude = magnitude;
+
+        return this;
+    }
+
+    /**
+     * Move the vector to the specified coordinates
+     * 
+     * @param theta
+     * @param magnitude
+     * @return Self
+     */
+    public Vector3309 setRadialCoords (Rotation2d theta, double magnitude) {
+        double xComponent = magnitude * Math.sin(theta.getRadians());
+        double yComponent = magnitude * Math.cos(theta.getRadians());
+
+        this.xComponent = xComponent;
+        this.yComponent = yComponent;
+        direction = theta;
+        this.magnitude = magnitude;
+
+        return this;
+    }
+
+    /**
      * Set the magnitude to one
      * 
      * @return A new vector with magnitude of one
      */
     public Vector3309 normalize () {
-        return Vector3309.fromRadialCoords(direction, 1);
+        return fromRadialCoords(direction, 1);
     }
 
     /**
@@ -86,8 +123,16 @@ public class Vector3309 {
         return xComponent;
     }
 
+    public void setXComponent (double xCoordinate) {
+        setCartesianCoords(xCoordinate, yComponent);
+    }
+
     public double getYComponent () {
         return yComponent;
+    }
+
+    public void setYComponent (double yCoordinate) {
+        setCartesianCoords(xComponent, yCoordinate);
     }
 
     public Rotation2d getDirection () {
