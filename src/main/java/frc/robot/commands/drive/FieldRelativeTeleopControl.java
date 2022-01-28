@@ -1,12 +1,12 @@
 package frc.robot.commands.drive;
 
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.IMU;
 import frc.robot.OI;
 import frc.robot.subsystems.DriveSubsystem;
+import friarLib2.utility.DoubleSlewRateLimiter;
 import friarLib2.utility.Vector3309;
 
 /**
@@ -28,14 +28,14 @@ public class FieldRelativeTeleopControl extends CommandBase {
 
     protected DriveSubsystem drive;
 
-    private SlewRateLimiter xAccelLimiter;
-    private SlewRateLimiter yAccelLimiter;
+    private DoubleSlewRateLimiter xAccelLimiter;
+    private DoubleSlewRateLimiter yAccelLimiter;
 
     public FieldRelativeTeleopControl(DriveSubsystem drive) {
         this.drive = drive;
 
-        xAccelLimiter = new SlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION);
-        yAccelLimiter = new SlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION);
+        xAccelLimiter = new DoubleSlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION, Constants.Drive.MAX_TELEOP_DECELERATION);
+        yAccelLimiter = new DoubleSlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION, Constants.Drive.MAX_TELEOP_DECELERATION);
 
         addRequirements(drive);
     }
