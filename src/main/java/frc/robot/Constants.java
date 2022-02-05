@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.swerve.SwerveCANIDs;
+import frc.robot.util.FiringSolution;
 import friarLib2.utility.PIDParameters;
 
 /**
@@ -82,6 +83,12 @@ public final class Constants {
         /******** Physical Constants ********/
         public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;
 
-        /********** Tuning Constants **********/
+        /********** Firing Solutions **********/
+        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(5000, true);
+        public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(5000, true);
+
+        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(5000, false);
+        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(5000, false);
+        public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(5000, false);
     }
 }
