@@ -60,6 +60,33 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     /**
+     * Stop the flywheel
+     */
+    public void stopFlywheel () {
+        flywheelLeader.stopMotor();
+    }
+
+    /**
+     * Get the speed of the flywheel in RPM
+     * 
+     * @return
+     */
+    public double getFlywheelRPM () {
+        return flywheelEncoderTicksPer100msToRPM(flywheelLeader.getSelectedSensorVelocity());
+    }
+
+    /**
+     * @return True if the flywheel is on and at its target velocity
+     */
+    public boolean isFlywheelUpToSpeed () {
+        boolean isRunning = getFlywheelRPM() >= 50;
+
+        boolean isUpToSpeed = getFlywheelRPM() - flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopTarget()) <= FLYWHEEL_SPEED_TOLERANCE;
+
+        return isRunning && isUpToSpeed;
+    }
+
+    /**
      * Deploy or retract the shot deflector
      * 
      * @param deployed If the deflector should be deployed or retracted

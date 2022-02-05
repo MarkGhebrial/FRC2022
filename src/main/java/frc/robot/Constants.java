@@ -118,6 +118,9 @@ public final class Constants {
         /******** PID Gains ********/
         public static final PIDParameters FLYWHEEL_MOTOR_PID = new PIDParameters(0.5, 0.00015, 6, "Flywheel PID");
 
+        /********** Tuning Constants **********/
+        public static final double FLYWHEEL_SPEED_TOLERANCE = 50; // RPM
+
         /******** Physical Constants ********/
         public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;
 
