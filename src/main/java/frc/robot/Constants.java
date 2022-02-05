@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.swerve.SwerveCANIDs;
 
 /**
@@ -26,7 +27,10 @@ public final class Constants {
     public static final double JOYSTICK_DEADBAND = 0.1;
     public static final double XBOX_DEADBAND = 0.05;
 
+    public static final int PCM_CAN_ID = 0;
     public static final int PIGEON_IMU_ID = 13;
+
+    public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.CTREPCM;
 
     /**
      * Constants for the Drivetrain
@@ -60,5 +64,24 @@ public final class Constants {
         public static final double MAX_TELEOP_ROTATIONAL_SPEED = Math.toRadians(700); // Radians/second
         public static final double MAX_TELEOP_ACCELERATION = 5; // Maters/second squared
         public static final double MAX_TELEOP_DECELERATION = 9;
+    }
+
+    /**
+     * Constants for the Intake
+     */
+    public static class Intake {
+        /********** Solenoid PCM Ports **********/
+        public static final int LEFT_INTAKE_EXTENSION_SOLENOID_ID = 0;
+        public static final int LEFT_INTAKE_RETRACTION_SOLENOID_ID = 1;
+
+        public static final int RIGHT_INTAKE_EXTENSION_SOLENOID_ID = 2;
+        public static final int RIGHT_INTAKE_RETRACTION_SOLENOID_ID = 3;
+
+        /********** CAN ID's **********/
+        public static final int LEFT_INTAKE_MOTOR_ID = 13;
+        public static final int RIGHT_INTAKE_MOTOR_ID = 14;
+
+        /********** Tuning Constants **********/
+        public static final double INTAKE_MOTOR_POWER = 1.0;
     }
 }
