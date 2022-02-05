@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.FieldRelativeTeleopControl;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -55,8 +56,11 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        new LambdaTrigger(() -> OI.leftStick.getTrigger() || OI.rightStick.getTrigger())
+        new LambdaTrigger(() -> OI.leftStick.getTrigger())
         .whileActiveContinuous(new PointInDirectionOfTravel(drive));
+
+        new LambdaTrigger(() -> OI.rightStick.getTrigger())
+        .whileActiveContinuous(new DriveAndAim(drive));
     }
 
     /**
