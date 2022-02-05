@@ -61,6 +61,9 @@ public final class Constants {
         public static final PIDController HOLONOMIC_CONTROLLER_PID_Y = new PIDController(9, 3, 0);
         public static final ProfiledPIDController HOLONOMIC_CONTROLLER_PID_THETA = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(MAX_AUTON_ANGULAR_SPEED, MAX_AUTON_ANGULAR_ACCELERATION));
 
+        /******** PID Gains ********/
+        public static final PIDController VISION_AIM_PID = new PIDController(0.1, 0, 0);
+
         /********** Teleop Control Adjustment **********/
         public static final double MAX_TELEOP_SPEED = 6; // Meters/second
         public static final double MAX_TELEOP_ROTATIONAL_SPEED = Math.toRadians(700); // Radians/second
