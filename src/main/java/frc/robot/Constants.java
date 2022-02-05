@@ -68,6 +68,28 @@ public final class Constants {
         public static final double MAX_TELEOP_DECELERATION = 9;
     }
 
+    /**
+     * Constants for the Intake
+     */
+    public static class Intake {
+        /********** Solenoid PCM Ports **********/
+        public static final int LEFT_INTAKE_EXTENSION_SOLENOID_ID = 0;
+        public static final int LEFT_INTAKE_RETRACTION_SOLENOID_ID = 1;
+
+        public static final int RIGHT_INTAKE_EXTENSION_SOLENOID_ID = 2;
+        public static final int RIGHT_INTAKE_RETRACTION_SOLENOID_ID = 3;
+
+        /********** CAN ID's **********/
+        public static final int LEFT_INTAKE_MOTOR_ID = 13;
+        public static final int RIGHT_INTAKE_MOTOR_ID = 14;
+
+        /********** Tuning Constants **********/
+        public static final double INTAKE_MOTOR_POWER = 1.0;
+    }
+
+    /** 
+     * Constants for the shooter 
+     */
     public static class Shooter {
         /********** CAN ID's **********/
         public static final int LEADER_MOTOR_ID = 15;
