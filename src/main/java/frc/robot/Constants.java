@@ -8,7 +8,9 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.swerve.SwerveCANIDs;
+import friarLib2.utility.PIDParameters;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -26,7 +28,10 @@ public final class Constants {
     public static final double JOYSTICK_DEADBAND = 0.1;
     public static final double XBOX_DEADBAND = 0.05;
 
+    public static final int PCM_CAN_ID = 0;
     public static final int PIGEON_IMU_ID = 13;
+
+    public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.CTREPCM;
 
     /**
      * Constants for the Drivetrain
@@ -60,5 +65,23 @@ public final class Constants {
         public static final double MAX_TELEOP_ROTATIONAL_SPEED = Math.toRadians(700); // Radians/second
         public static final double MAX_TELEOP_ACCELERATION = 5; // Maters/second squared
         public static final double MAX_TELEOP_DECELERATION = 9;
+    }
+
+    public static class Shooter {
+        /********** CAN ID's **********/
+        public static final int LEADER_MOTOR_ID = 15;
+        public static final int FOLLOWER_MOTOR_ID = 16;
+
+        /********** PCM Ports **********/
+        public static final int HOOD_EXTENSION_SOLENOID_ID = 4;
+        public static final int HOOD_RETRACTION_SOLENOID_ID = 5;
+
+        /******** PID Gains ********/
+        public static final PIDParameters FLYWHEEL_MOTOR_PID = new PIDParameters(0.5, 0.00015, 6, "Flywheel PID");
+
+        /******** Physical Constants ********/
+        public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;
+
+        /********** Tuning Constants **********/
     }
 }

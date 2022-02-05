@@ -1,5 +1,7 @@
 package friarLib2.utility;
 
+import java.util.ArrayList;
+
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 
 import edu.wpi.first.util.sendable.Sendable;
@@ -15,7 +17,7 @@ public class PIDParameters implements Sendable {
     private double kD = 0;
     private double kF = 0;
 
-    private BaseTalon linkedMotor;
+    private ArrayList<BaseTalon> linkedMotors;
     
     public PIDParameters (double kP, double kI, double kD, double kF, String name) {
         this.kP = kP;
@@ -39,7 +41,7 @@ public class PIDParameters implements Sendable {
      * @param PID PID parameters
      */
     public void configureMotorPID (BaseTalon motor) {
-        linkedMotor = motor;
+        linkedMotors.add(motor);
         updateMotorPID();
     }
 
@@ -47,10 +49,12 @@ public class PIDParameters implements Sendable {
      * Set the PID gains of the linked motor
      */
     public void updateMotorPID () {
-        linkedMotor.config_kP(0, kP);
-        linkedMotor.config_kI(0, kI);
-        linkedMotor.config_kD(0, kD);
-        linkedMotor.config_kF(0, kF);
+        for (BaseTalon linkedMotor : linkedMotors) {
+            linkedMotor.config_kP(0, kP);
+            linkedMotor.config_kI(0, kI);
+            linkedMotor.config_kD(0, kD);
+            linkedMotor.config_kF(0, kF);
+        }
     }
 
 	@Override
