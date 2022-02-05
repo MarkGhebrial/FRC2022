@@ -10,6 +10,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.swerve.SwerveCANIDs;
+import frc.robot.util.FiringSolution;
+import friarLib2.utility.PIDParameters;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -83,5 +85,32 @@ public final class Constants {
 
         /********** Tuning Constants **********/
         public static final double INTAKE_MOTOR_POWER = 1.0;
+    }
+
+    /** 
+     * Constants for the shooter 
+     */
+    public static class Shooter {
+        /********** CAN ID's **********/
+        public static final int LEADER_MOTOR_ID = 15;
+        public static final int FOLLOWER_MOTOR_ID = 16;
+
+        /********** PCM Ports **********/
+        public static final int HOOD_EXTENSION_SOLENOID_ID = 4;
+        public static final int HOOD_RETRACTION_SOLENOID_ID = 5;
+
+        /******** PID Gains ********/
+        public static final PIDParameters FLYWHEEL_MOTOR_PID = new PIDParameters(0.5, 0.00015, 6, "Flywheel PID");
+
+        /******** Physical Constants ********/
+        public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;
+
+        /********** Firing Solutions **********/
+        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(5000, true);
+        public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(5000, true);
+
+        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(5000, false);
+        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(5000, false);
+        public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(5000, false);
     }
 }
