@@ -19,7 +19,7 @@ public class Intake extends CommandBase {
 
     @Override
     public void initialize() {
-        intake.deployBothIntakes();
+        intake.extendIntake();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class Intake extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        intake.retractBothIntakes();
+        intake.retractIntake();
     }
 
     @Override
