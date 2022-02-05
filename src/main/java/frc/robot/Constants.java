@@ -30,7 +30,7 @@ public final class Constants {
     public static final double XBOX_DEADBAND = 0.05;
 
     public static final int PCM_CAN_ID = 0;
-    public static final int PIGEON_IMU_ID = 13;
+    public static final int PIGEON_IMU_ID = 19;
 
     public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.CTREPCM;
 
@@ -69,6 +69,19 @@ public final class Constants {
         public static final double MAX_TELEOP_ROTATIONAL_SPEED = Math.toRadians(700); // Radians/second
         public static final double MAX_TELEOP_ACCELERATION = 5; // Maters/second squared
         public static final double MAX_TELEOP_DECELERATION = 9;
+    }
+
+    /**
+     * Constants for the Indexer
+     */
+    public static class Indexer {
+        /********** CAN ID's **********/
+        public static final int CONVEYOR_MOTOR_ID = 17;
+        public static final int GATE_WHEEL_MOTOR_ID = 18;
+
+        /********** Tuning Constants **********/
+        public static final double CONVEYOR_POWER = .2;
+        public static final double GATE_WHEEL_POWER = .75;
     }
 
     /**
