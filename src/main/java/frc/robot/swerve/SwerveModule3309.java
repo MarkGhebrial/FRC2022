@@ -46,6 +46,14 @@ public class SwerveModule3309 implements SwerveModule {
 
     private double lastAngle = 0.0;
 
+    /**
+     * Construct a new swerve module
+     * 
+     * @param driveMotorID CAN ID for the module's drive motor
+     * @param steeringMotorID CAN ID for the module's steering motor
+     * @param encoderID CAN ID for the module's CANCoder
+     * @param name The module's name (used when outputting to SmartDashboard)
+     */
     public SwerveModule3309 (int driveMotorID, int steeringMotorID, int encoderID, String name) {
         this.name = name;
         driveMotor = new WPI_TalonFX(driveMotorID);
@@ -54,12 +62,14 @@ public class SwerveModule3309 implements SwerveModule {
         configMotors();
     }
 
+    /**
+     * Constructs a new swerve module
+     * 
+     * @param IDs The collection of CAN ID's for the module
+     * @param name The module's name (used when outputting to SmartDashboard)
+     */
     public SwerveModule3309 (SwerveCANIDs IDs, String name) {
-        this.name = name;
-        driveMotor = new WPI_TalonFX(IDs.driveMotorID);
-        steeringMotor = new WPI_TalonFX(IDs.steeringMotorID);
-        steeringEncoder = new CANCoder(IDs.CANCoderID);
-        configMotors();
+        this(IDs.driveMotorID, IDs.steeringMotorID, IDs.CANCoderID, name);
     }
 
     /**
@@ -105,7 +115,7 @@ public class SwerveModule3309 implements SwerveModule {
     }
 
     /**
-     * @return If the belts for the steering axis hav slipped
+     * @return If the belts for the steering axis have slipped
      */
     public boolean steeringHasSlipped () {
         return Math.abs(
@@ -136,7 +146,7 @@ public class SwerveModule3309 implements SwerveModule {
         }
 
         public static double degreesToEncoderTicksCANCoder (double degrees) {
-            return degrees * (4096.0 / 360.0) * STEERING_GEAR_RATIO_ENCODER;
+            return degrees * STEERING_GEAR_RATIO_ENCODER;
         }
 
         public static double encoderTicksToDegreesCANCoder (double encoderTicks) {
