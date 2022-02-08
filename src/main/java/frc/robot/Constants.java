@@ -45,10 +45,10 @@ public final class Constants {
         public static final SwerveCANIDs BACK_RIGHT_MODULE_IDS = new SwerveCANIDs(7, 8, 12);
 
         /********** Module Translations **********/
-        public static final Translation2d FRONT_LEFT_MODULE_TRANSLATION = new Translation2d(.5, .5);
-        public static final Translation2d FRONT_RIGHT_MODULE_TRANSLATION = new Translation2d(.5, -.5);
-        public static final Translation2d BACK_LEFT_MODULE_TRANSLATION = new Translation2d(-.5, .5);
-        public static final Translation2d BACK_RIGHT_MODULE_TRANSLATION = new Translation2d(-.5, -.5);
+        public static final Translation2d FRONT_LEFT_MODULE_TRANSLATION = new Translation2d(0.34671, 0.23241);
+        public static final Translation2d FRONT_RIGHT_MODULE_TRANSLATION = new Translation2d(0.34671, -0.23241);
+        public static final Translation2d BACK_LEFT_MODULE_TRANSLATION = new Translation2d(-0.34671, 0.23241);
+        public static final Translation2d BACK_RIGHT_MODULE_TRANSLATION = new Translation2d(-0.34671, -0.23241);
 
         /********** Autonomous Motion Envelope **********/
         public static final double MAX_AUTON_SPEED = 4; // Meters/second
