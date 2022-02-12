@@ -2,11 +2,13 @@ package frc.robot.swerve;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import friarLib2.hardware.SwerveModule;
 import friarLib2.math.CTREModuleState;
 import friarLib2.utility.PIDParameters;
@@ -22,9 +24,18 @@ import friarLib2.utility.PIDParameters;
  * 
  * <p>
  * The CANCoder is used to dectect any slippage in the module's steering 
- * axis. It is found by comparing the Falcon 500's integrated encoder value to 
+ * axis. It is found by comparing the Falcon 500's integrated encoder value to
  * that of the CANCoder. If there is a difference, then the robot knows that 
  * the belts have slipped and can alert the operators accordingly.
+ * 
+ * <p>
+ * To zero the module, we use the CANCoder's absolute positioning to set
+ * the Falcon encoder's value. The CANCoder's absolute reading when the 
+ * module is facing zero degrees is stored in the encoder's "custom slot" at
+ * index zero. Since that slot only stores a 32 bit integer, the actual value
+ * we store there is the magnet offest multiplied by 100. Such multiplication
+ * allows us to gain two decimal places of precision (which is plenty for this
+ * task) from that integer slot.
  */
 public class SwerveModule3309 implements SwerveModule {
     /********** Constants **********/
@@ -44,32 +55,57 @@ public class SwerveModule3309 implements SwerveModule {
     private WPI_TalonFX steeringMotor;
     private CANCoder steeringEncoder;
 
+    /** 
+     * How many degrees the steering axis must be at (relative to its zeroed
+     * position) to be facing forward on the robot. Modules on different
+     * corners of a drivetrain will have different offsets
+     */
+    private final double steeringOffset;
+
     private double lastAngle = 0.0;
 
     /**
      * Construct a new swerve module
      * 
+     * @param steeringOffset How many degrees the steering axis must be at 
+     *     (relative to its zeroed position) to be facing forward on the robot.
+     *     Modules on different corners of a drivetrain will have different 
+     *     offsets
      * @param driveMotorID CAN ID for the module's drive motor
      * @param steeringMotorID CAN ID for the module's steering motor
      * @param encoderID CAN ID for the module's CANCoder
      * @param name The module's name (used when outputting to SmartDashboard)
      */
-    public SwerveModule3309 (int driveMotorID, int steeringMotorID, int encoderID, String name) {
+    public SwerveModule3309 (double steeringOffset, int driveMotorID, int steeringMotorID, int encoderID, String name) {
         this.name = name;
         driveMotor = new WPI_TalonFX(driveMotorID);
         steeringMotor = new WPI_TalonFX(steeringMotorID);
-        steeringEncoder = new CANCoder(encoderID);
         configMotors();
+
+        this.steeringOffset = steeringOffset;
+
+        // Initialize the encoder
+        // DO NOT configure the factory defaults. Doing so will reset the manually tuned
+        // magnet offsets stored in the encoder's "custom slot"
+        steeringEncoder = new CANCoder(encoderID);
+        steeringEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+        steeringEncoder.configMagnetOffset(0);
+
+        zeroSteering();
     }
 
     /**
      * Constructs a new swerve module
      * 
+     * @param steeringOffset How many degrees the steering axis must be at 
+     *     (relative to its zeroed position) to be facing forward on the robot.
+     *     Modules on different corners of a drivetrain will have different 
+     *     offsets
      * @param IDs The collection of CAN ID's for the module
      * @param name The module's name (used when outputting to SmartDashboard)
      */
-    public SwerveModule3309 (SwerveCANIDs IDs, String name) {
-        this(IDs.driveMotorID, IDs.steeringMotorID, IDs.CANCoderID, name);
+    public SwerveModule3309 (double steeringOffset, SwerveCANIDs IDs, String name) {
+        this(steeringOffset, IDs.driveMotorID, IDs.steeringMotorID, IDs.CANCoderID, name);
     }
 
     /**
@@ -110,18 +146,81 @@ public class SwerveModule3309 implements SwerveModule {
     public SwerveModuleState getState () {
         return new SwerveModuleState(
             Conversions.encoderTicksPer100msToMps(driveMotor.getSelectedSensorVelocity()), 
-            Rotation2d.fromDegrees(Conversions.encoderTicksToDegreesFalcon(steeringMotor.getSelectedSensorPosition()))
+            Rotation2d.fromDegrees(getSteeringDegreesFromFalcon())
         );
     }
 
     /**
      * @return If the belts for the steering axis have slipped
      */
+    @Override
     public boolean steeringHasSlipped () {
         return Math.abs(
-            Conversions.encoderTicksToDegreesFalcon(steeringMotor.getSelectedSensorPosition()) -
-            Conversions.encoderTicksToDegreesCANCoder(steeringEncoder.getPosition())
+            getSteeringDegreesFromFalcon() -
+            getSteeringDegreesFromEncoder()
             ) >= SLIP_THRESHOLD;
+    }
+
+    /**
+     * Use the CANCoder (whoose belt will not slip under normal circumstances)
+     * to reset the steering Falcon's intgrated encoder.
+     */
+    @Override
+    public void zeroSteering () {
+        double encoderOffset = getMagnetOffsetFromCANCoderSlot() + steeringOffset;
+
+        double absolutePosition = steeringEncoder.getAbsolutePosition() - encoderOffset;
+        double absolutePositionFalcon = Conversions.degreesToEncoderTicksFalcon(absolutePosition);
+        double absolutePositionEncoder = Conversions.degreesToEncoderTicksCANCoder(absolutePosition);
+        steeringMotor.setSelectedSensorPosition(absolutePositionFalcon);
+        steeringEncoder.setPosition(absolutePositionEncoder);
+    }
+
+    /**
+     * Gets the value stored in the CANCoder's custom paramter slot zero,
+     * divided by 100.
+     * 
+     * <p>
+     * That slot, if configured correctly, should contain the absolute encoder
+     * reading when the swerve module's steering axis is at zero degrees, 
+     * multiplied by 100.
+     * 
+     * <p>
+     * To configure it correctly, open OutlineViewer and, under the 
+     * "SmartDahsboard" table, there should be a numeric field called 
+     * "{module name} CANCoder absolute value". With the robot disabled, move
+     * the steering axis of the module to be at the zero degrees position, then
+     * note the dashboard value at that position. Finally, use Phoenix Tuner to
+     * set the "Custom Param 0" field on the appropriate encoder (under the 
+     * "Config" tab) to that dashboard value multiplied by 100.
+     */
+    private double getMagnetOffsetFromCANCoderSlot () {
+        return steeringEncoder.configGetCustomParam(0) / 100.0;
+    }
+
+    /**
+     * @return The position of the steering axis according to the Falcon's encoder
+     */
+    private double getSteeringDegreesFromFalcon () {
+        return Conversions.encoderTicksToDegreesFalcon(steeringMotor.getSelectedSensorPosition());
+    }
+
+    /**
+     * @return The position of the steering axis according to the CANCoder
+     */
+    private double getSteeringDegreesFromEncoder () {
+        return Conversions.encoderTicksToDegreesCANCoder(steeringEncoder.getPosition());
+    }
+
+    @Override
+    public void outputToDashboard () {
+        SmartDashboard.putNumber(name + " CANCoder absolute value", steeringEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber(name + " CANCoder raw value", steeringEncoder.getPosition());
+        SmartDashboard.putNumber(name + " CANCoder degrees", getSteeringDegreesFromEncoder());
+        SmartDashboard.putNumber(name + " Falcon degrees", getSteeringDegreesFromFalcon());
+        SmartDashboard.putNumber(name + " Falcon raw value", steeringMotor.getSelectedSensorPosition());
+        SmartDashboard.putBoolean(name + " has slipped", steeringHasSlipped());
+        SmartDashboard.putNumber(name + " magnet offset", getMagnetOffsetFromCANCoderSlot());
     }
 
     /**

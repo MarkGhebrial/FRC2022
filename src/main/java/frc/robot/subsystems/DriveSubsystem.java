@@ -28,10 +28,10 @@ public class DriveSubsystem extends SubsystemBase {
      * Initialize the swerve modules, imu, and Kinematics/Odometry objects
      */
     public DriveSubsystem() {
-        frontLeftModule = new SwerveModule3309(FRONT_LEFT_MODULE_IDS, "Front left");
-        frontRightModule = new SwerveModule3309(FRONT_RIGHT_MODULE_IDS, "Front right");
-        backLeftModule = new SwerveModule3309(BACK_LEFT_MODULE_IDS, "Back left");
-        backRightModule = new SwerveModule3309(BACK_RIGHT_MODULE_IDS, "Back right");
+        frontLeftModule = new SwerveModule3309(0, FRONT_LEFT_MODULE_IDS, "Front left");
+        frontRightModule = new SwerveModule3309(90, FRONT_RIGHT_MODULE_IDS, "Front right");
+        backLeftModule = new SwerveModule3309(180, BACK_LEFT_MODULE_IDS, "Back left");
+        backRightModule = new SwerveModule3309(270, BACK_RIGHT_MODULE_IDS, "Back right");
 
         swerveKinematics = new SwerveDriveKinematics(
             FRONT_LEFT_MODULE_TRANSLATION,
