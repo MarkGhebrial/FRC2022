@@ -17,7 +17,7 @@ public class PIDParameters implements Sendable {
     private double kD = 0;
     private double kF = 0;
 
-    private ArrayList<BaseTalon> linkedMotors;
+    private ArrayList<BaseTalon> linkedMotors  = new ArrayList<BaseTalon>();
     
     public PIDParameters (double kP, double kI, double kD, double kF, String name) {
         this.kP = kP;

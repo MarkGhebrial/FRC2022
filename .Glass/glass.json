@@ -1,0 +1,37 @@
+{
+  "NetworkTables": {
+    "SmartDashboard": {
+      "open": true
+    },
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/ExampleSubsystem": "Subsystem",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/SmartDashboard/Flywheel PID": "PIDController",
+      "/SmartDashboard/Swerve Drive PID": "PIDController",
+      "/SmartDashboard/Swerve Steering PID": "PIDController"
+    }
+  },
+  "NetworkTables Settings": {
+    "mode": "Client"
+  },
+  "Plots": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "max": 360.0,
+              "min": -360.0
+            }
+          ],
+          "height": 332
+        }
+      ]
+    }
+  }
+}

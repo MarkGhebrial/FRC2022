@@ -195,7 +195,11 @@ public class SwerveModule3309 implements SwerveModule {
      * "Config" tab) to that dashboard value multiplied by 100.
      */
     private double getMagnetOffsetFromCANCoderSlot () {
-        return steeringEncoder.configGetCustomParam(0) / 100.0;
+        int customParam = 0;
+        do {
+            customParam = steeringEncoder.configGetCustomParam(0);
+        } while (customParam == 0); // Try again if the request timed out
+        return customParam / 100.0;
     }
 
     /**
@@ -221,6 +225,7 @@ public class SwerveModule3309 implements SwerveModule {
         SmartDashboard.putNumber(name + " Falcon raw value", steeringMotor.getSelectedSensorPosition());
         SmartDashboard.putBoolean(name + " has slipped", steeringHasSlipped());
         SmartDashboard.putNumber(name + " magnet offset", getMagnetOffsetFromCANCoderSlot());
+        SmartDashboard.putNumber(name + " fdjla;ksaf", steeringEncoder.getAbsolutePosition() - (getMagnetOffsetFromCANCoderSlot() + steeringOffset));
     }
 
     /**

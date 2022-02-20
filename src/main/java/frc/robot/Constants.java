@@ -26,7 +26,7 @@ public final class Constants {
     /**
      * Constants that do not belong to a subsystem
      */
-    public static final double JOYSTICK_DEADBAND = 0.1;
+    public static final double JOYSTICK_DEADBAND = 0.07;
     public static final double XBOX_DEADBAND = 0.05;
 
     public static final int PCM_CAN_ID = 0;
@@ -39,10 +39,10 @@ public final class Constants {
      */
     public static class Drive {
         /********** CAN ID's **********/
-        public static final SwerveCANIDs FRONT_LEFT_MODULE_IDS = new SwerveCANIDs(1, 2, 9);
-        public static final SwerveCANIDs FRONT_RIGHT_MODULE_IDS = new SwerveCANIDs(3, 4, 10);
-        public static final SwerveCANIDs BACK_LEFT_MODULE_IDS = new SwerveCANIDs(5, 6, 11);
-        public static final SwerveCANIDs BACK_RIGHT_MODULE_IDS = new SwerveCANIDs(7, 8, 12);
+        public static final SwerveCANIDs FRONT_LEFT_MODULE_IDS = new SwerveCANIDs(4, 6, 52);
+        public static final SwerveCANIDs FRONT_RIGHT_MODULE_IDS = new SwerveCANIDs(3, 5, 53);
+        public static final SwerveCANIDs BACK_LEFT_MODULE_IDS = new SwerveCANIDs(1, 2, 50);
+        public static final SwerveCANIDs BACK_RIGHT_MODULE_IDS = new SwerveCANIDs(8, 7, 51);
 
         /********** Module Translations **********/
         public static final Translation2d FRONT_LEFT_MODULE_TRANSLATION = new Translation2d(0.34671, 0.23241);
