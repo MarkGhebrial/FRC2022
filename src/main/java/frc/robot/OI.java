@@ -19,5 +19,5 @@ public class OI
     public static JoystickClusterGroup rightStickRightCluster = new JoystickClusterGroup(rightStick, JoystickClusterGroup.Side.right);
 
     // Xbox controller
-    public static XboxController3309 OperatorController = new XboxController3309(2, Constants.XBOX_DEADBAND);
+    public static XboxController3309 operatorController = new XboxController3309(2, Constants.XBOX_DEADBAND);
 }
