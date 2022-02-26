@@ -12,7 +12,7 @@ public class Vision {
     /**
      * @return the distance in meters from the target
      */
-    public static double getDistanceFromTarget () {
+    public static double getMetersFromTarget () {
         return shooterCamera.getBestTarget().getPose().getX();
     }
 }

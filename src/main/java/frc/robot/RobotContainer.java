@@ -57,10 +57,10 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         new LambdaTrigger(() -> OI.leftStick.getTrigger())
-        .whileActiveContinuous(new PointInDirectionOfTravel(drive));
+            .whileActiveContinuous(new PointInDirectionOfTravel(drive));
 
         new LambdaTrigger(() -> OI.rightStick.getTrigger())
-        .whileActiveContinuous(new DriveAndAim(drive));
+            .whileActiveContinuous(new DriveAndAim(drive));
     }
 
     /**
