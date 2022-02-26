@@ -8,14 +8,17 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.FieldRelativeTeleopControl;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.util.FiringSolution;
 import friarLib2.hid.LambdaTrigger;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -30,6 +33,7 @@ public class RobotContainer {
     private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
     private final DriveSubsystem drive = new DriveSubsystem();
     private final ClimberSubsystem climber = new ClimberSubsystem();
+    private final IndexerSubsystem indexer = new IndexerSubsystem();
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
 
@@ -61,6 +65,28 @@ public class RobotContainer {
 
         new LambdaTrigger(() -> OI.rightStick.getTrigger())
             .whileActiveContinuous(new DriveAndAim(drive));
+
+        // Bind the oerator's D-pad to various shooting locations
+        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0);
+        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 90);
+        bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_FENDER, 180);
+        bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_TARMAC, 270);
+    }
+
+    /**
+     * Bind a Shoot command with the specified FiringSolution to the 
+     * specified angle on the operator's D-pad.
+     * 
+     * @param solution The firing solution to go to
+     * @param dPadPosition The value returned by 
+     */
+    private void bindShootingCommand(FiringSolution solution, int dPadPosition) {
+        new LambdaTrigger(() -> OI.OperatorController.getPOV() == dPadPosition)
+            .whileActiveContinuous(
+                new Shoot(
+                    () -> OI.OperatorController.getAButton(), // Fire a cargo if this evaluates to true
+                    solution, shooter, indexer), 
+                true); // Set the command as interruptible
     }
 
     /**
