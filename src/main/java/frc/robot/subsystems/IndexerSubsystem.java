@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.UnitConversions;
 
 import static frc.robot.Constants.Indexer.*;
 
@@ -12,6 +13,8 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private WPI_TalonSRX conveyorMotor;
     private WPI_TalonSRX gateMotor;
+
+    private boolean hasCargo = false;
 
     public IndexerSubsystem() {
         conveyorMotor = new WPI_TalonSRX(CONVEYOR_MOTOR_ID);
@@ -21,6 +24,13 @@ public class IndexerSubsystem extends SubsystemBase {
         gateMotor = new WPI_TalonSRX(GATE_WHEEL_MOTOR_ID);
         gateMotor.configFactoryDefault();
         gateMotor.setNeutralMode(NeutralMode.Brake);
+    }
+
+    /**
+     * @return If the indexer has a cargo indexed
+     */
+    public boolean hasCargo() {
+        return hasCargo;
     }
 
     /**
@@ -54,14 +64,14 @@ public class IndexerSubsystem extends SubsystemBase {
      * Activate the gate wheel at defult speed
      */
     public void activateGateWheel() {
-        gateMotor.set(ControlMode.PercentOutput, CONVEYOR_POWER);
+        gateMotor.set(ControlMode.PercentOutput, GATE_WHEEL_POWER);
     }
 
     /**
      * Turn off the gate wheel
      */
     public void deactivateGateWheel() {
-        conveyorMotor.stopMotor();
+        gateMotor.stopMotor();
     }
 
     /**
@@ -75,6 +85,27 @@ public class IndexerSubsystem extends SubsystemBase {
         } else {
             deactivateGateWheel();
         }
+    }
+
+    /**
+     * Roll the gate wheel by the specified amount
+     * 
+     * @param degrees The distance to move the wheel
+     */
+    public void rotateGateWheelByXDegrees(double degrees) {
+        double targetPosition = getGateWheelPosition(degrees) + degrees;
+        gateMotor.set(ControlMode.Position, UnitConversions.Indexer.gateWheelDegreesToEncoderTicks(targetPosition));
+    }
+
+    private double getGateWheelPosition(double degrees) {
+        return UnitConversions.Indexer.gateWheelEncoderTicksToDegrees(gateMotor.getSelectedSensorPosition());
+    }
+
+    /**
+     * @return The current being drawn by the gate wheel
+     */
+    public double getGateWheelSupplyCurrent() {
+        return gateMotor.getSupplyCurrent();
     }
 
     @Override

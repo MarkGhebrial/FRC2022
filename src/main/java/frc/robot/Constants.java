@@ -82,6 +82,7 @@ public final class Constants {
         /********** Tuning Constants **********/
         public static final double CONVEYOR_POWER = .2;
         public static final double GATE_WHEEL_POWER = .75;
+        public static final double GATE_WHEEL_INDEXING_DEGREES = 360; // Rotate the gate by this much to index a cargo
 
         /******** Physical Constants ********/
         public static final double GATE_WHEEL_GEAR_RATIO = 1.0 / 1.0; // Between the encoder and wheel, not between the motor and wheel
