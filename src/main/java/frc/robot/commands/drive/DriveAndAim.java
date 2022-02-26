@@ -20,9 +20,9 @@ public class DriveAndAim extends FieldRelativeTeleopControl {
     protected double calculateRotationalSpeed (Vector3309 translationalSpeeds) {
         if (Vision.shooterCamera.hasTargets()) {
             return Constants.Drive.VISION_AIM_PID.calculate(Vision.shooterCamera.getBestTarget().getX());
-        } else {
-            // Use driver input if no target is found
-            return super.calculateRotationalSpeed(translationalSpeeds);
         }
+        
+        // Use driver input if no target is found
+        return super.calculateRotationalSpeed(translationalSpeeds);
     }
 }

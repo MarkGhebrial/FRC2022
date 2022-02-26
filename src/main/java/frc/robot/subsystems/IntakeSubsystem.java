@@ -45,120 +45,105 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     /**
-     * Extend the left intake without turning on the rollers
-     */
-    public void extendLeftIntake () {
-        leftIntakeSolenoid.set(Value.kForward);
-    }
-
-    /**
-     * Extend and activate the left intake
-     */
-    public void deployLeftIntake () {
-        extendLeftIntake();
-        leftIntakeMotor.set(ControlMode.Velocity, INTAKE_MOTOR_POWER);
-    }
-
-    /**
-     * Retract the left intake and turn off its rollers
-     */
-    public void retractLeftIntake () {
-        leftIntakeSolenoid.set(Value.kReverse);
-        leftIntakeMotor.stopMotor();
-    }
-
-    /**
-     * Deploy or retract the left intake
+     * Extend the specified intake(s)
      * 
-     * @param deployed If true, intake will deploy, otherwise, it'll retract
+     * @param side Which intake (or both) to extend
+     * @param activateRollers Rollers will turn on of true, stay off if false
      */
-    public void setLeftIntake (boolean deployed) {
-        if (deployed) {
-            deployLeftIntake();
-        } else {
-            retractLeftIntake();
+    public void extendIntake (Side side, boolean activateRollers) {
+        if (side == Side.leftIntake || side == Side.bothIntakes) {
+            leftIntakeSolenoid.set(Value.kForward);
+            setLeftIntakeRoller(activateRollers);
+        }
+        if (side == Side.rightIntake || side == Side.bothIntakes) {
+            rightIntakeSolenoid.set(Value.kForward);
+            setRightIntakeRoller(activateRollers);
         }
     }
 
     /**
-     * Extend the right intake without turning on the rollers
-     */
-    public void extendRightIntake () {
-        rightIntakeSolenoid.set(Value.kForward);
-    }
-
-    /**
-     * Extend and activate the right intake
-     */
-    public void deployRightIntake () {
-        extendRightIntake();
-        rightIntakeMotor.set(ControlMode.Velocity, INTAKE_MOTOR_POWER);
-    }
-
-    /**
-     * Retract the right intake and turn off its rollers
-     */
-    public void retractRightIntake () {
-        rightIntakeSolenoid.set(Value.kReverse);
-        rightIntakeMotor.stopMotor();
-    }
-
-    /**
-     * Deploy or retract the right intake
+     * Extend the specified intake(s) and turn on their rollers
      * 
-     * @param deployed If true, intake will deploy, otherwise, it'll retract
+     * @param side Which intake (or both) to extend
      */
-    public void setRightIntake (boolean deployed) {
-        if (deployed) {
-            deployRightIntake();
-        } else {
+    public void extendIntake (Side side) {
+        extendIntake(side, true);
+    }
+
+    /**
+     * Extend and activate the rollers of both intakes
+     */
+    public void extendIntake () {
+        extendIntake(Side.bothIntakes);
+    }
+
+    /**
+     * Retract the specified intake(s) back into the robot frame, turning 
+     * off their rollers
+     * 
+     * @param side Which intake (or both) to extend
+     */
+    public void retractIntake (Side side) {
+        if (side == Side.leftIntake || side == Side.bothIntakes) {
+            retractLeftIntake();
+        }
+        if (side == Side.rightIntake || side == Side.bothIntakes) {
             retractRightIntake();
         }
     }
 
     /**
-     * Extend both intakes without turning them on
+     * Retract both intakes, turning off their rollers
      */
-    public void extendBothIntakes () {
-        extendLeftIntake();
-        extendRightIntake();
+    public void retractIntake () {
+        retractIntake(Side.bothIntakes);
     }
 
     /**
-     * Extend and activate both intakes
+     * Turn on or off the left intake's roller
      */
-    public void deployBothIntakes () {
-        deployLeftIntake();
-        deployRightIntake();
+    private void setLeftIntakeRoller (boolean on) {
+        if (on) {
+            leftIntakeMotor.set(ControlMode.Velocity, INTAKE_MOTOR_POWER);
+        } else {
+            leftIntakeMotor.stopMotor();
+        }
     }
 
     /**
-     * Retract both intakes and turn of their rollers
+     * Retract the left intake and turn off its rollers
      */
-    public void retractBothIntakes () {
-        retractLeftIntake();
-        retractRightIntake();
+    private void retractLeftIntake () {
+        leftIntakeSolenoid.set(Value.kReverse);
+        setLeftIntakeRoller(false);
     }
 
     /**
-     * Deploy or retract the both intakes
-     * 
-     * @param deployed If true, intakes will deploy, otherwise, they'll retract
+     * Turn on or off the right intake's roller
      */
-    public void setBothIntakes (boolean deployed) {
-        setLeftIntake(deployed);
-        setRightIntake(deployed);
+    private void setRightIntakeRoller (boolean on) {
+        if (on) {
+            rightIntakeMotor.set(ControlMode.Velocity, INTAKE_MOTOR_POWER);
+        } else {
+            rightIntakeMotor.stopMotor();
+        }
     }
 
     /**
-     * Deploy or retract both intakes individually
-     * 
-     * @param leftDeployed Controls the left intake
-     * @param rightDeployed Controls the right intake
+     * Retract the right intake and turn off its rollers
      */
-    public void setEachIntake (boolean leftDeployed, boolean rightDeployed) {
-        setLeftIntake(leftDeployed);
-        setRightIntake(rightDeployed);
+    private void retractRightIntake () {
+        rightIntakeSolenoid.set(Value.kReverse);
+        setRightIntakeRoller(false);
+    }
+
+    /**
+     * Rpresents which intake(s) to deploy/retract
+     */
+    public static enum Side {
+        leftIntake,
+        rightIntake,
+        bothIntakes
     }
 
     @Override
