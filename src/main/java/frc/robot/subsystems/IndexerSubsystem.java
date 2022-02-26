@@ -14,8 +14,6 @@ public class IndexerSubsystem extends SubsystemBase {
     private WPI_TalonSRX conveyorMotor;
     private WPI_TalonSRX gateMotor;
 
-    private boolean hasCargo = false;
-
     public IndexerSubsystem() {
         conveyorMotor = new WPI_TalonSRX(CONVEYOR_MOTOR_ID);
         conveyorMotor.configFactoryDefault();
@@ -30,7 +28,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return If the indexer has a cargo indexed
      */
     public boolean hasCargo() {
-        return hasCargo;
+        return gateMotor.getControlMode() == ControlMode.Position;
     }
 
     /**
@@ -43,48 +41,29 @@ public class IndexerSubsystem extends SubsystemBase {
     /**
      * Turn off the conveyor
      */
-    public void deactivateConveyor() {
+    public void stopConveyor() {
         conveyorMotor.stopMotor();
     }
 
     /**
-     * Activate or disable the conveyor
-     * 
-     * @param on If the conveyor should be on or off
+     * Activate the gate wheel at the default speed for indexing a cargo
      */
-    public void setConveyor(boolean on) {
-        if (on) {
-            activateConveyor();
-        } else {
-            deactivateConveyor();
-        }
+    public void activateGateWheelForIndexing() {
+        gateMotor.set(ControlMode.PercentOutput, GATE_WHEEL_INDEXING_POWER);
     }
 
     /**
-     * Activate the gate wheel at defult speed
+     * Activate the gate wheel at the default speed for shooting
      */
-    public void activateGateWheel() {
-        gateMotor.set(ControlMode.PercentOutput, GATE_WHEEL_POWER);
+    public void activateGateWheelForShooting() {
+        gateMotor.set(ControlMode.PercentOutput, GATE_WHEEL_SHOOTING_POWER);
     }
 
     /**
      * Turn off the gate wheel
      */
-    public void deactivateGateWheel() {
+    public void stopGateWheel() {
         gateMotor.stopMotor();
-    }
-
-    /**
-     * Activate or disable the gate wheel
-     * 
-     * @param on If the gete wheel should be on or off
-     */
-    public void setGateWheel(boolean on) {
-        if (on) {
-            activateGateWheel();
-        } else {
-            deactivateGateWheel();
-        }
     }
 
     /**
