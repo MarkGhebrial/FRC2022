@@ -1,21 +1,19 @@
 package friarLib2.hid;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class LambdaTrigger extends Trigger {
 
-    TriggerCondition condition;
+    BooleanSupplier condition;
 
-    public LambdaTrigger (TriggerCondition condition) {
+    public LambdaTrigger (BooleanSupplier condition) {
         this.condition = condition;
     }
 
     @Override
     public boolean get () {
-        return condition.get();
-    }
-
-    public interface TriggerCondition {
-        boolean get();
+        return condition.getAsBoolean();
     }
 }
