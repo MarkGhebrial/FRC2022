@@ -17,8 +17,8 @@ public class IndexOneCargo extends ConditionalCommand {
             new WaitCommand(0), // Don't do anything if the indexer already has a cargo
             new SequentialCommandGroup(
                 new InstantCommand(() -> { // Turn on the indexer
-                    indexer.activateConveyor();
-                    indexer.activateGateWheelForIndexing();
+                    indexer.startConveyor();
+                    indexer.startGateWheelForIndexing();
                 }), 
                 new WaitUntilCommand(() -> indexer.getGateWheelSupplyCurrent() > Constants.Indexer.GATE_WHEEL_INDEXING_POWER), // Once a cargo has contacted the rollers, the current drawn by the motor should increase
                 new InstantCommand(() -> {

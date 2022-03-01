@@ -32,9 +32,9 @@ public class IndexerSubsystem extends SubsystemBase {
     }
 
     /**
-     * Activate the conveyor at defult speed
+     * Start the conveyor at defult speed
      */
-    public void activateConveyor() {
+    public void startConveyor() {
         conveyorMotor.set(ControlMode.PercentOutput, CONVEYOR_POWER);
     }
 
@@ -46,16 +46,16 @@ public class IndexerSubsystem extends SubsystemBase {
     }
 
     /**
-     * Activate the gate wheel at the default speed for indexing a cargo
+     * Start the gate wheel at the default speed for indexing a cargo
      */
-    public void activateGateWheelForIndexing() {
+    public void startGateWheelForIndexing() {
         gateMotor.set(ControlMode.PercentOutput, GATE_WHEEL_INDEXING_POWER);
     }
 
     /**
-     * Activate the gate wheel at the default speed for shooting
+     * Start the gate wheel at the default speed for shooting
      */
-    public void activateGateWheelForShooting() {
+    public void startGateWheelForShooting() {
         gateMotor.set(ControlMode.PercentOutput, GATE_WHEEL_SHOOTING_POWER);
     }
 

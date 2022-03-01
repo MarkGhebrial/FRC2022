@@ -36,8 +36,8 @@ public class Shoot extends CommandBase {
     public void execute() {
         // If the flywhheel is up to speed and the condition is true
         if (shooter.isFlywheelUpToSpeed() && shootCondition.get()) {
-            indexer.activateConveyor();
-            indexer.activateGateWheelForShooting();
+            indexer.startConveyor();
+            indexer.startGateWheelForShooting();
         } else {
             indexer.stopConveyor();
             indexer.stopGateWheel();
