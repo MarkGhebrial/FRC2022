@@ -12,6 +12,7 @@ import frc.robot.commands.Shoot;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.FieldRelativeTeleopControl;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
+import frc.robot.commands.intake.IntakeAndIndex;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -66,8 +67,11 @@ public class RobotContainer {
         new LambdaTrigger(() -> OI.rightStick.getTrigger())
             .whileActiveContinuous(new DriveAndAim(drive));
 
+        new LambdaTrigger(() -> OI.operatorController.getLeftBumper() || OI.leftStickLeftCluster.get() || OI.leftStickRightCluster.get())
+            .whileActiveContinuous(new IntakeAndIndex(intake, indexer));
+
         // Bind the oerator's D-pad to various shooting locations
-        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0);
+        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0); // 0 is up, the values increase clockwise
         bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 90);
         bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_FENDER, 180);
         bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_TARMAC, 270);
@@ -81,10 +85,10 @@ public class RobotContainer {
      * @param dPadPosition The value returned by 
      */
     private void bindShootingCommand(FiringSolution solution, int dPadPosition) {
-        new LambdaTrigger(() -> OI.OperatorController.getPOV() == dPadPosition)
+        new LambdaTrigger(() -> OI.operatorController.getPOV() == dPadPosition)
             .whileActiveContinuous(
                 new Shoot(
-                    () -> OI.OperatorController.getAButton(), // Fire a cargo if this evaluates to true
+                    () -> OI.operatorController.getAButton(), // Fire a cargo if this evaluates to true
                     solution, shooter, indexer), 
                 true); // Set the command as interruptible
     }

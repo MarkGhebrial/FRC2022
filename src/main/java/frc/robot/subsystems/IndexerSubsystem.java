@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.UnitConversions;
 
 import static frc.robot.Constants.Indexer.*;
 
@@ -24,57 +25,66 @@ public class IndexerSubsystem extends SubsystemBase {
     }
 
     /**
-     * Activate the conveyor at defult speed
+     * @return If the indexer has a cargo indexed
      */
-    public void activateConveyor() {
+    public boolean hasCargo() {
+        return gateMotor.getControlMode() == ControlMode.Position;
+    }
+
+    /**
+     * Start the conveyor at defult speed
+     */
+    public void startConveyor() {
         conveyorMotor.set(ControlMode.PercentOutput, CONVEYOR_POWER);
     }
 
     /**
      * Turn off the conveyor
      */
-    public void deactivateConveyor() {
+    public void stopConveyor() {
         conveyorMotor.stopMotor();
     }
 
     /**
-     * Activate or disable the conveyor
-     * 
-     * @param on If the conveyor should be on or off
+     * Start the gate wheel at the default speed for indexing a cargo
      */
-    public void setConveyor(boolean on) {
-        if (on) {
-            activateConveyor();
-        } else {
-            deactivateConveyor();
-        }
+    public void startGateWheelForIndexing() {
+        gateMotor.set(ControlMode.PercentOutput, GATE_WHEEL_INDEXING_POWER);
     }
 
     /**
-     * Activate the gate wheel at defult speed
+     * Start the gate wheel at the default speed for shooting
      */
-    public void activateGateWheel() {
-        gateMotor.set(ControlMode.PercentOutput, CONVEYOR_POWER);
+    public void startGateWheelForShooting() {
+        gateMotor.set(ControlMode.PercentOutput, GATE_WHEEL_SHOOTING_POWER);
     }
 
     /**
      * Turn off the gate wheel
      */
-    public void deactivateGateWheel() {
-        conveyorMotor.stopMotor();
+    public void stopGateWheel() {
+        gateMotor.stopMotor();
     }
 
     /**
-     * Activate or disable the gate wheel
+     * Roll the gate wheel by the specified amount
      * 
-     * @param on If the gete wheel should be on or off
+     * @param degrees The distance to move the wheel
      */
-    public void setGateWheel(boolean on) {
-        if (on) {
-            activateGateWheel();
-        } else {
-            deactivateGateWheel();
-        }
+    public void rotateGateWheelByXDegrees(double degrees) {
+        double targetPosition = getGateWheelPosition(degrees) + degrees;
+        gateMotor.set(ControlMode.Position, UnitConversions.Indexer.gateWheelDegreesToEncoderTicks(targetPosition));
+    }
+
+    private double getGateWheelPosition(double degrees) {
+        return UnitConversions.Indexer.gateWheelEncoderTicksToDegrees(gateMotor.getSelectedSensorPosition());
+    }
+
+    /**
+     * @return The current being drawn by the gate wheel
+     */
+    public double getGateWheelSupplyCurrent() {
+        return gateMotor.getSupplyCurrent();
     }
 
     @Override
