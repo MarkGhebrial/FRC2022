@@ -37,19 +37,19 @@ public class Shoot extends CommandBase {
     public void execute() {
         // If the flywhheel is up to speed and the condition is true
         if (shooter.isFlywheelUpToSpeed() && shootCondition.getAsBoolean()) {
-            indexer.activateConveyor();
-            indexer.activateGateWheel();
+            indexer.startConveyor();
+            indexer.startGateWheelForShooting();
         } else {
-            indexer.deactivateConveyor();
-            indexer.deactivateGateWheel();
+            indexer.stopConveyor();
+            indexer.stopGateWheel();
         }
     }
 
     @Override
     public void end(boolean interrupted) {
         shooter.stopFlywheel();
-        indexer.deactivateConveyor();
-        indexer.deactivateGateWheel();
+        indexer.stopConveyor();
+        indexer.stopGateWheel();
     }
 
     @Override
