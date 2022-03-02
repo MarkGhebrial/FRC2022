@@ -1,6 +1,7 @@
 package frc.robot.swerve;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -115,10 +116,12 @@ public class SwerveModule3309 implements SwerveModule {
         driveMotor.configFactoryDefault();
         DRIVE_PID_GAINS.configureMotorPID(driveMotor);
         driveMotor.config_IntegralZone(0, 500);
+        driveMotor.setNeutralMode(NeutralMode.Brake);
 
         steeringMotor.configFactoryDefault();
         STEERING_PID_GAINS.configureMotorPID(steeringMotor);
         steeringMotor.config_IntegralZone(0, 500);
+        steeringMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     /**
@@ -195,11 +198,7 @@ public class SwerveModule3309 implements SwerveModule {
      * "Config" tab) to that dashboard value multiplied by 100.
      */
     private double getMagnetOffsetFromCANCoderSlot () {
-        int customParam = 0;
-        do {
-            customParam = steeringEncoder.configGetCustomParam(0);
-        } while (customParam == 0); // Try again if the request timed out
-        return customParam / 100.0;
+        return steeringEncoder.configGetCustomParam(0, 2000) / 100.0;
     }
 
     /**
@@ -224,8 +223,8 @@ public class SwerveModule3309 implements SwerveModule {
         SmartDashboard.putNumber(name + " Falcon degrees", getSteeringDegreesFromFalcon());
         SmartDashboard.putNumber(name + " Falcon raw value", steeringMotor.getSelectedSensorPosition());
         SmartDashboard.putBoolean(name + " has slipped", steeringHasSlipped());
-        SmartDashboard.putNumber(name + " magnet offset", getMagnetOffsetFromCANCoderSlot());
-        SmartDashboard.putNumber(name + " fdjla;ksaf", steeringEncoder.getAbsolutePosition() - (getMagnetOffsetFromCANCoderSlot() + steeringOffset));
+        //SmartDashboard.putNumber(name + " magnet offset", getMagnetOffsetFromCANCoderSlot());
+        //SmartDashboard.putNumber(name + " fdjla;ksaf", steeringEncoder.getAbsolutePosition() - (getMagnetOffsetFromCANCoderSlot() + steeringOffset));
     }
 
     /**

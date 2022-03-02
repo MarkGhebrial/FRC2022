@@ -32,7 +32,7 @@ public final class Constants {
     public static final int PCM_CAN_ID = 0;
     public static final int PIGEON_IMU_ID = 19;
 
-    public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.CTREPCM;
+    public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.REVPH;
 
     /**
      * Constants for the Drivetrain

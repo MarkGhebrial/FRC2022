@@ -27,7 +27,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private WPI_TalonFX flywheelLeader;
     private WPI_TalonFX flywheelFollower;
 
-    private DoubleSolenoid deflectorSolenoid;
+    //private DoubleSolenoid deflectorSolenoid;
 
     public ShooterSubsystem() {
         // Configure the flywheel motors
@@ -42,12 +42,15 @@ public class ShooterSubsystem extends SubsystemBase {
         FLYWHEEL_MOTOR_PID.configureMotorPID(flywheelFollower);
         flywheelFollower.follow(flywheelLeader);
 
-        deflectorSolenoid = new DoubleSolenoid(
+        flywheelLeader.setInverted(true);
+        flywheelFollower.setInverted(false);
+
+        /*deflectorSolenoid = new DoubleSolenoid(
             Constants.PCM_CAN_ID,
             Constants.PCM_TYPE,
             HOOD_EXTENSION_SOLENOID_ID,
             HOOD_RETRACTION_SOLENOID_ID
-        );
+        );*/
     }
 
     /**
@@ -92,7 +95,7 @@ public class ShooterSubsystem extends SubsystemBase {
      * @param deployed If the deflector should be deployed or retracted
      */
     public void setDeflector (boolean deployed) {
-        deflectorSolenoid.set(deployed ? Value.kForward : Value.kReverse);
+        //deflectorSolenoid.set(deployed ? Value.kForward : Value.kReverse);
     }
 
     public void goToFiringSolution (FiringSolution solution) {
