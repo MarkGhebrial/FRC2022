@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.UnitConversions;
 import frc.robot.util.FiringSolution;
 
 import static frc.robot.Constants.Shooter.*;
@@ -36,11 +37,13 @@ public class ShooterSubsystem extends SubsystemBase {
         flywheelLeader.configFactoryDefault();
         flywheelLeader.setNeutralMode(NeutralMode.Coast);
         FLYWHEEL_MOTOR_PID.configureMotorPID(flywheelLeader);
+        flywheelLeader.config_IntegralZone(0, UnitConversions.Shooter.flywheelRPMToEncoderTicksPer100ms(FLYWHEEL_IZONE));
 
         flywheelFollower = new WPI_TalonFX(FOLLOWER_MOTOR_ID);
         flywheelFollower.configFactoryDefault();
         flywheelFollower.setNeutralMode(NeutralMode.Coast);
         FLYWHEEL_MOTOR_PID.configureMotorPID(flywheelFollower);
+        flywheelLeader.config_IntegralZone(0, UnitConversions.Shooter.flywheelRPMToEncoderTicksPer100ms(FLYWHEEL_IZONE));
         flywheelFollower.follow(flywheelLeader);
 
         flywheelLeader.setInverted(true);

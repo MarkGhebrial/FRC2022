@@ -125,7 +125,8 @@ public final class Constants {
         public static final int HOOD_RETRACTION_SOLENOID_ID = 5;
 
         /******** PID Gains ********/
-        public static final PIDParameters FLYWHEEL_MOTOR_PID = new PIDParameters(0.4, 0.1, 1.0, "Flywheel PID");
+        public static final PIDParameters FLYWHEEL_MOTOR_PID = new PIDParameters(0.2, 0.001, 2, "Flywheel PID");
+        public static final double FLYWHEEL_IZONE = 700;
 
         /********** Tuning Constants **********/
         public static final double FLYWHEEL_SPEED_TOLERANCE = 50; // RPM
@@ -134,11 +135,11 @@ public final class Constants {
         public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;
 
         /********** Firing Solutions **********/
-        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(4000, true);
-        public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(4000, true);
+        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(3500, true);
+        public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(3500, true);
 
-        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(4000, false);
-        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(4000, false);
-        public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(4000, false);
+        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(2000, false);///
+        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(3500, false);
+        public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(3500, false);
     }
 }
