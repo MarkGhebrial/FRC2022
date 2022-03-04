@@ -12,6 +12,9 @@ import frc.robot.subsystems.IndexerSubsystem;
  * Run the indexer's gate wheel until a cargo has been indexed, then
  */
 public class IndexOneCargo extends ConditionalCommand {
+
+    private IndexerSubsystem indexer;
+
     public IndexOneCargo(IndexerSubsystem indexer) {
         super(
             new WaitCommand(0), // Don't do anything if the indexer already has a cargo
@@ -20,8 +23,8 @@ public class IndexOneCargo extends ConditionalCommand {
                     indexer.startConveyor();
                     indexer.startGateWheelForIndexing();
                 }),
-                new WaitCommand(0.5),
-                new WaitUntilCommand(() -> indexer.getGateWheelSupplyCurrent() > Constants.Indexer.GATE_WHEEL_INDEXING_POWER), // Once a cargo has contacted the rollers, the current drawn by the motor should increase
+                new WaitCommand(0.1),
+                new WaitUntilCommand(() -> indexer.getGateWheelSupplyCurrent() > Constants.Indexer.GATE_WHEEL_CURRENT_THRESHOLD), // Once a cargo has contacted the rollers, the current drawn by the motor should increase
                 new InstantCommand(() -> {
                     indexer.stopConveyor();
                     indexer.rotateGateWheelByXDegrees(Constants.Indexer.GATE_WHEEL_INDEXING_DEGREES); // Quickly spin the roller by a few rotations to "suck in" the cargo and hold it in place
@@ -29,5 +32,17 @@ public class IndexOneCargo extends ConditionalCommand {
             ),
             indexer::hasCargo // The condition for this command to run
         );
+
+        this.indexer = indexer;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        super.end(interrupted);
+
+        indexer.stopConveyor();
+        if (interrupted) {
+            indexer.stopGateWheel();
+        }
     }
 }
