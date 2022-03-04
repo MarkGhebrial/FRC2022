@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.FiringSolution;
@@ -84,7 +85,9 @@ public class ShooterSubsystem extends SubsystemBase {
     public boolean isFlywheelUpToSpeed () {
         boolean isRunning = getFlywheelRPM() >= 50;
 
-        boolean isUpToSpeed = getFlywheelRPM() - flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopTarget()) <= FLYWHEEL_SPEED_TOLERANCE;
+        boolean isUpToSpeed = Math.abs(flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopError())) <= FLYWHEEL_SPEED_TOLERANCE;
+
+        System.out.println("Is running: " + isRunning + " ; Is up to speed: " + isUpToSpeed);
 
         return isRunning && isUpToSpeed;
     }
@@ -105,11 +108,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
-    }
-
-    @Override
-    public void simulationPeriodic() {
-        // This method will be called once per scheduler run during simulation
+        SmartDashboard.putNumber("Flywheel Speed", getFlywheelRPM());
+        SmartDashboard.putNumber("Flywheel Setpoint", flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopTarget()));
+        SmartDashboard.putNumber("Flywheel Error", flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopError()));
     }
 }

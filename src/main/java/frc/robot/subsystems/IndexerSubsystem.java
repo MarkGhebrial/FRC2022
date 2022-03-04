@@ -33,8 +33,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return If the indexer has a cargo indexed
      */
     public boolean hasCargo() {
-        return false;
-        //return gateMotor.getControlMode() == ControlMode.Position;
+        return gateMotor.getControlMode() == ControlMode.Position;
     }
 
     /**
@@ -78,11 +77,11 @@ public class IndexerSubsystem extends SubsystemBase {
      * @param degrees The distance to move the wheel
      */
     public void rotateGateWheelByXDegrees(double degrees) {
-        double targetPosition = getGateWheelPosition(degrees) + degrees;
+        double targetPosition = getGateWheelPosition() + degrees;
         gateMotor.set(ControlMode.Position, UnitConversions.Indexer.gateWheelDegreesToEncoderTicks(targetPosition));
     }
 
-    private double getGateWheelPosition(double degrees) {
+    private double getGateWheelPosition() {
         return UnitConversions.Indexer.gateWheelEncoderTicksToDegrees(gateMotor.getSelectedSensorPosition());
     }
 

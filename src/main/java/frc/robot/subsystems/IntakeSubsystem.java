@@ -42,6 +42,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
         leftIntakeMotor = new WPI_TalonSRX(LEFT_INTAKE_MOTOR_ID);
         rightIntakeMotor = new WPI_TalonSRX(RIGHT_INTAKE_MOTOR_ID);
+
+        leftIntakeMotor.setInverted(true);
+        rightIntakeMotor.setInverted(false);
     }
 
     /**
@@ -104,7 +107,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     private void setLeftIntakeRoller (boolean on) {
         if (on) {
-            leftIntakeMotor.set(ControlMode.Velocity, INTAKE_MOTOR_POWER);
+            leftIntakeMotor.set(ControlMode.PercentOutput, INTAKE_MOTOR_POWER);
         } else {
             leftIntakeMotor.stopMotor();
         }
@@ -123,7 +126,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     private void setRightIntakeRoller (boolean on) {
         if (on) {
-            rightIntakeMotor.set(ControlMode.Velocity, INTAKE_MOTOR_POWER);
+            rightIntakeMotor.set(ControlMode.PercentOutput, INTAKE_MOTOR_POWER);
         } else {
             rightIntakeMotor.stopMotor();
         }

@@ -24,7 +24,7 @@ public class IntakeAndIndex extends ParallelCommandGroup {
             new ScheduleCommand( // We schedule the indexer's command separately so that it can run after this one terminates
                 new RunUntilCommand(
                     new IndexOneCargo(indexer), // This will run either until it finishes or until five seconds have elapsed after the intake retracts
-                    () -> timer.get() >= 5 // The timer only starts running after the intake retracts
+                    () -> timer.get() >= 3 // The timer only starts running after the intake retracts
                 )
             ),
             new PrintCommand("Starting intake"),

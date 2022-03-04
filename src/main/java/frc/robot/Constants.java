@@ -84,8 +84,8 @@ public final class Constants {
         public static final double GATE_WHEEL_SHOOTING_POWER = .75;
         public static final double GATE_WHEEL_INDEXING_POWER = .25;
 
-        public static final double GATE_WHEEL_INDEXING_DEGREES = 360; // Rotate the gate by this much to index a cargo
-        public static final double GATE_WHEEL_CURRENT_THRESHOLD = 20; // Amps
+        public static final double GATE_WHEEL_INDEXING_DEGREES = 0; // Rotate the gate by this much to index a cargo
+        public static final double GATE_WHEEL_CURRENT_THRESHOLD = 3.95; // Amps
 
         public static final PIDParameters GATE_WHEEL_PID = new PIDParameters(0.1, 0, 0, "Gate wheel PID");
 
@@ -125,7 +125,7 @@ public final class Constants {
         public static final int HOOD_RETRACTION_SOLENOID_ID = 5;
 
         /******** PID Gains ********/
-        public static final PIDParameters FLYWHEEL_MOTOR_PID = new PIDParameters(0.5, 0.00015, 6, "Flywheel PID");
+        public static final PIDParameters FLYWHEEL_MOTOR_PID = new PIDParameters(0.4, 0.1, 1.0, "Flywheel PID");
 
         /********** Tuning Constants **********/
         public static final double FLYWHEEL_SPEED_TOLERANCE = 50; // RPM
@@ -134,11 +134,11 @@ public final class Constants {
         public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;
 
         /********** Firing Solutions **********/
-        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(200, true);
-        public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(200, true);
+        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(4000, true);
+        public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(4000, true);
 
-        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(200, false);
-        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(200, false);
-        public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(200, false);
+        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(4000, false);
+        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(4000, false);
+        public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(4000, false);
     }
 }
