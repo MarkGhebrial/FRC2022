@@ -35,7 +35,7 @@ public class RobotContainer {
     private final DriveSubsystem drive = new DriveSubsystem();
     private final ClimberSubsystem climber = new ClimberSubsystem();
     private final IndexerSubsystem indexer = new IndexerSubsystem();
-    //private final IntakeSubsystem intake = new IntakeSubsystem();
+    private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
 
     private SendableChooser<Command> autoChooser = new SendableChooser<Command>();

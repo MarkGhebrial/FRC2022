@@ -2,6 +2,7 @@ package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -26,6 +27,7 @@ public class IntakeAndIndex extends ParallelCommandGroup {
                     () -> timer.get() >= 5 // The timer only starts running after the intake retracts
                 )
             ),
+            new PrintCommand("Starting intake"),
             new Intake(intake) // Deploy the intake
         );
     }

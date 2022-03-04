@@ -19,14 +19,14 @@ import static frc.robot.Constants.Intake.*;
  */
 public class IntakeSubsystem extends SubsystemBase {
 
-    private DoubleSolenoid leftIntakeSolenoid;
-    private DoubleSolenoid rightIntakeSolenoid;
+    //private DoubleSolenoid leftIntakeSolenoid;
+    //private DoubleSolenoid rightIntakeSolenoid;
 
     private WPI_TalonSRX leftIntakeMotor;
     private WPI_TalonSRX rightIntakeMotor;
     
     public IntakeSubsystem() {
-        leftIntakeSolenoid = new DoubleSolenoid(
+        /*leftIntakeSolenoid = new DoubleSolenoid(
             Constants.PCM_CAN_ID,
             Constants.PCM_TYPE,
             LEFT_INTAKE_EXTENSION_SOLENOID_ID,
@@ -38,7 +38,7 @@ public class IntakeSubsystem extends SubsystemBase {
             Constants.PCM_TYPE,
             RIGHT_INTAKE_EXTENSION_SOLENOID_ID,
             RIGHT_INTAKE_RETRACTION_SOLENOID_ID
-        );
+        );*/
 
         leftIntakeMotor = new WPI_TalonSRX(LEFT_INTAKE_MOTOR_ID);
         rightIntakeMotor = new WPI_TalonSRX(RIGHT_INTAKE_MOTOR_ID);
@@ -52,11 +52,11 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public void extendIntake (Side side, boolean activateRollers) {
         if (side == Side.leftIntake || side == Side.bothIntakes) {
-            leftIntakeSolenoid.set(Value.kForward);
+            //leftIntakeSolenoid.set(Value.kForward);
             setLeftIntakeRoller(activateRollers);
         }
         if (side == Side.rightIntake || side == Side.bothIntakes) {
-            rightIntakeSolenoid.set(Value.kForward);
+            //rightIntakeSolenoid.set(Value.kForward);
             setRightIntakeRoller(activateRollers);
         }
     }
@@ -114,7 +114,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * Retract the left intake and turn off its rollers
      */
     private void retractLeftIntake () {
-        leftIntakeSolenoid.set(Value.kReverse);
+        //leftIntakeSolenoid.set(Value.kReverse);
         setLeftIntakeRoller(false);
     }
 
@@ -133,7 +133,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * Retract the right intake and turn off its rollers
      */
     private void retractRightIntake () {
-        rightIntakeSolenoid.set(Value.kReverse);
+        //rightIntakeSolenoid.set(Value.kReverse);
         setRightIntakeRoller(false);
     }
 

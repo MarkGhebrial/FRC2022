@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.UnitConversions;
 
@@ -21,14 +22,19 @@ public class IndexerSubsystem extends SubsystemBase {
 
         gateMotor = new WPI_TalonSRX(GATE_WHEEL_MOTOR_ID);
         gateMotor.configFactoryDefault();
+        GATE_WHEEL_PID.configureMotorPID(gateMotor);
         gateMotor.setNeutralMode(NeutralMode.Brake);
+
+        conveyorMotor.setInverted(true);
+        gateMotor.setInverted(true);
     }
 
     /**
      * @return If the indexer has a cargo indexed
      */
     public boolean hasCargo() {
-        return gateMotor.getControlMode() == ControlMode.Position;
+        return false;
+        //return gateMotor.getControlMode() == ControlMode.Position;
     }
 
     /**
@@ -89,7 +95,7 @@ public class IndexerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
+        SmartDashboard.putNumber("Gate wheel current", getGateWheelSupplyCurrent());
     }
 
     @Override
