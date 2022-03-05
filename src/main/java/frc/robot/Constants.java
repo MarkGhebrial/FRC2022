@@ -35,6 +35,15 @@ public final class Constants {
     public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.CTREPCM;
 
     /**
+     * Constants for the Climber
+     */
+    public static class Climber {
+        /********** Solenoid PCM Ports **********/
+        public static final int EXTENSION_SOLENOID_ID = 4;
+        public static final int RETRACTION_SOLENOID_ID = 5;
+    }
+
+    /**
      * Constants for the Drivetrain
      */
     public static class Drive {
