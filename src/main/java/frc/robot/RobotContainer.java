@@ -4,7 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.ExampleCommand;
@@ -22,6 +24,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.util.FiringSolution;
 import friarLib2.hid.LambdaTrigger;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -69,6 +73,14 @@ public class RobotContainer {
 
         new LambdaTrigger(() -> OI.operatorController.getLeftBumper() || OI.leftStickLeftCluster.get() || OI.leftStickRightCluster.get())
             .whileActiveContinuous(new IntakeAndIndex(intake, indexer));
+
+        // Extend the climber
+        new LambdaTrigger(() -> OI.operatorController.getRightBumper() && DriverStation.getMatchTime() <= 30)
+            .whenActive(new InstantCommand(climber::extendClimber, climber));
+
+        // Retract the climber
+        new LambdaTrigger(() -> OI.operatorController.getRightTriggerAxis() >= 0.5)
+            .whenActive(new InstantCommand(climber::retractClimber, climber));
 
         // Bind the oerator's D-pad to various shooting locations
         bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0); // 0 is up, the values increase clockwise
