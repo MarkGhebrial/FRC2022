@@ -29,7 +29,7 @@ public final class Constants {
     public static final double JOYSTICK_DEADBAND = 0.07;
     public static final double XBOX_DEADBAND = 0.05;
 
-    public static final int PCM_CAN_ID = 0;
+    public static final int PCM_CAN_ID = 1;
     public static final int PIGEON_IMU_ID = 19;
 
     public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.REVPH;
@@ -98,11 +98,8 @@ public final class Constants {
      */
     public static class Intake {
         /********** Solenoid PCM Ports **********/
-        public static final int LEFT_INTAKE_EXTENSION_SOLENOID_ID = 0;
-        public static final int LEFT_INTAKE_RETRACTION_SOLENOID_ID = 1;
-
-        public static final int RIGHT_INTAKE_EXTENSION_SOLENOID_ID = 2;
-        public static final int RIGHT_INTAKE_RETRACTION_SOLENOID_ID = 3;
+        public static final int LEFT_INTAKE_SOLENOID_ID = 1;
+        public static final int RIGHT_INTAKE_SOLENOID_ID = 2;
 
         /********** CAN ID's **********/
         public static final int LEFT_INTAKE_MOTOR_ID = 13;
@@ -121,8 +118,7 @@ public final class Constants {
         public static final int FOLLOWER_MOTOR_ID = 16;
 
         /********** PCM Ports **********/
-        public static final int HOOD_EXTENSION_SOLENOID_ID = 4;
-        public static final int HOOD_RETRACTION_SOLENOID_ID = 5;
+        public static final int HOOD_SOLENOID_ID = 3;
 
         /******** PID Gains ********/
         public static final PIDParameters FLYWHEEL_MOTOR_PID = new PIDParameters(0.2, 0.001, 2, "Flywheel PID");
@@ -138,7 +134,7 @@ public final class Constants {
         public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(3500, true);
         public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(3500, true);
 
-        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(2000, false);///
+        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(2000, false);
         public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(3500, false);
         public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(3500, false);
     }

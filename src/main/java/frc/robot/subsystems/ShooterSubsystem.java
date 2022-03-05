@@ -4,8 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -29,7 +28,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private WPI_TalonFX flywheelLeader;
     private WPI_TalonFX flywheelFollower;
 
-    //private DoubleSolenoid deflectorSolenoid;
+    private Solenoid deflectorSolenoid;
 
     public ShooterSubsystem() {
         // Configure the flywheel motors
@@ -49,12 +48,11 @@ public class ShooterSubsystem extends SubsystemBase {
         flywheelLeader.setInverted(true);
         flywheelFollower.setInverted(false);
 
-        /*deflectorSolenoid = new DoubleSolenoid(
+        deflectorSolenoid = new Solenoid(
             Constants.PCM_CAN_ID,
             Constants.PCM_TYPE,
-            HOOD_EXTENSION_SOLENOID_ID,
-            HOOD_RETRACTION_SOLENOID_ID
-        );*/
+            HOOD_SOLENOID_ID
+        );
     }
 
     /**
@@ -101,7 +99,7 @@ public class ShooterSubsystem extends SubsystemBase {
      * @param deployed If the deflector should be deployed or retracted
      */
     public void setDeflector (boolean deployed) {
-        //deflectorSolenoid.set(deployed ? Value.kForward : Value.kReverse);
+        deflectorSolenoid.set(deployed);
     }
 
     public void goToFiringSolution (FiringSolution solution) {
