@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.FieldRelativeTeleopControl;
@@ -17,7 +16,6 @@ import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.commands.intake.IntakeAndIndex;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -35,7 +33,6 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
     private final DriveSubsystem drive = new DriveSubsystem();
     private final ClimberSubsystem climber = new ClimberSubsystem();
     private final IndexerSubsystem indexer = new IndexerSubsystem();
@@ -43,12 +40,11 @@ public class RobotContainer {
     private final ShooterSubsystem shooter = new ShooterSubsystem();
 
     private SendableChooser<Command> autoChooser = new SendableChooser<Command>();
-    private final ExampleCommand autoCommand = new ExampleCommand(m_exampleSubsystem);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         // Add autos to SmartDashboard
-        autoChooser.setDefaultOption("No auto", autoCommand);
+        autoChooser.setDefaultOption("No auto", new WaitUntilCommand(0));
 
         configureDefaultCommands();
         configureButtonBindings();
