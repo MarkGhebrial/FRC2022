@@ -15,7 +15,7 @@ import friarLib2.utility.Vector3309;
  * i.e., the robot will move in whatever direction the stick is pushed,
  * and its heading will automatically change to point in that direction.
  */
-public class PointInDirectionOfTravel extends FieldRelativeTeleopControl {
+public class PointInDirectionOfTravel extends DriveTeleop {
 
     public PointInDirectionOfTravel (DriveSubsystem drive) {
         super(drive);

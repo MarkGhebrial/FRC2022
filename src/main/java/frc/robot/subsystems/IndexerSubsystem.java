@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.UnitConversions;
+import friarLib2.math.RateOfChangeCalculator;
 
 import static frc.robot.Constants.Indexer.*;
 
@@ -14,6 +15,8 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private WPI_TalonSRX conveyorMotor;
     private WPI_TalonSRX gateMotor;
+
+    private RateOfChangeCalculator gateWheelCurrentRoC = new RateOfChangeCalculator();
 
     public IndexerSubsystem() {
         conveyorMotor = new WPI_TalonSRX(CONVEYOR_MOTOR_ID);
@@ -92,9 +95,17 @@ public class IndexerSubsystem extends SubsystemBase {
         return gateMotor.getSupplyCurrent();
     }
 
+    public double getGateWheelSupplyCurrentRoC() {
+        return gateWheelCurrentRoC.getRoC();
+    }
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Gate wheel current", getGateWheelSupplyCurrent());
+
+        gateWheelCurrentRoC.update(getGateWheelSupplyCurrent());
+
+        SmartDashboard.putNumber("Gate wheel current RoC", gateWheelCurrentRoC.getRoC());
     }
 
     @Override

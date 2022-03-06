@@ -24,14 +24,14 @@ import friarLib2.utility.Vector3309;
  * teleop control while being able to set the rotational speed 
  * independently (based on vision data for example).
  */
-public class FieldRelativeTeleopControl extends CommandBase {
+public class DriveTeleop extends CommandBase {
 
     protected DriveSubsystem drive;
 
     private DoubleSlewRateLimiter xAccelLimiter;
     private DoubleSlewRateLimiter yAccelLimiter;
 
-    public FieldRelativeTeleopControl(DriveSubsystem drive) {
+    public DriveTeleop(DriveSubsystem drive) {
         this.drive = drive;
 
         xAccelLimiter = new DoubleSlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION, Constants.Drive.MAX_TELEOP_DECELERATION);
@@ -73,7 +73,7 @@ public class FieldRelativeTeleopControl extends CommandBase {
      * @return The rotational speed in radians/second
      */
     protected double calculateRotationalSpeed (Vector3309 translationalSpeeds) {
-        double rotationalSpeed = Constants.Drive.MAX_TELEOP_ROTATIONAL_SPEED * OI.rightStick.getXWithDeadband();
+        double rotationalSpeed = Constants.Drive.MAX_TELEOP_ROTATIONAL_SPEED * -OI.rightStick.getXWithDeadband();
 
         return rotationalSpeed;
     }

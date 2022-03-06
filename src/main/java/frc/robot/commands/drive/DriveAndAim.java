@@ -8,7 +8,7 @@ import friarLib2.utility.Vector3309;
 /**
  * Point at the target as the robot moves about the field
  */
-public class DriveAndAim extends FieldRelativeTeleopControl {
+public class DriveAndAim extends DriveTeleop {
     public DriveAndAim (DriveSubsystem drive) {
         super(drive);
     }

@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.drive.DriveAndAim;
-import frc.robot.commands.drive.FieldRelativeTeleopControl;
+import frc.robot.commands.drive.DriveTeleop;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.commands.intake.IntakeAndIndex;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -51,7 +51,7 @@ public class RobotContainer {
     }
 
     private void configureDefaultCommands() {
-        drive.setDefaultCommand(new FieldRelativeTeleopControl(drive));
+        drive.setDefaultCommand(new DriveTeleop(drive));
     }
 
     /**

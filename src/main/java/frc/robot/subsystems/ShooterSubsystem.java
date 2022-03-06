@@ -99,7 +99,7 @@ public class ShooterSubsystem extends SubsystemBase {
      * @param deployed If the deflector should be deployed or retracted
      */
     public void setDeflector (boolean deployed) {
-        deflectorSolenoid.set(deployed);
+        deflectorSolenoid.set(!deployed);
     }
 
     public void goToFiringSolution (FiringSolution solution) {

@@ -106,7 +106,7 @@ public final class Constants {
         public static final int RIGHT_INTAKE_MOTOR_ID = 14;
 
         /********** Tuning Constants **********/
-        public static final double INTAKE_MOTOR_POWER = 0.5;
+        public static final double INTAKE_MOTOR_POWER = 0.4;
     }
 
     /** 
@@ -131,11 +131,11 @@ public final class Constants {
         public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;
 
         /********** Firing Solutions **********/
-        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(3500, true);
-        public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(3500, true);
+        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(1000, true);
+        public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(1850, true);
 
-        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(2000, false);
-        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(3500, false);
-        public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(3500, false);
+        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(2150, false);
+        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(2500, true);
+        public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(100, false);
     }
 }
