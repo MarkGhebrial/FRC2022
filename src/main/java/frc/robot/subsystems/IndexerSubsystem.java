@@ -57,7 +57,8 @@ public class IndexerSubsystem extends SubsystemBase {
      * Start the gate wheel at the default speed for indexing a cargo
      */
     public void startGateWheelForIndexing() {
-        gateMotor.set(ControlMode.PercentOutput, GATE_WHEEL_INDEXING_POWER);
+        gateMotor.setVoltage(3);
+        gateMotor.getSelectedSensorPosition(0);
     }
 
     /**
@@ -106,6 +107,9 @@ public class IndexerSubsystem extends SubsystemBase {
         gateWheelCurrentRoC.update(getGateWheelSupplyCurrent());
 
         SmartDashboard.putNumber("Gate wheel current RoC", gateWheelCurrentRoC.getRoC());
+        SmartDashboard.putBoolean("Indexer Has Cargo", hasCargo());
+        SmartDashboard.putNumber("Gate wheel closed loop error", gateMotor.getClosedLoopError());
+        SmartDashboard.putNumber("Gate wheel closed loop error degrees", UnitConversions.Indexer.gateWheelEncoderTicksToDegrees(gateMotor.getClosedLoopError()));
     }
 
     @Override

@@ -67,7 +67,7 @@ public class RobotContainer {
         new LambdaTrigger(() -> OI.rightStick.getTrigger())
             .whileActiveContinuous(new DriveAndAim(drive));
 
-        new LambdaTrigger(() -> OI.operatorController.getLeftBumper() || OI.leftStickLeftCluster.get() || OI.leftStickRightCluster.get())
+        new LambdaTrigger(() -> OI.operatorController.getLeftBumper() || OI.operatorController.getRightBumper())
             .whileActiveContinuous(new IntakeAndIndex(intake, indexer));
 
         // Bind the oerator's D-pad to various shooting locations
@@ -82,7 +82,7 @@ public class RobotContainer {
      * specified angle on the operator's D-pad.
      * 
      * @param solution The firing solution to go to
-     * @param dPadPosition The value returned by 
+     * @param dPadPosition The value returned by XboxController.getPOV()
      */
     private void bindShootingCommand(FiringSolution solution, int dPadPosition) {
         new LambdaTrigger(() -> OI.operatorController.getPOV() == dPadPosition)

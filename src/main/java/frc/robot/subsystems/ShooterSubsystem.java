@@ -88,8 +88,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
         boolean isUpToSpeed = Math.abs(flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopError())) <= FLYWHEEL_SPEED_TOLERANCE;
 
-        System.out.println("Is running: " + isRunning + " ; Is up to speed: " + isUpToSpeed);
-
         return isRunning && isUpToSpeed;
     }
 
@@ -112,5 +110,6 @@ public class ShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Flywheel Speed", getFlywheelRPM());
         SmartDashboard.putNumber("Flywheel Setpoint", flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopTarget()));
         SmartDashboard.putNumber("Flywheel Error", flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopError()));
+        SmartDashboard.putBoolean("Flywheel Up To Speed", isFlywheelUpToSpeed());
     }
 }

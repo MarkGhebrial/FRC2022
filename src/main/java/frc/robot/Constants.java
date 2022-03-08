@@ -84,10 +84,10 @@ public final class Constants {
         public static final double GATE_WHEEL_SHOOTING_POWER = .75;
         public static final double GATE_WHEEL_INDEXING_POWER = .25;
 
-        public static final double GATE_WHEEL_INDEXING_DEGREES = 0; // Rotate the gate by this much to index a cargo
-        public static final double GATE_WHEEL_CURRENT_THRESHOLD = 10.0; // Amps/sec
+        public static final double GATE_WHEEL_INDEXING_DEGREES = -90; // Rotate the gate by this much to index a cargo
+        public static final double GATE_WHEEL_CURRENT_THRESHOLD = 2.8; // Amps/sec
 
-        public static final PIDParameters GATE_WHEEL_PID = new PIDParameters(0.1, 0, 0, "Gate wheel PID");
+        public static final PIDParameters GATE_WHEEL_PID = new PIDParameters(0.25, 0, 0, "Gate wheel PID");
 
         /******** Physical Constants ********/
         public static final double GATE_WHEEL_GEAR_RATIO = 1.0 / 1.0; // Between the encoder and wheel, not between the motor and wheel
@@ -125,16 +125,16 @@ public final class Constants {
         public static final double FLYWHEEL_IZONE = 700;
 
         /********** Tuning Constants **********/
-        public static final double FLYWHEEL_SPEED_TOLERANCE = 20; // RPM
+        public static final double FLYWHEEL_SPEED_TOLERANCE = 10; // RPM
 
         /******** Physical Constants ********/
         public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;
 
         /********** Firing Solutions **********/
-        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(1000, true);
+        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(1500, true);
         public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(1850, true);
 
-        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(2300, false);
+        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(2360, false);
         public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(2500, true);
         public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(100, false);
     }
