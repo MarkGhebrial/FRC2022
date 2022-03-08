@@ -70,11 +70,11 @@ public class RobotContainer {
             .whileActiveContinuous(new IntakeAndIndex(intake, indexer));
 
         // Extend the climber
-        new LambdaTrigger(() -> OI.operatorController.getRightBumper() && DriverStation.getMatchTime() <= 30)
+        new LambdaTrigger(() -> OI.operatorController.getYButton() && DriverStation.getMatchTime() <= 30)
             .whenActive(new InstantCommand(climber::extendClimber, climber));
 
         // Retract the climber
-        new LambdaTrigger(() -> OI.operatorController.getRightTriggerAxis() >= 0.5)
+        new LambdaTrigger(() -> OI.operatorController.getXButton())
             .whenActive(new InstantCommand(climber::retractClimber, climber));
 
         // Bind the oerator's D-pad to various shooting locations
