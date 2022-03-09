@@ -90,7 +90,7 @@ public final class Constants {
         /********** Tuning Constants **********/
         public static final double CONVEYOR_POWER = .2;
         public static final double GATE_WHEEL_SHOOTING_POWER = .75;
-        public static final double GATE_WHEEL_INDEXING_POWER = .25;
+        public static final double GATE_WHEEL_INDEXING_VOLTS = 3;
 
         public static final double GATE_WHEEL_INDEXING_DEGREES = -90; // Rotate the gate by this much to index a cargo
         public static final double GATE_WHEEL_CURRENT_THRESHOLD = 2.8; // Amps/sec
