@@ -8,9 +8,11 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.DriveTeleop;
+import frc.robot.commands.drive.LockDriveTrain;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.commands.intake.IntakeAndIndex;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -18,6 +20,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IntakeSubsystem.Side;
 import frc.robot.util.FiringSolution;
 import friarLib2.hid.LambdaTrigger;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -44,6 +47,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Add autos to SmartDashboard
         autoChooser.setDefaultOption("No auto", new WaitUntilCommand(0));
+        SmartDashboard.putData(autoChooser);
 
         configureDefaultCommands();
         configureButtonBindings();
@@ -66,8 +70,28 @@ public class RobotContainer {
         new LambdaTrigger(() -> OI.rightStick.getTrigger())
             .whileActiveContinuous(new DriveAndAim(drive));
 
+        new LambdaTrigger(() -> OI.rightStickLeftCluster.get() || OI.rightStickRightCluster.get())
+            .whileActiveContinuous(new LockDriveTrain(drive));
+
         new LambdaTrigger(() -> OI.operatorController.getLeftBumper() || OI.operatorController.getRightBumper())
-            .whileActiveContinuous(new IntakeAndIndex(intake, indexer));
+            .whileActiveContinuous(new IntakeAndIndex(intake, indexer), false);
+
+        /*new LambdaTrigger(() -> OI.operatorController.getLeftTriggerAxis() >= 0.5)
+            .whileActiveContinuous(
+                new InstantCommand(
+                    () -> {
+                        intake.setIntake(Side.leftIntake, false, true);
+                    }, 
+                    intake
+                )/*.andThen(
+                    new InstantCommand(
+                        () -> {
+                            intake.retractIntake(Side.leftIntake);
+                        }, 
+                        intake
+                    )
+                )
+            );*/
 
         // Extend the climber
         new LambdaTrigger(() -> OI.operatorController.getYButton() && DriverStation.getMatchTime() <= 30)

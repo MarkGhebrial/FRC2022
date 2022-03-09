@@ -58,7 +58,7 @@ public class IndexerSubsystem extends SubsystemBase {
      */
     public void startGateWheelForIndexing() {
         gateMotor.setVoltage(3);
-        gateMotor.getSelectedSensorPosition(0);
+        gateMotor.setSelectedSensorPosition(0);
     }
 
     /**
@@ -86,7 +86,7 @@ public class IndexerSubsystem extends SubsystemBase {
     }
 
     private double getGateWheelPosition() {
-        return UnitConversions.Indexer.gateWheelEncoderTicksToDegrees(gateMotor.getSelectedSensorPosition());
+        return UnitConversions.Indexer.gateWheelEncoderTicksToDegrees(gateMotor.getSelectedSensorPosition(1500));
     }
 
     /**

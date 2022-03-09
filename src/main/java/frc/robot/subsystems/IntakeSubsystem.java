@@ -47,20 +47,31 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     /**
+     * Set the state of the specified intake(s)
+     * 
+     * @param side Which intake (or both) to set
+     * @param deployed Whether to deploy the intake or not 
+     * @param activateRollers Rollers will turn on of true, stay off if false
+     */
+    public void setIntake (Side side, boolean deployed, boolean activateRollers) {
+        if (side == Side.leftIntake || side == Side.bothIntakes) {
+            leftIntakeSolenoid.set(deployed);
+            setLeftIntakeRoller(activateRollers);
+        }
+        if (side == Side.rightIntake || side == Side.bothIntakes) {
+            rightIntakeSolenoid.set(deployed);
+            setRightIntakeRoller(activateRollers);
+        }
+    }
+
+    /**
      * Extend the specified intake(s)
      * 
      * @param side Which intake (or both) to extend
      * @param activateRollers Rollers will turn on of true, stay off if false
      */
     public void extendIntake (Side side, boolean activateRollers) {
-        if (side == Side.leftIntake || side == Side.bothIntakes) {
-            leftIntakeSolenoid.set(true);
-            setLeftIntakeRoller(activateRollers);
-        }
-        if (side == Side.rightIntake || side == Side.bothIntakes) {
-            rightIntakeSolenoid.set(true);
-            setRightIntakeRoller(activateRollers);
-        }
+        setIntake(side, true, activateRollers);
     }
 
     /**
@@ -86,12 +97,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @param side Which intake (or both) to extend
      */
     public void retractIntake (Side side) {
-        if (side == Side.leftIntake || side == Side.bothIntakes) {
-            retractLeftIntake();
-        }
-        if (side == Side.rightIntake || side == Side.bothIntakes) {
-            retractRightIntake();
-        }
+        setIntake(side, false, false);
     }
 
     /**
@@ -113,14 +119,6 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     /**
-     * Retract the left intake and turn off its rollers
-     */
-    private void retractLeftIntake () {
-        leftIntakeSolenoid.set(false);
-        setLeftIntakeRoller(false);
-    }
-
-    /**
      * Turn on or off the right intake's roller
      */
     private void setRightIntakeRoller (boolean on) {
@@ -129,14 +127,6 @@ public class IntakeSubsystem extends SubsystemBase {
         } else {
             rightIntakeMotor.stopMotor();
         }
-    }
-
-    /**
-     * Retract the right intake and turn off its rollers
-     */
-    private void retractRightIntake () {
-        rightIntakeSolenoid.set(false);
-        setRightIntakeRoller(false);
     }
 
     /**
