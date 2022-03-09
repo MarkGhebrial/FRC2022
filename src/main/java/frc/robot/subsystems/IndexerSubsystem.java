@@ -113,7 +113,7 @@ public class IndexerSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Gate wheel closed loop error", gateMotor.getClosedLoopError());
         SmartDashboard.putNumber("Gate wheel closed loop error degrees", UnitConversions.Indexer.gateWheelEncoderTicksToDegrees(gateMotor.getClosedLoopError()));
 
-        System.out.println(gateMotor.getMotorOutputVoltage());
+        //System.out.println(gateMotor.getMotorOutputVoltage());
     }
 
     @Override

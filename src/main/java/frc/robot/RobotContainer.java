@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.auto.TaxiAndPreloadAuto;
+import frc.robot.commands.auto.TwoBallAuto;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.DriveTeleop;
 import frc.robot.commands.drive.LockDriveTrain;
@@ -20,7 +22,6 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.IntakeSubsystem.Side;
 import frc.robot.util.FiringSolution;
 import friarLib2.hid.LambdaTrigger;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -47,6 +48,8 @@ public class RobotContainer {
     public RobotContainer() {
         // Add autos to SmartDashboard
         autoChooser.setDefaultOption("No auto", new WaitUntilCommand(0));
+        autoChooser.addOption("Preload auto", new TaxiAndPreloadAuto(drive, indexer, shooter));
+        autoChooser.addOption("Two ball auto (hangar side)", new TwoBallAuto(drive, indexer, intake, shooter));
         SmartDashboard.putData(autoChooser);
 
         configureDefaultCommands();
