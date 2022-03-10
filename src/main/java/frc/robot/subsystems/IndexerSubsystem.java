@@ -81,8 +81,9 @@ public class IndexerSubsystem extends SubsystemBase {
      * @param degrees The distance to move the wheel
      */
     public void rotateGateWheelByXDegrees(double degrees) {
-        double targetPosition = getGateWheelPosition() + degrees;
-        gateMotor.set(ControlMode.Position, UnitConversions.Indexer.gateWheelDegreesToEncoderTicks(targetPosition));
+        //double targetPosition = getGateWheelPosition() + degrees;
+        gateMotor.setSelectedSensorPosition(0);
+        gateMotor.set(ControlMode.Position, UnitConversions.Indexer.gateWheelDegreesToEncoderTicks(degrees));
     }
 
     private double getGateWheelPosition() {

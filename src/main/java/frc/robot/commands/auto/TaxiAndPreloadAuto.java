@@ -20,7 +20,7 @@ public class TaxiAndPreloadAuto extends SequentialCommandGroup {
                 shooter, indexer
             ), 5),
             new TimedInstantCommand( // Back up at 2 m/s for one second
-                1,
+                2,
                 () -> drive.setChassisSpeeds(new ChassisSpeeds(-2, 0, 0)),
                 drive
             ),
