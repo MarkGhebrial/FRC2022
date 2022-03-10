@@ -16,7 +16,7 @@ public class TaxiAndPreloadAuto extends SequentialCommandGroup {
         addCommands(
             new RunForTime(new Shoot( // Shoot the preload
                 () -> true,
-                Constants.Shooter.LOW_HUB_FROM_FENDER,
+                Constants.Shooter.HIGH_HUB_FROM_FENDER,
                 shooter, indexer
             ), 5),
             new TimedInstantCommand( // Back up at 2 m/s for one second

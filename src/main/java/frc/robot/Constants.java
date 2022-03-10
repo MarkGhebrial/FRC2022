@@ -92,8 +92,8 @@ public final class Constants {
         public static final double GATE_WHEEL_SHOOTING_POWER = .75;
         public static final double GATE_WHEEL_INDEXING_VOLTS = 3;
 
-        public static final double GATE_WHEEL_INDEXING_DEGREES = -90; // Rotate the gate by this much to index a cargo
-        public static final double GATE_WHEEL_CURRENT_THRESHOLD = 2.8; // Amps/sec
+        public static final double GATE_WHEEL_INDEXING_DEGREES = -120; // Rotate the gate by this much to index a cargo
+        public static final double GATE_WHEEL_CURRENT_THRESHOLD = 2.8; // Amps
 
         public static final PIDParameters GATE_WHEEL_PID = new PIDParameters(0.25, 0, 0, "Gate wheel PID");
 
@@ -139,11 +139,11 @@ public final class Constants {
         public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;
 
         /********** Firing Solutions **********/
-        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(1000, true);
+        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(1300, true);
         public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(1850, true);
 
         public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(2700, false); //2400 //2520
         public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(2850, true);
-        public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(100, false);
+        public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(3450, true);
     }
 }

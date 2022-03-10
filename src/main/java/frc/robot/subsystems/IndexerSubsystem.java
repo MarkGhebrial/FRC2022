@@ -65,7 +65,11 @@ public class IndexerSubsystem extends SubsystemBase {
      * Start the gate wheel at the default speed for shooting
      */
     public void startGateWheelForShooting() {
-        gateMotor.set(ControlMode.PercentOutput, GATE_WHEEL_SHOOTING_POWER);
+        setGateWheel(GATE_WHEEL_SHOOTING_POWER);
+    }
+
+    public void setGateWheel(double percentOutput) {
+        gateMotor.set(ControlMode.PercentOutput, percentOutput);
     }
 
     /**
@@ -86,11 +90,11 @@ public class IndexerSubsystem extends SubsystemBase {
         gateMotor.set(ControlMode.Position, UnitConversions.Indexer.gateWheelDegreesToEncoderTicks(degrees));
     }
 
-    private double getGateWheelPosition() {
+    /*private double getGateWheelPosition() {
         double out = UnitConversions.Indexer.gateWheelEncoderTicksToDegrees(gateMotor.getSelectedSensorPosition(1500));
         System.out.println(out);
         return out;
-    }
+    }*/
 
     /**
      * @return The current being drawn by the gate wheel

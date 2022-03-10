@@ -4,11 +4,14 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ReverseShooter;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.auto.TaxiAndPreloadAuto;
 import frc.robot.commands.auto.TwoBallAuto;
@@ -92,6 +95,11 @@ public class RobotContainer {
         bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 90);
         bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_FENDER, 180);
         bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_TARMAC, 270);
+
+        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_LAUNCHPAD, 45);
+
+        new LambdaTrigger(() -> OI.operatorController.getStartButton())
+            .whileActiveContinuous(new ReverseShooter(indexer, shooter));
     }
 
     /**
@@ -102,7 +110,11 @@ public class RobotContainer {
      * @param dPadPosition The value returned by XboxController.getPOV()
      */
     private void bindShootingCommand(FiringSolution solution, int dPadPosition) {
-        new LambdaTrigger(() -> OI.operatorController.getPOV() == dPadPosition)
+        bindShootingCommand(solution, () -> OI.operatorController.getPOV() == dPadPosition);
+    }
+
+    private void bindShootingCommand(FiringSolution solution, BooleanSupplier condition) {
+        new LambdaTrigger(condition)
             .whileActiveContinuous(
                 new Shoot(
                     () -> OI.operatorController.getAButton(), // Fire a cargo if this evaluates to true
