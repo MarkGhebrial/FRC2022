@@ -76,8 +76,8 @@ public class RobotContainer {
         new LambdaTrigger(() -> OI.rightStick.getTrigger())
             .whileActiveContinuous(new DriveAndAim(drive));
 
-        new LambdaTrigger(() -> OI.rightStickLeftCluster.get() || OI.rightStickRightCluster.get())
-            .whileActiveContinuous(new LockDriveTrain(drive));
+        /*new LambdaTrigger(() -> OI.rightStickLeftCluster.get() || OI.rightStickRightCluster.get())
+            .whileActiveContinuous(new LockDriveTrain(drive));*/
 
         new LambdaTrigger(() -> OI.operatorController.getLeftBumper() || OI.operatorController.getRightBumper())
             .whileActiveContinuous(new IntakeAndIndex(intake, indexer), false);
@@ -117,7 +117,7 @@ public class RobotContainer {
         new LambdaTrigger(condition)
             .whileActiveContinuous(
                 new Shoot(
-                    () -> OI.operatorController.getAButton(), // Fire a cargo if this evaluates to true
+                    () -> OI.operatorController.getAButton() || OI.leftStickRightCluster.get() || OI.rightStickLeftCluster.get(), // Fire a cargo if this evaluates to true
                     solution, shooter, indexer), 
                 true); // Set the command as interruptible
     }

@@ -730,7 +730,7 @@
               "Visuals/Show value": true
             }
           },
-          "7,1": {
+          "5,3": {
             "size": [
               1,
               1
@@ -743,7 +743,7 @@
               "Colors/Color when false": "#00FF00FF"
             }
           },
-          "8,1": {
+          "6,3": {
             "size": [
               1,
               1
@@ -769,7 +769,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "8,0": {
+          "6,2": {
             "size": [
               1,
               1
@@ -782,7 +782,7 @@
               "Colors/Color when false": "#00FF00FF"
             }
           },
-          "7,0": {
+          "5,2": {
             "size": [
               1,
               1
@@ -803,7 +803,7 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/Flywheel Up To Speed",
-              "_title": "SmartDashboard/Flywheel Up To Speed",
+              "_title": "Flywheel Up To Speed",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -816,7 +816,7 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/Indexer Has Cargo",
-              "_title": "SmartDashboard/Indexer Has Cargo",
+              "_title": "Indexer Has Cargo",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -824,26 +824,31 @@
           "5,1": {
             "size": [
               2,
-              2
-            ],
-            "content": {
-              "_type": "Gyro",
-              "_title": "Robot Heading",
-              "Visuals/Major tick spacing": 45.0,
-              "Visuals/Starting angle": 180.0,
-              "Visuals/Show tick mark ring": true,
-              "Visuals/Counter clockwise": false
-            }
-          },
-          "7,2": {
-            "size": [
-              2,
               1
             ],
             "content": {
               "_type": "ComboBox Chooser",
               "_source0": "network_table:///SmartDashboard/SendableChooser[0]",
-              "_title": "SmartDashboard/SendableChooser[0]"
+              "_title": "Auto Chooser"
+            }
+          },
+          "7,0": {
+            "size": [
+              3,
+              3
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://USB Camera 0",
+              "_title": "USB Camera 0",
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": -1,
+              "imageWidth": -1,
+              "imageHeight": -1
             }
           }
         }

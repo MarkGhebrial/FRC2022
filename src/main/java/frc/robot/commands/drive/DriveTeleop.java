@@ -53,7 +53,7 @@ public class DriveTeleop extends CommandBase {
             -OI.leftStick.getYWithDeadband()).capMagnitude(1).scale(Constants.Drive.MAX_TELEOP_SPEED);
 
         // TODO: This needs to be better, controller logic should not be in commands
-        if (OI.leftStick.getPOV() != -1 || OI.rightStick.getPOV() != -1) {
+        if (OI.leftStickLeftCluster.get() || OI.rightStickRightCluster.get()) {
             translationalSpeeds = translationalSpeeds.scale(0.1); // Slow down the robot
         }
 
