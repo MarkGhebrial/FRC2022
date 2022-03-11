@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
         m_robotContainer = new RobotContainer();
         
         CameraServer.startAutomaticCapture();
+        Pneumatics.COMPRESSOR.enableAnalog(100, 120);
     }
 
     /**

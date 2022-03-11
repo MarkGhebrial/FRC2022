@@ -22,7 +22,7 @@ public class ReverseShooter extends CommandBase {
 
     @Override
     public void execute() {
-        shooter.setFlywheelSpeed(-200);
+        shooter.setFlywheelSpeed(-1000);
         indexer.setGateWheel(-.2);
     }
 

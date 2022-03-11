@@ -17,7 +17,6 @@ import frc.robot.commands.auto.TaxiAndPreloadAuto;
 import frc.robot.commands.auto.TwoBallAuto;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.DriveTeleop;
-import frc.robot.commands.drive.LockDriveTrain;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.commands.intake.IntakeAndIndex;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -29,6 +28,7 @@ import frc.robot.util.FiringSolution;
 import friarLib2.hid.LambdaTrigger;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 /**
@@ -75,6 +75,9 @@ public class RobotContainer {
 
         new LambdaTrigger(() -> OI.rightStick.getTrigger())
             .whileActiveContinuous(new DriveAndAim(drive));
+
+        new LambdaTrigger(() -> OI.leftStick.getTop())
+            .whenActive(new InstantCommand(IMU::zeroIMU).alongWith(new PrintCommand("Zeroed IMU")));
 
         /*new LambdaTrigger(() -> OI.rightStickLeftCluster.get() || OI.rightStickRightCluster.get())
             .whileActiveContinuous(new LockDriveTrain(drive));*/

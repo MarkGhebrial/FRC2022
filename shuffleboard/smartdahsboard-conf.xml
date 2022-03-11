@@ -1,0 +1,198 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Flywheel Up To Speed" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="0" y="2"/>
+		<width>447</width>
+		<height>677</height>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="446" y="0"/>
+		<width>915</width>
+		<height>680</height>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+	<widget field="Gate wheel PID" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="478" y="459"/>
+	</widget>
+	<widget field="Swerve Steering PID" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="478" y="303"/>
+	</widget>
+	<widget field="Swerve Drive PID" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="507" y="147"/>
+	</widget>
+</dashboard>
+<live-window>
+	<widget field="ClimberSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="115"/>
+	</widget>
+	<widget field="ShooterSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="92"/>
+	</widget>
+	<widget field="DriveSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="69"/>
+	</widget>
+	<widget field="IntakeSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="46"/>
+	</widget>
+	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="Talon FX [5]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="16"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon SRX [17]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="61"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="Solenoid[1,4]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+			<location x="90" y="106"/>
+			<height>23</height>
+			<width>123</width>
+		</widget>
+		<widget field="Talon FX [4]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="129"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="PIDController[1]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="174"/>
+			<height>155</height>
+			<width>293</width>
+		</widget>
+		<widget field="Compressor[1]" type="Compressor" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+			<location x="84" y="329"/>
+			<height>23</height>
+			<width>135</width>
+		</widget>
+		<widget field="Talon SRX [14]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="352"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon SRX [18]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="397"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="Solenoid[1,1]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+			<location x="90" y="442"/>
+			<height>23</height>
+			<width>123</width>
+		</widget>
+		<widget field="Talon FX [1]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="465"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon FX [3]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="510"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="PIDController[2]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="555"/>
+			<height>155</height>
+			<width>293</width>
+		</widget>
+		<widget field="Solenoid[1,3]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+			<location x="90" y="710"/>
+			<height>23</height>
+			<width>123</width>
+		</widget>
+		<widget field="Solenoid[1,2]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+			<location x="90" y="733"/>
+			<height>23</height>
+			<width>123</width>
+		</widget>
+		<widget field="Talon FX [2]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="756"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon FX [8]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="801"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon FX [6]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="846"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon FX [16]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="891"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon SRX [13]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="936"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="PIDController[3]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="981"/>
+			<height>155</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon FX [7]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="1136"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<widget field="PIDController[4]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+			<location x="6" y="1181"/>
+			<height>155</height>
+			<width>293</width>
+		</widget>
+		<widget field="Talon FX [15]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="1336"/>
+			<height>45</height>
+			<width>293</width>
+		</widget>
+		<location x="0" y="23"/>
+		<width>305</width>
+		<height>1387</height>
+	</widget>
+	<widget field="IndexerSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="0"/>
+	</widget>
+</live-window>
+	<hidden field="SendableChooser[0]"/>
+	<hidden field="Flywheel Setpoint"/>
+	<hidden field="Front left Falcon raw value"/>
+	<hidden field="Back right CANCoder degrees"/>
+	<hidden field="Front right has slipped"/>
+	<hidden field="Front left CANCoder degrees"/>
+	<hidden field="Back left CANCoder raw value"/>
+	<hidden field="Air Storage Pressure"/>
+	<hidden field="Flywheel PID"/>
+	<hidden field="Flywheel Speed"/>
+	<hidden field="Gate wheel current"/>
+	<hidden field="Front left Falcon degrees"/>
+	<hidden field="Back left has slipped"/>
+	<hidden field="Back right Falcon degrees"/>
+	<hidden field="Gate wheel closed loop error degrees"/>
+	<hidden field="Back right has slipped"/>
+	<hidden field="Back right Falcon raw value"/>
+	<hidden field="Front left CANCoder raw value"/>
+	<hidden field="Compressor State"/>
+	<hidden field="Front right CANCoder absolute value"/>
+	<hidden field="Robot heading"/>
+	<hidden field="Front left has slipped"/>
+	<hidden field="Indexer Has Cargo"/>
+	<hidden field="Back left CANCoder degrees"/>
+	<hidden field="Gate wheel closed loop error"/>
+	<hidden field="Front right Falcon raw value"/>
+	<hidden field="Back left Falcon degrees"/>
+	<hidden field="Back right CANCoder absolute value"/>
+	<hidden field="Front left CANCoder absolute value"/>
+	<hidden field="Flywheel Error"/>
+	<hidden field="Front right CANCoder degrees"/>
+	<hidden field="Front right CANCoder raw value"/>
+	<hidden field="Back right CANCoder raw value"/>
+	<hidden field="Back left CANCoder absolute value"/>
+	<hidden field="Back left Falcon raw value"/>
+	<hidden field="Gate wheel current RoC"/>
+	<hidden field="Front right Falcon degrees"/>
+</xml>
