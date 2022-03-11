@@ -29,7 +29,13 @@ public class IntakeAndIndex extends ParallelCommandGroup {
         addCommands(
             /*new ScheduleCommand( // We schedule the indexer's command separately so that it can run after this one terminates
                 new RunUntilCommand(
-                    new IndexOneCargo(indexer), // This will run either until it finishes or until three seconds have elapsed after the intake retracts
+                    new FunctionalCommand(
+                        indexer::startConveyor,
+                        () -> {},
+                        interrupted -> indexer.stopConveyor(),
+                        () -> { return false; },
+                        indexer
+                    ),
                     () -> {
                         return timer.get() >= 8;
                     } // The timer only starts running after the intake retracts

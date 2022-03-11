@@ -7,17 +7,18 @@ import frc.robot.Constants;
 import frc.robot.commands.Shoot;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import friarLib2.commands.RunForTime;
 import friarLib2.commands.TimedInstantCommand;
 
 public class TaxiAndPreloadAuto extends SequentialCommandGroup {
-    public TaxiAndPreloadAuto(DriveSubsystem drive, IndexerSubsystem indexer, ShooterSubsystem shooter) {
+    public TaxiAndPreloadAuto(DriveSubsystem drive, IndexerSubsystem indexer, ShooterSubsystem shooter, IntakeSubsystem intake) {
         addCommands(
             new RunForTime(new Shoot( // Shoot the preload
                 () -> true,
                 Constants.Shooter.HIGH_HUB_FROM_FENDER,
-                shooter, indexer
+                shooter, indexer, intake
             ), 5),
             new TimedInstantCommand( // Back up at 2 m/s for one second
                 2,

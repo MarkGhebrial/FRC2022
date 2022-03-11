@@ -19,6 +19,7 @@ import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.DriveTeleop;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.commands.intake.IntakeAndIndex;
+import frc.robot.commands.intake.SpinIntakeRollers;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -51,7 +52,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Add autos to SmartDashboard
         autoChooser.setDefaultOption("No auto", new WaitUntilCommand(0));
-        autoChooser.addOption("Preload auto", new TaxiAndPreloadAuto(drive, indexer, shooter));
+        autoChooser.addOption("Preload auto", new TaxiAndPreloadAuto(drive, indexer, shooter, intake));
         autoChooser.addOption("Two ball auto (hangar side)", new TwoBallAuto(drive, indexer, intake, shooter));
         SmartDashboard.putData(autoChooser);
 
@@ -79,11 +80,11 @@ public class RobotContainer {
         new LambdaTrigger(() -> OI.leftStick.getTop())
             .whenActive(new InstantCommand(IMU::zeroIMU).alongWith(new PrintCommand("Zeroed IMU")));
 
-        /*new LambdaTrigger(() -> OI.rightStickLeftCluster.get() || OI.rightStickRightCluster.get())
-            .whileActiveContinuous(new LockDriveTrain(drive));*/
-
         new LambdaTrigger(() -> OI.operatorController.getLeftBumper() || OI.operatorController.getRightBumper())
             .whileActiveContinuous(new IntakeAndIndex(intake, indexer), false);
+
+        new LambdaTrigger(() -> OI.operatorController.getLeftTriggerAxis() >= 0.5)
+            .whileActiveContinuous(new SpinIntakeRollers(intake));
 
         // Extend the climber
         new LambdaTrigger(() -> OI.operatorController.getYButton() && DriverStation.getMatchTime() <= 30)
@@ -121,7 +122,7 @@ public class RobotContainer {
             .whileActiveContinuous(
                 new Shoot(
                     () -> OI.operatorController.getAButton() || OI.leftStickRightCluster.get() || OI.rightStickLeftCluster.get(), // Fire a cargo if this evaluates to true
-                    solution, shooter, indexer), 
+                    solution, shooter, indexer, intake), 
                 true); // Set the command as interruptible
     }
 
