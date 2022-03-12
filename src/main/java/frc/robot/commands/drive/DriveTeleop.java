@@ -52,11 +52,6 @@ public class DriveTeleop extends CommandBase {
             -OI.leftStick.getXWithDeadband(), 
             -OI.leftStick.getYWithDeadband()).capMagnitude(1).scale(Constants.Drive.MAX_TELEOP_SPEED);
 
-        // TODO: This needs to be better, controller logic should not be in commands
-        if (OI.leftStickLeftCluster.get() || OI.rightStickRightCluster.get()) {
-            translationalSpeeds = translationalSpeeds.scale(0.1); // Slow down the robot
-        }
-
         // Limit the drivebase's acceleration to reduce wear on the swerve modules
         translationalSpeeds.setXComponent(xAccelLimiter.calculate(translationalSpeeds.getXComponent()));
         translationalSpeeds.setYComponent(yAccelLimiter.calculate(translationalSpeeds.getYComponent()));

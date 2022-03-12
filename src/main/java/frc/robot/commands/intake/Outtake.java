@@ -1,16 +1,15 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IntakeSubsystem.Side;
 
-/**
- * Slowly spin the intake rollers to agitate cargo
- */
-public class SpinIntakeRollers extends CommandBase {
+public class Outtake extends CommandBase {
     
     private IntakeSubsystem intake;
 
-    public SpinIntakeRollers(IntakeSubsystem intake) {
+    public Outtake(IntakeSubsystem intake) {
         this.intake = intake;
 
         addRequirements(intake);
@@ -18,9 +17,9 @@ public class SpinIntakeRollers extends CommandBase {
 
     @Override
     public void initialize() {
-        intake.retractIntake();
-        intake.setLeftIntakeRoller(true, 0.5);
-        intake.setRightIntakeRoller(true, 0.5);
+        intake.setIntake(Side.bothIntakes, true, false);
+        intake.setLeftIntakeRoller(true, -Constants.Intake.INTAKE_MOTOR_POWER);
+        intake.setRightIntakeRoller(true, -Constants.Intake.INTAKE_MOTOR_POWER);
     }
 
     @Override

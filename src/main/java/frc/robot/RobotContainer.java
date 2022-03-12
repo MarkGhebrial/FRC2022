@@ -19,6 +19,7 @@ import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.DriveTeleop;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.commands.intake.IntakeAndIndex;
+import frc.robot.commands.intake.Outtake;
 import frc.robot.commands.intake.SpinIntakeRollers;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -52,7 +53,8 @@ public class RobotContainer {
     public RobotContainer() {
         // Add autos to SmartDashboard
         autoChooser.setDefaultOption("No auto", new WaitUntilCommand(0));
-        autoChooser.addOption("Preload auto", new TaxiAndPreloadAuto(drive, indexer, shooter, intake));
+        autoChooser.addOption("Preload auto (low goal)", new TaxiAndPreloadAuto(Constants.Shooter.LOW_HUB_FROM_FENDER, drive, indexer, shooter, intake));
+        autoChooser.addOption("Preload auto (high goal)", new TaxiAndPreloadAuto(new FiringSolution(2800, false), drive, indexer, shooter, intake));
         autoChooser.addOption("Two ball auto (hangar side)", new TwoBallAuto(drive, indexer, intake, shooter));
         SmartDashboard.putData(autoChooser);
 
@@ -86,6 +88,9 @@ public class RobotContainer {
         new LambdaTrigger(() -> OI.operatorController.getLeftTriggerAxis() >= 0.5)
             .whileActiveContinuous(new SpinIntakeRollers(intake));
 
+        new LambdaTrigger(() -> OI.operatorController.getRightTriggerAxis() >= 0.5)
+            .whileActiveContinuous(new Outtake(intake));
+
         // Extend the climber
         new LambdaTrigger(() -> OI.operatorController.getYButton() && DriverStation.getMatchTime() <= 30)
             .whenActive(new InstantCommand(climber::extendClimber, climber));
@@ -95,12 +100,12 @@ public class RobotContainer {
             .whenActive(new InstantCommand(climber::retractClimber, climber));
 
         // Bind the oerator's D-pad to various shooting locations
-        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0); // 0 is up, the values increase clockwise
-        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 90);
-        bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_FENDER, 180);
-        bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_TARMAC, 270);
+        //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0); // 0 is up, the values increase clockwise
+        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 0); //90
+        bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_FENDER, () -> OI.leftStickLeftCluster.get() || OI.rightStickRightCluster.get()); //180
+        //bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_TARMAC, 270);
 
-        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_LAUNCHPAD, 45);
+        //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_LAUNCHPAD, 45);
 
         new LambdaTrigger(() -> OI.operatorController.getStartButton())
             .whileActiveContinuous(new ReverseShooter(indexer, shooter));

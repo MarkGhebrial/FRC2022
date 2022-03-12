@@ -46,8 +46,7 @@ public class IntakeAndIndex extends ParallelCommandGroup {
                 indexer::startConveyor,
                 () -> {},
                 interrupted -> indexer.stopConveyor(),
-                () -> { return false; },
-                indexer
+                () -> { return false; }
             ),
             new Intake(intake) // Deploy the intake
         );
