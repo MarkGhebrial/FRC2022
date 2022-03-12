@@ -96,7 +96,7 @@ public class RobotContainer {
             .whenActive(new InstantCommand(climber::extendClimber, climber));
 
         // Retract the climber
-        new LambdaTrigger(() -> OI.operatorController.getBButton())
+        new LambdaTrigger(() -> OI.rightStick.getTop())
             .whenActive(new InstantCommand(climber::retractClimber, climber));
 
         // Bind the oerator's D-pad to various shooting locations

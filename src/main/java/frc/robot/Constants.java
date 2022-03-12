@@ -39,7 +39,8 @@ public final class Constants {
      */
     public static class Climber {
         /********** Solenoid PCM Ports **********/
-        public static final int CLIMBER_SOLENOID_ID = 4;
+        public static final int CLIMBER_EXTENSION_SOLENOID_ID = 7;
+        public static final int CLIMBER_RETRACTION_SOLENOID_ID = 4;
     }
 
     /**
