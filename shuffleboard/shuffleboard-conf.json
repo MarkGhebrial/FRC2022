@@ -850,15 +850,26 @@
               "imageWidth": -1,
               "imageHeight": -1
             }
+          },
+          "4,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/SendableChooser[1]",
+              "_title": "SmartDashboard/SendableChooser[1]"
+            }
           }
         }
       }
     }
   ],
   "windowGeometry": {
-    "x": -8.0,
-    "y": -8.0,
-    "width": 1382.0,
-    "height": 744.0
+    "x": -7.0,
+    "y": 0.0,
+    "width": 1380.0,
+    "height": 735.0
   }
 }

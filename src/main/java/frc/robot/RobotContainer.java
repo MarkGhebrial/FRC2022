@@ -42,7 +42,7 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveSubsystem drive = new DriveSubsystem();
-    private final ClimberSubsystem climber = new ClimberSubsystem();
+    public final ClimberSubsystem climber = new ClimberSubsystem();
     private final IndexerSubsystem indexer = new IndexerSubsystem();
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
@@ -52,9 +52,9 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         // Add autos to SmartDashboard
-        autoChooser.setDefaultOption("No auto", new WaitUntilCommand(0));
+        autoChooser.addOption("No auto", new WaitUntilCommand(0));
         autoChooser.addOption("Preload auto (low goal)", new TaxiAndPreloadAuto(Constants.Shooter.LOW_HUB_FROM_FENDER, drive, indexer, shooter, intake));
-        autoChooser.addOption("Preload auto (high goal)", new TaxiAndPreloadAuto(new FiringSolution(2800, false), drive, indexer, shooter, intake));
+        autoChooser.setDefaultOption("Preload auto (high goal)", new TaxiAndPreloadAuto(new FiringSolution(2800, false), drive, indexer, shooter, intake));
         autoChooser.addOption("Two ball auto (hangar side)", new TwoBallAuto(drive, indexer, intake, shooter));
         SmartDashboard.putData(autoChooser);
 
@@ -82,6 +82,9 @@ public class RobotContainer {
         new LambdaTrigger(() -> OI.leftStick.getTop())
             .whenActive(new InstantCommand(IMU::zeroIMU).alongWith(new PrintCommand("Zeroed IMU")));
 
+        new LambdaTrigger(() -> OI.leftStick.getPOV() != -1)
+            .whenActive(new InstantCommand(drive::zeroModules, drive));
+
         new LambdaTrigger(() -> OI.operatorController.getLeftBumper() || OI.operatorController.getRightBumper())
             .whileActiveContinuous(new IntakeAndIndex(intake, indexer), false);
 
@@ -92,7 +95,7 @@ public class RobotContainer {
             .whileActiveContinuous(new Outtake(intake));
 
         // Extend the climber
-        new LambdaTrigger(() -> OI.operatorController.getYButton() && DriverStation.getMatchTime() <= 30)
+        new LambdaTrigger(() -> OI.rightStick.getPOV() != -1)
             .whenActive(new InstantCommand(climber::extendClimber, climber));
 
         // Retract the climber

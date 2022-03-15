@@ -1,6 +1,8 @@
 package frc.robot.commands.drive;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.IMU;
@@ -31,6 +33,8 @@ public class DriveTeleop extends CommandBase {
     private DoubleSlewRateLimiter xAccelLimiter;
     private DoubleSlewRateLimiter yAccelLimiter;
 
+    SendableChooser<Boolean> accelChooser;
+
     public DriveTeleop(DriveSubsystem drive) {
         this.drive = drive;
 
@@ -38,6 +42,12 @@ public class DriveTeleop extends CommandBase {
         yAccelLimiter = new DoubleSlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION, Constants.Drive.MAX_TELEOP_DECELERATION);
 
         addRequirements(drive);
+
+        accelChooser = new SendableChooser<Boolean>();
+        accelChooser.setDefaultOption("Normal acceleration", true);
+        accelChooser.addOption("No accleration limits", false);
+
+        SmartDashboard.putData(accelChooser);
     }
 
     @Override
@@ -52,9 +62,11 @@ public class DriveTeleop extends CommandBase {
             -OI.leftStick.getXWithDeadband(), 
             -OI.leftStick.getYWithDeadband()).capMagnitude(1).scale(Constants.Drive.MAX_TELEOP_SPEED);
 
-        // Limit the drivebase's acceleration to reduce wear on the swerve modules
-        translationalSpeeds.setXComponent(xAccelLimiter.calculate(translationalSpeeds.getXComponent()));
-        translationalSpeeds.setYComponent(yAccelLimiter.calculate(translationalSpeeds.getYComponent()));
+        if (accelChooser.getSelected()) {
+            // Limit the drivebase's acceleration to reduce wear on the swerve modules
+            translationalSpeeds.setXComponent(xAccelLimiter.calculate(translationalSpeeds.getXComponent()));
+            translationalSpeeds.setYComponent(yAccelLimiter.calculate(translationalSpeeds.getYComponent()));
+        }
 
         ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
             translationalSpeeds.getXComponent(), 

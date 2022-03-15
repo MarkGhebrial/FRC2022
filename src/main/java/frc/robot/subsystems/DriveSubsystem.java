@@ -52,6 +52,13 @@ public class DriveSubsystem extends SubsystemBase {
         backRightModule.setState(states[3]);
     }
 
+    public void zeroModules () {
+        frontLeftModule.zeroSteering();
+        frontRightModule.zeroSteering();
+        backLeftModule.zeroSteering();
+        backRightModule.zeroSteering();
+    }
+
     /**
      * Calculate and set the requred SwerveModuleStates for a given ChassisSpeeds
      * 
