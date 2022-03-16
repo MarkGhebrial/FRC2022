@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -9,24 +8,24 @@ import static frc.robot.Constants.Climber.*;
 
 public class ClimberSubsystem extends SubsystemBase {
 
-    private DoubleSolenoid climberSolenoid;
+    private Solenoid climberSolenoid;
 
     public ClimberSubsystem() {
-        climberSolenoid = new DoubleSolenoid(
+        climberSolenoid = new Solenoid(
             Constants.PCM_CAN_ID,
             Constants.PCM_TYPE,
-            EXTENSION_SOLENOID_ID, RETRACTION_SOLENOID_ID
+            CLIMBER_SOLENOID_ID
         );
 
         retractClimber();
     }
 
     public void extendClimber() {
-        climberSolenoid.set(Value.kForward);
+        climberSolenoid.set(true);
     }
 
     public void retractClimber() {
-        climberSolenoid.set(Value.kReverse);
+        climberSolenoid.set(false);
     }
 
     @Override

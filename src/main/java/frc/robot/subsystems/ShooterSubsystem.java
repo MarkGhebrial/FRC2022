@@ -4,10 +4,11 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.UnitConversions;
 import frc.robot.util.FiringSolution;
 
 import static frc.robot.Constants.Shooter.*;
@@ -27,7 +28,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private WPI_TalonFX flywheelLeader;
     private WPI_TalonFX flywheelFollower;
 
-    private DoubleSolenoid deflectorSolenoid;
+    private Solenoid deflectorSolenoid;
 
     public ShooterSubsystem() {
         // Configure the flywheel motors
@@ -35,18 +36,22 @@ public class ShooterSubsystem extends SubsystemBase {
         flywheelLeader.configFactoryDefault();
         flywheelLeader.setNeutralMode(NeutralMode.Coast);
         FLYWHEEL_MOTOR_PID.configureMotorPID(flywheelLeader);
+        flywheelLeader.config_IntegralZone(0, UnitConversions.Shooter.flywheelRPMToEncoderTicksPer100ms(FLYWHEEL_IZONE));
 
         flywheelFollower = new WPI_TalonFX(FOLLOWER_MOTOR_ID);
         flywheelFollower.configFactoryDefault();
         flywheelFollower.setNeutralMode(NeutralMode.Coast);
         FLYWHEEL_MOTOR_PID.configureMotorPID(flywheelFollower);
+        flywheelLeader.config_IntegralZone(0, UnitConversions.Shooter.flywheelRPMToEncoderTicksPer100ms(FLYWHEEL_IZONE));
         flywheelFollower.follow(flywheelLeader);
 
-        deflectorSolenoid = new DoubleSolenoid(
+        flywheelLeader.setInverted(true);
+        flywheelFollower.setInverted(false);
+
+        deflectorSolenoid = new Solenoid(
             Constants.PCM_CAN_ID,
             Constants.PCM_TYPE,
-            HOOD_EXTENSION_SOLENOID_ID,
-            HOOD_RETRACTION_SOLENOID_ID
+            HOOD_SOLENOID_ID
         );
     }
 
@@ -81,7 +86,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public boolean isFlywheelUpToSpeed () {
         boolean isRunning = getFlywheelRPM() >= 50;
 
-        boolean isUpToSpeed = getFlywheelRPM() - flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopTarget()) <= FLYWHEEL_SPEED_TOLERANCE;
+        boolean isUpToSpeed = Math.abs(flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopError())) <= FLYWHEEL_SPEED_TOLERANCE;
 
         return isRunning && isUpToSpeed;
     }
@@ -92,7 +97,7 @@ public class ShooterSubsystem extends SubsystemBase {
      * @param deployed If the deflector should be deployed or retracted
      */
     public void setDeflector (boolean deployed) {
-        deflectorSolenoid.set(deployed ? Value.kForward : Value.kReverse);
+        deflectorSolenoid.set(!deployed);
     }
 
     public void goToFiringSolution (FiringSolution solution) {
@@ -102,11 +107,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
-    }
-
-    @Override
-    public void simulationPeriodic() {
-        // This method will be called once per scheduler run during simulation
+        SmartDashboard.putNumber("Flywheel Speed", getFlywheelRPM());
+        SmartDashboard.putNumber("Flywheel Setpoint", flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopTarget()));
+        SmartDashboard.putNumber("Flywheel Error", flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopError()));
+        SmartDashboard.putBoolean("Flywheel Up To Speed", isFlywheelUpToSpeed());
     }
 }

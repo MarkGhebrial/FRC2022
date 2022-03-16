@@ -19,7 +19,7 @@ public class TwoBallAuto extends SequentialCommandGroup {
         addCommands(
             new InstantCommand(() -> intake.extendIntake(Side.leftIntake), intake), // Deploy the intake
             new ScheduleCommand(new IndexOneCargo(indexer)), // Start the indexer
-            new FollowTrajectory(drive, "two-ball-auto-1.path"), // Pick up a cargo
+            new FollowTrajectory(drive, "two-ball-auto-1"), // Pick up a cargo
             new InstantCommand(intake::retractIntake, intake),
             new RunForTime(new Shoot( // Shoot the cargo
                 () -> true,

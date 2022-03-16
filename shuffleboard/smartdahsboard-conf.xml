@@ -1,0 +1,146 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Flywheel Up To Speed" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="0" y="2"/>
+		<width>447</width>
+		<height>677</height>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="342" y="1"/>
+		<width>915</width>
+		<height>680</height>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+	<widget field="Gate wheel PID" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="478" y="459"/>
+	</widget>
+	<widget field="Swerve Steering PID" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="478" y="303"/>
+	</widget>
+	<widget field="Swerve Drive PID" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="507" y="147"/>
+	</widget>
+	<widget field="SendableChooser[0]" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="10" y="8"/>
+	</widget>
+	<widget field="SendableChooser[2]" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="18" y="16"/>
+	</widget>
+	<widget field="SendableChooser[1]" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="24" y="10"/>
+	</widget>
+	<widget field="SendableChooser[3]" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="19" y="17"/>
+	</widget>
+	<widget field="Flywheel PID" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="3" y="15"/>
+	</widget>
+	<widget field="Front right CANCoder raw value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="21" y="20"/>
+	</widget>
+	<widget field="Flywheel Error" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="27" y="24"/>
+	</widget>
+	<widget field="Front left Falcon raw value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="14" y="15"/>
+	</widget>
+	<widget field="Back left Falcon raw value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="8" y="10"/>
+	</widget>
+	<widget field="Gate wheel closed loop error" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="26" y="5"/>
+	</widget>
+	<widget field="Front right CANCoder degrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="26" y="4"/>
+	</widget>
+	<widget field="Back right Falcon degrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="8" y="28"/>
+	</widget>
+	<widget field="Flywheel Speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="20" y="28"/>
+	</widget>
+	<widget field="Front left CANCoder degrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="2" y="3"/>
+	</widget>
+	<widget field="Back left CANCoder degrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="22" y="14"/>
+	</widget>
+	<widget field="Air Storage Pressure" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="6" y="26"/>
+	</widget>
+	<widget field="Front left Falcon degrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="2" y="8"/>
+	</widget>
+	<widget field="Back left Falcon degrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="30" y="2"/>
+	</widget>
+	<widget field="Back left has slipped" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="26" y="22"/>
+	</widget>
+	<widget field="Gate wheel current RoC" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="25" y="31"/>
+	</widget>
+	<widget field="Back left CANCoder absolute value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="20" y="18"/>
+	</widget>
+	<widget field="Front right CANCoder absolute value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="7" y="21"/>
+	</widget>
+	<widget field="Front left CANCoder raw value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="27" y="2"/>
+	</widget>
+	<widget field="Flywheel Setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="27" y="28"/>
+	</widget>
+	<widget field="Compressor State" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="4" y="22"/>
+	</widget>
+	<widget field="Back right CANCoder absolute value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="5" y="1"/>
+	</widget>
+	<widget field="Back right Falcon raw value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="9" y="15"/>
+	</widget>
+	<widget field="Back left CANCoder raw value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="18" y="31"/>
+	</widget>
+	<widget field="Back right CANCoder raw value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="9" y="14"/>
+	</widget>
+	<widget field="Front right Falcon degrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="9" y="19"/>
+	</widget>
+	<widget field="Indexer Has Cargo" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="10" y="20"/>
+	</widget>
+	<widget field="Gate wheel current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="17" y="31"/>
+	</widget>
+	<widget field="Front right has slipped" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="23" y="4"/>
+	</widget>
+	<widget field="Back right CANCoder degrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="23" y="9"/>
+	</widget>
+	<widget field="Back right has slipped" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="12" y="6"/>
+	</widget>
+	<widget field="Front left has slipped" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="5" y="23"/>
+	</widget>
+	<widget field="Front left CANCoder absolute value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="19" y="2"/>
+	</widget>
+	<widget field="Robot heading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="16" y="8"/>
+	</widget>
+	<widget field="Front right Falcon raw value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="9" y="8"/>
+	</widget>
+	<widget field="Gate wheel closed loop error degrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="7" y="2"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>

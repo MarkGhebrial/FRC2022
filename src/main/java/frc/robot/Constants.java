@@ -29,18 +29,17 @@ public final class Constants {
     public static final double JOYSTICK_DEADBAND = 0.07;
     public static final double XBOX_DEADBAND = 0.05;
 
-    public static final int PCM_CAN_ID = 0;
+    public static final int PCM_CAN_ID = 1;
     public static final int PIGEON_IMU_ID = 19;
 
-    public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.CTREPCM;
+    public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.REVPH;
 
     /**
      * Constants for the Climber
      */
     public static class Climber {
         /********** Solenoid PCM Ports **********/
-        public static final int EXTENSION_SOLENOID_ID = 4;
-        public static final int RETRACTION_SOLENOID_ID = 5;
+        public static final int CLIMBER_SOLENOID_ID = 4;
     }
 
     /**
@@ -89,12 +88,14 @@ public final class Constants {
         public static final int GATE_WHEEL_MOTOR_ID = 18;
 
         /********** Tuning Constants **********/
-        public static final double CONVEYOR_POWER = .2;
+        public static final double CONVEYOR_POWER = .5;
         public static final double GATE_WHEEL_SHOOTING_POWER = .75;
-        public static final double GATE_WHEEL_INDEXING_POWER = .4;
+        public static final double GATE_WHEEL_INDEXING_VOLTS = 3;
 
-        public static final double GATE_WHEEL_INDEXING_DEGREES = 360; // Rotate the gate by this much to index a cargo
-        public static final double GATE_WHEEL_CURRENT_THRESHOLD = 20; // Amps
+        public static final double GATE_WHEEL_INDEXING_DEGREES = -120; // Rotate the gate by this much to index a cargo
+        public static final double GATE_WHEEL_CURRENT_THRESHOLD = 2.8; // Amps
+
+        public static final PIDParameters GATE_WHEEL_PID = new PIDParameters(0.25, 0, 0, "Gate wheel PID");
 
         /******** Physical Constants ********/
         public static final double GATE_WHEEL_GEAR_RATIO = 1.0 / 1.0; // Between the encoder and wheel, not between the motor and wheel
@@ -105,18 +106,15 @@ public final class Constants {
      */
     public static class Intake {
         /********** Solenoid PCM Ports **********/
-        public static final int LEFT_INTAKE_EXTENSION_SOLENOID_ID = 0;
-        public static final int LEFT_INTAKE_RETRACTION_SOLENOID_ID = 1;
-
-        public static final int RIGHT_INTAKE_EXTENSION_SOLENOID_ID = 2;
-        public static final int RIGHT_INTAKE_RETRACTION_SOLENOID_ID = 3;
+        public static final int LEFT_INTAKE_SOLENOID_ID = 1;
+        public static final int RIGHT_INTAKE_SOLENOID_ID = 2;
 
         /********** CAN ID's **********/
         public static final int LEFT_INTAKE_MOTOR_ID = 13;
         public static final int RIGHT_INTAKE_MOTOR_ID = 14;
 
         /********** Tuning Constants **********/
-        public static final double INTAKE_MOTOR_POWER = 1.0;
+        public static final double INTAKE_MOTOR_POWER = 0.50;
     }
 
     /** 
@@ -128,24 +126,24 @@ public final class Constants {
         public static final int FOLLOWER_MOTOR_ID = 16;
 
         /********** PCM Ports **********/
-        public static final int HOOD_EXTENSION_SOLENOID_ID = 4;
-        public static final int HOOD_RETRACTION_SOLENOID_ID = 5;
+        public static final int HOOD_SOLENOID_ID = 3;
 
         /******** PID Gains ********/
-        public static final PIDParameters FLYWHEEL_MOTOR_PID = new PIDParameters(0.5, 0.00015, 6, "Flywheel PID");
+        public static final PIDParameters FLYWHEEL_MOTOR_PID = new PIDParameters(0.2, 0.001, 2, "Flywheel PID");
+        public static final double FLYWHEEL_IZONE = 700; // RPM
 
         /********** Tuning Constants **********/
-        public static final double FLYWHEEL_SPEED_TOLERANCE = 50; // RPM
+        public static final double FLYWHEEL_SPEED_TOLERANCE = 30; // RPM
 
         /******** Physical Constants ********/
         public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;
 
         /********** Firing Solutions **********/
-        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(5000, true);
-        public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(5000, true);
+        public static final FiringSolution LOW_HUB_FROM_FENDER = new FiringSolution(1350, true);
+        public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(1850, true);
 
-        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(5000, false);
-        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(5000, false);
-        public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(5000, false);
+        public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(2900, false); //2400 //2520
+        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(2850, true);
+        public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(3450, true);
     }
 }

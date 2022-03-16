@@ -1,6 +1,7 @@
 package frc.robot.swerve;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -43,7 +44,7 @@ public class SwerveModule3309 implements SwerveModule {
     public static final double DRIVE_GEAR_RATIO = (60. / 20.) * (16. / 34.) * (45. / 15.);
     public static final double STEERING_GEAR_RATIO_FALCON = (100. / 24.) * (48. / 16.); // Gear ratio between the Falcon's shaft and the steering axis
     public static final double STEERING_GEAR_RATIO_ENCODER = (1. / 1.); // Gear ratio between the CANCoder and the steering axis
-    public static final double SLIP_THRESHOLD = 5; // Steering axis will be considered to have slipped if the 
+    public static final double SLIP_THRESHOLD = 5; // Steering axis will be considered to have slipped if the difference between the Falcon and CANCoder's readings is greater than this value
 
     public static final PIDParameters DRIVE_PID_GAINS = new PIDParameters(.1, 0.0007, 0.1, "Swerve Drive PID");
     public static final PIDParameters STEERING_PID_GAINS = new PIDParameters(.1, 0.002, 0, "Swerve Steering PID");
@@ -115,10 +116,12 @@ public class SwerveModule3309 implements SwerveModule {
         driveMotor.configFactoryDefault();
         DRIVE_PID_GAINS.configureMotorPID(driveMotor);
         driveMotor.config_IntegralZone(0, 500);
+        driveMotor.setNeutralMode(NeutralMode.Brake);
 
         steeringMotor.configFactoryDefault();
         STEERING_PID_GAINS.configureMotorPID(steeringMotor);
         steeringMotor.config_IntegralZone(0, 500);
+        steeringMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     /**
@@ -195,11 +198,8 @@ public class SwerveModule3309 implements SwerveModule {
      * "Config" tab) to that dashboard value multiplied by 100.
      */
     private double getMagnetOffsetFromCANCoderSlot () {
-        int customParam = 0;
-        do {
-            customParam = steeringEncoder.configGetCustomParam(0);
-        } while (customParam == 0); // Try again if the request timed out
-        return customParam / 100.0;
+        //TODO: Do we need this 2 second timeout?
+        return steeringEncoder.configGetCustomParam(0, 2000) / 100.0;
     }
 
     /**
@@ -224,8 +224,6 @@ public class SwerveModule3309 implements SwerveModule {
         SmartDashboard.putNumber(name + " Falcon degrees", getSteeringDegreesFromFalcon());
         SmartDashboard.putNumber(name + " Falcon raw value", steeringMotor.getSelectedSensorPosition());
         SmartDashboard.putBoolean(name + " has slipped", steeringHasSlipped());
-        SmartDashboard.putNumber(name + " magnet offset", getMagnetOffsetFromCANCoderSlot());
-        SmartDashboard.putNumber(name + " fdjla;ksaf", steeringEncoder.getAbsolutePosition() - (getMagnetOffsetFromCANCoderSlot() + steeringOffset));
     }
 
     /**

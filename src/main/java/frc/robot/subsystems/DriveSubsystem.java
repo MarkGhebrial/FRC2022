@@ -6,6 +6,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.IMU;
 import frc.robot.swerve.SwerveModule3309;
@@ -40,6 +41,8 @@ public class DriveSubsystem extends SubsystemBase {
             BACK_RIGHT_MODULE_TRANSLATION
         );
         swerveOdometry = new SwerveDriveOdometry(swerveKinematics, IMU.getRobotYaw());
+
+        IMU.zeroIMU();
     }
 
     public void setModuleStates (SwerveModuleState[] states) {
@@ -47,6 +50,16 @@ public class DriveSubsystem extends SubsystemBase {
         frontRightModule.setState(states[1]);
         backLeftModule.setState(states[2]);
         backRightModule.setState(states[3]);
+    }
+
+    /**
+     * Use the CANCoders to rezero each swerve module
+     */
+    public void zeroModules () {
+        frontLeftModule.zeroSteering();
+        frontRightModule.zeroSteering();
+        backLeftModule.zeroSteering();
+        backRightModule.zeroSteering();
     }
 
     /**
@@ -58,6 +71,13 @@ public class DriveSubsystem extends SubsystemBase {
         SwerveModuleState[] moduleStates = swerveKinematics.toSwerveModuleStates(speeds); //Generate the swerve module states
         SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, SwerveModule3309.ABSOLUTE_MAX_DRIVE_SPEED);
         setModuleStates(moduleStates);
+    }
+
+    /**
+     * Set the target speeds to zero (stop the drivetrain)
+     */
+    public void stopChassis () {
+        setChassisSpeeds(new ChassisSpeeds());
     }
 
     /**
@@ -95,5 +115,7 @@ public class DriveSubsystem extends SubsystemBase {
         frontRightModule.outputToDashboard();
         backLeftModule.outputToDashboard();
         backRightModule.outputToDashboard();
+
+        SmartDashboard.putNumber("Robot heading", IMU.getRobotYaw().getDegrees());
     }
 }

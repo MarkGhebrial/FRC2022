@@ -3,10 +3,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Pneumatics;
 
 import static frc.robot.Constants.Intake.*;
 
@@ -19,29 +20,48 @@ import static frc.robot.Constants.Intake.*;
  */
 public class IntakeSubsystem extends SubsystemBase {
 
-    private DoubleSolenoid leftIntakeSolenoid;
-    private DoubleSolenoid rightIntakeSolenoid;
+    private Solenoid leftIntakeSolenoid;
+    private Solenoid rightIntakeSolenoid;
 
     private WPI_TalonSRX leftIntakeMotor;
     private WPI_TalonSRX rightIntakeMotor;
     
     public IntakeSubsystem() {
-        leftIntakeSolenoid = new DoubleSolenoid(
+        leftIntakeSolenoid = new Solenoid(
             Constants.PCM_CAN_ID,
             Constants.PCM_TYPE,
-            LEFT_INTAKE_EXTENSION_SOLENOID_ID,
-            LEFT_INTAKE_RETRACTION_SOLENOID_ID
+            LEFT_INTAKE_SOLENOID_ID
         );
 
-        rightIntakeSolenoid = new DoubleSolenoid(
+        rightIntakeSolenoid = new Solenoid(
             Constants.PCM_CAN_ID,
             Constants.PCM_TYPE,
-            RIGHT_INTAKE_EXTENSION_SOLENOID_ID,
-            RIGHT_INTAKE_RETRACTION_SOLENOID_ID
+            RIGHT_INTAKE_SOLENOID_ID
         );
 
         leftIntakeMotor = new WPI_TalonSRX(LEFT_INTAKE_MOTOR_ID);
         rightIntakeMotor = new WPI_TalonSRX(RIGHT_INTAKE_MOTOR_ID);
+
+        leftIntakeMotor.setInverted(true);
+        rightIntakeMotor.setInverted(false);
+    }
+
+    /**
+     * Set the state of the specified intake(s)
+     * 
+     * @param side Which intake (or both) to set
+     * @param deployed Whether to deploy the intake or not 
+     * @param activateRollers Rollers will turn on of true, stay off if false
+     */
+    public void setIntake (Side side, boolean deployed, boolean activateRollers) {
+        if (side == Side.leftIntake || side == Side.bothIntakes) {
+            leftIntakeSolenoid.set(deployed);
+            setLeftIntakeRoller(activateRollers);
+        }
+        if (side == Side.rightIntake || side == Side.bothIntakes) {
+            rightIntakeSolenoid.set(deployed);
+            setRightIntakeRoller(activateRollers);
+        }
     }
 
     /**
@@ -51,14 +71,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @param activateRollers Rollers will turn on of true, stay off if false
      */
     public void extendIntake (Side side, boolean activateRollers) {
-        if (side == Side.leftIntake || side == Side.bothIntakes) {
-            leftIntakeSolenoid.set(Value.kForward);
-            setLeftIntakeRoller(activateRollers);
-        }
-        if (side == Side.rightIntake || side == Side.bothIntakes) {
-            rightIntakeSolenoid.set(Value.kForward);
-            setRightIntakeRoller(activateRollers);
-        }
+        setIntake(side, true, activateRollers);
     }
 
     /**
@@ -84,12 +97,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @param side Which intake (or both) to extend
      */
     public void retractIntake (Side side) {
-        if (side == Side.leftIntake || side == Side.bothIntakes) {
-            retractLeftIntake();
-        }
-        if (side == Side.rightIntake || side == Side.bothIntakes) {
-            retractRightIntake();
-        }
+        setIntake(side, false, false);
     }
 
     /**
@@ -102,39 +110,23 @@ public class IntakeSubsystem extends SubsystemBase {
     /**
      * Turn on or off the left intake's roller
      */
-    private void setLeftIntakeRoller (boolean on) {
-        if (on) {
-            leftIntakeMotor.set(ControlMode.Velocity, INTAKE_MOTOR_POWER);
-        } else {
-            leftIntakeMotor.stopMotor();
-        }
+    public void setLeftIntakeRoller (double power) {
+        leftIntakeMotor.set(ControlMode.PercentOutput, power);
     }
 
-    /**
-     * Retract the left intake and turn off its rollers
-     */
-    private void retractLeftIntake () {
-        leftIntakeSolenoid.set(Value.kReverse);
-        setLeftIntakeRoller(false);
+    public void setLeftIntakeRoller (boolean on) {
+        setLeftIntakeRoller(INTAKE_MOTOR_POWER);
     }
 
     /**
      * Turn on or off the right intake's roller
      */
-    private void setRightIntakeRoller (boolean on) {
-        if (on) {
-            rightIntakeMotor.set(ControlMode.Velocity, INTAKE_MOTOR_POWER);
-        } else {
-            rightIntakeMotor.stopMotor();
-        }
+    public void setRightIntakeRoller (double power) {
+        rightIntakeMotor.set(ControlMode.PercentOutput, power);
     }
 
-    /**
-     * Retract the right intake and turn off its rollers
-     */
-    private void retractRightIntake () {
-        rightIntakeSolenoid.set(Value.kReverse);
-        setRightIntakeRoller(false);
+    public void setRightIntakeRoller (boolean on) {
+        setRightIntakeRoller(INTAKE_MOTOR_POWER);
     }
 
     /**
@@ -148,6 +140,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
+        SmartDashboard.putNumber("Air Storage Pressure", Pneumatics.getStoragePSI());
+        SmartDashboard.putBoolean("Compressor State", Pneumatics.getCompressorState());
     }
 }

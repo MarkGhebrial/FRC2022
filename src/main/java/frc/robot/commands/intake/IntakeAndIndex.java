@@ -1,11 +1,11 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import friarLib2.commands.RunUntilCommand;
 
 /**
  * While this command is running, run the intake. When this command 
@@ -13,21 +13,47 @@ import friarLib2.commands.RunUntilCommand;
  */
 public class IntakeAndIndex extends ParallelCommandGroup {
 
+    private IndexerSubsystem indexer;
+
     private Timer timer = new Timer();
 
     public IntakeAndIndex (IntakeSubsystem intake, IndexerSubsystem indexer) {
         timer.reset();
         timer.stop();
+
+        this.indexer = indexer;
         
         addCommands(
-            new ScheduleCommand( // We schedule the indexer's command separately so that it can run after this one terminates
+            /*new ScheduleCommand( // We schedule the indexer's command separately so that it can run after this one terminates
                 new RunUntilCommand(
-                    new IndexOneCargo(indexer), // This will run either until it finishes or until five seconds have elapsed after the intake retracts
-                    () -> timer.get() >= 5 // The timer only starts running after the intake retracts
+                    new FunctionalCommand(
+                        indexer::startConveyor,
+                        () -> {},
+                        interrupted -> indexer.stopConveyor(),
+                        () -> { return false; },
+                        indexer
+                    ),
+                    () -> {
+                        return timer.get() >= 8;
+                    } // The timer only starts running after the intake retracts
                 )
+            ),*/
+            new InstantCommand(indexer::startConveyor),
+            new FunctionalCommand(
+                indexer::startConveyor,
+                () -> {},
+                interrupted -> indexer.stopConveyor(),
+                () -> { return false; }
             ),
             new Intake(intake) // Deploy the intake
         );
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        timer.reset();
+        timer.stop();
     }
 
     @Override
@@ -35,5 +61,7 @@ public class IntakeAndIndex extends ParallelCommandGroup {
         super.end(interrupted);
         timer.reset();
         timer.start();
+
+        indexer.stopConveyor();
     }
 }

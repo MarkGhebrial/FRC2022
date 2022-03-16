@@ -31,6 +31,10 @@ public class Shoot extends CommandBase {
     @Override
     public void initialize() {
         shooter.goToFiringSolution(solution);
+
+        /*intake.retractIntake();
+        intake.setLeftIntakeRoller(true, 0.2);
+        intake.setRightIntakeRoller(true, 0.2);*/
     }
 
     @Override
@@ -50,6 +54,7 @@ public class Shoot extends CommandBase {
         shooter.stopFlywheel();
         indexer.stopConveyor();
         indexer.stopGateWheel();
+        //intake.retractIntake();
     }
 
     @Override

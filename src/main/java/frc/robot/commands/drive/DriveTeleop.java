@@ -1,6 +1,8 @@
 package frc.robot.commands.drive;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.IMU;
@@ -24,20 +26,28 @@ import friarLib2.utility.Vector3309;
  * teleop control while being able to set the rotational speed 
  * independently (based on vision data for example).
  */
-public class FieldRelativeTeleopControl extends CommandBase {
+public class DriveTeleop extends CommandBase {
 
     protected DriveSubsystem drive;
 
     private DoubleSlewRateLimiter xAccelLimiter;
     private DoubleSlewRateLimiter yAccelLimiter;
 
-    public FieldRelativeTeleopControl(DriveSubsystem drive) {
+    SendableChooser<Boolean> accelChooser; // Menu on the dashboard to toggle acceleration limits
+
+    public DriveTeleop(DriveSubsystem drive) {
         this.drive = drive;
 
         xAccelLimiter = new DoubleSlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION, Constants.Drive.MAX_TELEOP_DECELERATION);
         yAccelLimiter = new DoubleSlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION, Constants.Drive.MAX_TELEOP_DECELERATION);
 
         addRequirements(drive);
+
+        // Configure the dashbaord menu
+        accelChooser = new SendableChooser<Boolean>();
+        accelChooser.setDefaultOption("Normal acceleration", true);
+        accelChooser.addOption("No accleration limits", false);
+        SmartDashboard.putData("Drivetrain acceleration", accelChooser);
     }
 
     @Override
@@ -52,9 +62,11 @@ public class FieldRelativeTeleopControl extends CommandBase {
             -OI.leftStick.getXWithDeadband(), 
             -OI.leftStick.getYWithDeadband()).capMagnitude(1).scale(Constants.Drive.MAX_TELEOP_SPEED);
 
-        // Limit the drivebase's acceleration to reduce wear on the swerve modules
-        translationalSpeeds.setXComponent(xAccelLimiter.calculate(translationalSpeeds.getXComponent()));
-        translationalSpeeds.setYComponent(yAccelLimiter.calculate(translationalSpeeds.getYComponent()));
+        if (accelChooser.getSelected()) {
+            // Limit the drivebase's acceleration to reduce wear on the swerve modules
+            translationalSpeeds.setXComponent(xAccelLimiter.calculate(translationalSpeeds.getXComponent()));
+            translationalSpeeds.setYComponent(yAccelLimiter.calculate(translationalSpeeds.getYComponent()));
+        }
 
         ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
             translationalSpeeds.getXComponent(), 
@@ -73,7 +85,7 @@ public class FieldRelativeTeleopControl extends CommandBase {
      * @return The rotational speed in radians/second
      */
     protected double calculateRotationalSpeed (Vector3309 translationalSpeeds) {
-        double rotationalSpeed = Constants.Drive.MAX_TELEOP_ROTATIONAL_SPEED * OI.rightStick.getXWithDeadband();
+        double rotationalSpeed = Constants.Drive.MAX_TELEOP_ROTATIONAL_SPEED * -OI.rightStick.getXWithDeadband();
 
         return rotationalSpeed;
     }
