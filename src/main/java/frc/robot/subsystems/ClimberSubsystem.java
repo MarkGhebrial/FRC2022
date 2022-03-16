@@ -14,7 +14,7 @@ public class ClimberSubsystem extends SubsystemBase {
         climberSolenoid = new Solenoid(
             Constants.PCM_CAN_ID,
             Constants.PCM_TYPE,
-            CLIMBER_RETRACTION_SOLENOID_ID
+            CLIMBER_SOLENOID_ID
         );
 
         retractClimber();
