@@ -58,7 +58,6 @@ public class IndexerSubsystem extends SubsystemBase {
      */
     public void startGateWheelForIndexing() {
         gateMotor.setVoltage(GATE_WHEEL_INDEXING_VOLTS);
-        //gateMotor.setSelectedSensorPosition(0);
     }
 
     /**
@@ -85,16 +84,9 @@ public class IndexerSubsystem extends SubsystemBase {
      * @param degrees The distance to move the wheel
      */
     public void rotateGateWheelByXDegrees(double degrees) {
-        //double targetPosition = getGateWheelPosition() + degrees;
         gateMotor.setSelectedSensorPosition(0);
         gateMotor.set(ControlMode.Position, UnitConversions.Indexer.gateWheelDegreesToEncoderTicks(degrees));
     }
-
-    /*private double getGateWheelPosition() {
-        double out = UnitConversions.Indexer.gateWheelEncoderTicksToDegrees(gateMotor.getSelectedSensorPosition(1500));
-        System.out.println(out);
-        return out;
-    }*/
 
     /**
      * @return The current being drawn by the gate wheel
@@ -117,8 +109,6 @@ public class IndexerSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Indexer Has Cargo", hasCargo());
         SmartDashboard.putNumber("Gate wheel closed loop error", gateMotor.getClosedLoopError());
         SmartDashboard.putNumber("Gate wheel closed loop error degrees", UnitConversions.Indexer.gateWheelEncoderTicksToDegrees(gateMotor.getClosedLoopError()));
-
-        //System.out.println(gateMotor.getMotorOutputVoltage());
     }
 
     @Override

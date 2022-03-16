@@ -18,8 +18,8 @@ public class Outtake extends CommandBase {
     @Override
     public void initialize() {
         intake.setIntake(Side.bothIntakes, true, false);
-        intake.setLeftIntakeRoller(true, -Constants.Intake.INTAKE_MOTOR_POWER);
-        intake.setRightIntakeRoller(true, -Constants.Intake.INTAKE_MOTOR_POWER);
+        intake.setLeftIntakeRoller(-Constants.Intake.INTAKE_MOTOR_POWER);
+        intake.setRightIntakeRoller(-Constants.Intake.INTAKE_MOTOR_POWER);
     }
 
     @Override

@@ -4,11 +4,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import friarLib2.commands.RunUntilCommand;
 
 /**
  * While this command is running, run the intake. When this command 

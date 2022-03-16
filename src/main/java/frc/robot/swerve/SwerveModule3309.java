@@ -198,6 +198,7 @@ public class SwerveModule3309 implements SwerveModule {
      * "Config" tab) to that dashboard value multiplied by 100.
      */
     private double getMagnetOffsetFromCANCoderSlot () {
+        //TODO: Do we need this 2 second timeout?
         return steeringEncoder.configGetCustomParam(0, 2000) / 100.0;
     }
 

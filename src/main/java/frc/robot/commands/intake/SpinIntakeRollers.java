@@ -19,8 +19,8 @@ public class SpinIntakeRollers extends CommandBase {
     @Override
     public void initialize() {
         intake.retractIntake();
-        intake.setLeftIntakeRoller(true, 0.5);
-        intake.setRightIntakeRoller(true, 0.5);
+        intake.setLeftIntakeRoller(0.5);
+        intake.setRightIntakeRoller(0.5);
     }
 
     @Override

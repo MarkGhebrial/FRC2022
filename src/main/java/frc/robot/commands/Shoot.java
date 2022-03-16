@@ -4,7 +4,6 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.util.FiringSolution;
 
@@ -18,17 +17,15 @@ public class Shoot extends CommandBase {
 
     private ShooterSubsystem shooter;
     private IndexerSubsystem indexer;
-    private IntakeSubsystem intake;
 
-    public Shoot(BooleanSupplier shootCondition, FiringSolution solution, ShooterSubsystem shooter, IndexerSubsystem indexer, IntakeSubsystem intake) {
+    public Shoot(BooleanSupplier shootCondition, FiringSolution solution, ShooterSubsystem shooter, IndexerSubsystem indexer) {
         this.shootCondition = shootCondition;
         this.solution = solution;
 
         this.shooter = shooter;
         this.indexer = indexer;
-        //this.intake = intake;
 
-        addRequirements(shooter, indexer/*, intake*/);
+        addRequirements(shooter, indexer);
     }
 
     @Override

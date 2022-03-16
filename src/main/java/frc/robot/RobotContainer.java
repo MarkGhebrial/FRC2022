@@ -6,7 +6,6 @@ package frc.robot;
 
 import java.util.function.BooleanSupplier;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -30,7 +29,6 @@ import frc.robot.util.FiringSolution;
 import friarLib2.hid.LambdaTrigger;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 /**
@@ -53,8 +51,8 @@ public class RobotContainer {
     public RobotContainer() {
         // Add autos to SmartDashboard
         autoChooser.addOption("No auto", new WaitUntilCommand(0));
-        autoChooser.addOption("Preload auto (low goal)", new TaxiAndPreloadAuto(Constants.Shooter.LOW_HUB_FROM_FENDER, drive, indexer, shooter, intake));
-        autoChooser.setDefaultOption("Preload auto (high goal)", new TaxiAndPreloadAuto(new FiringSolution(2800, false), drive, indexer, shooter, intake));
+        autoChooser.addOption("Preload auto (low goal)", new TaxiAndPreloadAuto(Constants.Shooter.LOW_HUB_FROM_FENDER, drive, indexer, shooter));
+        autoChooser.setDefaultOption("Preload auto (high goal)", new TaxiAndPreloadAuto(new FiringSolution(2800, false), drive, indexer, shooter));
         autoChooser.addOption("Two ball auto (hangar side)", new TwoBallAuto(drive, indexer, intake, shooter));
         SmartDashboard.putData(autoChooser);
 
@@ -79,18 +77,22 @@ public class RobotContainer {
         new LambdaTrigger(() -> OI.rightStick.getTrigger())
             .whileActiveContinuous(new DriveAndAim(drive));
 
+        // Zero the IMU
         new LambdaTrigger(() -> OI.leftStick.getTop())
-            .whenActive(new InstantCommand(IMU::zeroIMU).alongWith(new PrintCommand("Zeroed IMU")));
+            .whenActive(new InstantCommand(IMU::zeroIMU));
 
+        // Zero the modules
         new LambdaTrigger(() -> OI.leftStick.getPOV() != -1)
             .whenActive(new InstantCommand(drive::zeroModules, drive));
 
+        // Intake
         new LambdaTrigger(() -> OI.operatorController.getLeftBumper() || OI.operatorController.getRightBumper())
             .whileActiveContinuous(new IntakeAndIndex(intake, indexer), false);
 
         new LambdaTrigger(() -> OI.operatorController.getLeftTriggerAxis() >= 0.5)
             .whileActiveContinuous(new SpinIntakeRollers(intake));
 
+        // Outtake
         new LambdaTrigger(() -> OI.operatorController.getRightTriggerAxis() >= 0.5)
             .whileActiveContinuous(new Outtake(intake));
 
@@ -110,6 +112,7 @@ public class RobotContainer {
 
         //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_LAUNCHPAD, 45);
 
+        // Spin the flywheel in reverse in case a cargo falls on our robot
         new LambdaTrigger(() -> OI.operatorController.getStartButton())
             .whileActiveContinuous(new ReverseShooter(indexer, shooter));
     }
@@ -130,7 +133,7 @@ public class RobotContainer {
             .whileActiveContinuous(
                 new Shoot(
                     () -> OI.operatorController.getAButton() || OI.leftStickRightCluster.get() || OI.rightStickLeftCluster.get(), // Fire a cargo if this evaluates to true
-                    solution, shooter, indexer, intake), 
+                    solution, shooter, indexer), 
                 true); // Set the command as interruptible
     }
 

@@ -52,6 +52,9 @@ public class DriveSubsystem extends SubsystemBase {
         backRightModule.setState(states[3]);
     }
 
+    /**
+     * Use the CANCoders to rezero each swerve module
+     */
     public void zeroModules () {
         frontLeftModule.zeroSteering();
         frontRightModule.zeroSteering();
@@ -68,6 +71,13 @@ public class DriveSubsystem extends SubsystemBase {
         SwerveModuleState[] moduleStates = swerveKinematics.toSwerveModuleStates(speeds); //Generate the swerve module states
         SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, SwerveModule3309.ABSOLUTE_MAX_DRIVE_SPEED);
         setModuleStates(moduleStates);
+    }
+
+    /**
+     * Set the target speeds to zero (stop the drivetrain)
+     */
+    public void stopChassis () {
+        setChassisSpeeds(new ChassisSpeeds());
     }
 
     /**

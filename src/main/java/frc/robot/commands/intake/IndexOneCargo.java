@@ -9,7 +9,11 @@ import frc.robot.Constants;
 import frc.robot.subsystems.IndexerSubsystem;
 
 /**
- * Run the indexer's gate wheel until a cargo has been indexed, then
+ * Run the indexer's gate wheel until a cargo has been indexed
+ * 
+ * <p>TODO: This is not very effective. Simply running the conveyor at half
+ * power is enough to reliably wedge the cargo in place, so we don't need a
+ * complex current-sensing solution like this one.
  */
 public class IndexOneCargo extends ConditionalCommand {
 

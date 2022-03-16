@@ -24,7 +24,7 @@ public class TwoBallAuto extends SequentialCommandGroup {
             new RunForTime(new Shoot( // Shoot the cargo
                 () -> true,
                 Constants.Shooter.LOW_HUB_FROM_FENDER,
-                shooter, indexer, intake
+                shooter, indexer
             ), 5)
         );
         

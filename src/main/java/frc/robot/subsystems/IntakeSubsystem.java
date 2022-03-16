@@ -110,31 +110,23 @@ public class IntakeSubsystem extends SubsystemBase {
     /**
      * Turn on or off the left intake's roller
      */
-    public void setLeftIntakeRoller (boolean on, double power) {
-        if (on) {
-            leftIntakeMotor.set(ControlMode.PercentOutput, power);
-        } else {
-            leftIntakeMotor.stopMotor();
-        }
+    public void setLeftIntakeRoller (double power) {
+        leftIntakeMotor.set(ControlMode.PercentOutput, power);
     }
 
     public void setLeftIntakeRoller (boolean on) {
-        setLeftIntakeRoller(on, INTAKE_MOTOR_POWER);
+        setLeftIntakeRoller(INTAKE_MOTOR_POWER);
     }
 
     /**
      * Turn on or off the right intake's roller
      */
-    public void setRightIntakeRoller (boolean on, double power) {
-        if (on) {
-            rightIntakeMotor.set(ControlMode.PercentOutput, power);
-        } else {
-            rightIntakeMotor.stopMotor();
-        }
+    public void setRightIntakeRoller (double power) {
+        rightIntakeMotor.set(ControlMode.PercentOutput, power);
     }
 
     public void setRightIntakeRoller (boolean on) {
-        setRightIntakeRoller(on, INTAKE_MOTOR_POWER);
+        setRightIntakeRoller(INTAKE_MOTOR_POWER);
     }
 
     /**
