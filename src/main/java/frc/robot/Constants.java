@@ -114,7 +114,7 @@ public final class Constants {
         public static final int RIGHT_INTAKE_MOTOR_ID = 14;
 
         /********** Tuning Constants **********/
-        public static final double INTAKE_MOTOR_POWER = 0.50;
+        public static final double INTAKE_MOTOR_POWER = 0.35;
     }
 
     /** 
