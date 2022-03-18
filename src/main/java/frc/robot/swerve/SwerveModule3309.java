@@ -9,6 +9,8 @@ import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import friarLib2.hardware.SwerveModule;
 import friarLib2.math.CTREModuleState;
@@ -38,7 +40,7 @@ import friarLib2.utility.PIDParameters;
  * allows us to gain two decimal places of precision (which is plenty for this
  * task) from that integer slot.
  */
-public class SwerveModule3309 implements SwerveModule {
+public class SwerveModule3309 implements SwerveModule, Sendable {
     /********** Constants **********/
     public static final double WHEEL_DIAMETER_INCHES = 3.8;
     public static final double DRIVE_GEAR_RATIO = (60. / 20.) * (16. / 34.) * (45. / 15.);
@@ -93,6 +95,9 @@ public class SwerveModule3309 implements SwerveModule {
         steeringEncoder.configMagnetOffset(0);
 
         zeroSteering();
+
+        // Add the module to SmartDashboard
+        SmartDashboard.putData(name, this);
     }
 
     /**
@@ -224,6 +229,17 @@ public class SwerveModule3309 implements SwerveModule {
         SmartDashboard.putNumber(name + " Falcon degrees", getSteeringDegreesFromFalcon());
         SmartDashboard.putNumber(name + " Falcon raw value", steeringMotor.getSelectedSensorPosition());
         SmartDashboard.putBoolean(name + " has slipped", steeringHasSlipped());
+    }
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        builder.setSmartDashboardType("SwerveModule");
+
+        builder.addDoubleProperty("steeringAngle", () -> getState().angle.getDegrees(), null);
+        builder.addDoubleProperty("driveSpeed", () -> getState().speedMetersPerSecond, null);
+        builder.addBooleanProperty("steeringHasSlipped", () -> steeringHasSlipped(), null);
+        builder.addDoubleProperty("driveMotorTemperature", () -> driveMotor.getTemperature(), null);
+        builder.addDoubleProperty("steeringMotorTemperature", () -> steeringMotor.getTemperature(), null);
     }
 
     /**
