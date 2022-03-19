@@ -3,6 +3,17 @@
     "LiveWindow": {
       "DriveSubsystem": {
         "open": true
+      }
+    },
+    "SmartDashboard": {
+      "Holonomic target": {
+        "open": true
+      },
+      "Odometry": {
+        "open": true
+      },
+      "Swerve Drive PID": {
+        "open": true
       },
       "open": true
     },
@@ -37,16 +48,11 @@
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Flywheel PID": "PIDController",
       "/SmartDashboard/Gate wheel PID": "PIDController",
+      "/SmartDashboard/Holonomic target": "Field2d",
+      "/SmartDashboard/Odometry": "Field2d",
       "/SmartDashboard/SendableChooser[0]": "String Chooser",
       "/SmartDashboard/Swerve Drive PID": "PIDController",
       "/SmartDashboard/Swerve Steering PID": "PIDController"
-    },
-    "windows": {
-      "/SmartDashboard/Field": {
-        "window": {
-          "visible": true
-        }
-      }
     }
   },
   "NetworkTables Settings": {
@@ -61,7 +67,7 @@
               "max": 40.0
             }
           ],
-          "height": 415,
+          "height": -37,
           "series": [
             {
               "color": [

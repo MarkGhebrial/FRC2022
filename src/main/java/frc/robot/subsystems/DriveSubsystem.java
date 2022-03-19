@@ -101,8 +101,9 @@ public class DriveSubsystem extends SubsystemBase {
      * @param pose Pose to be written to odometry
      * @param rotation Roatation to be written to odometry
      */
-    public void resetOdometry (Pose2d pose, Rotation2d rotation) {
-        swerveOdometry.resetPosition(pose, rotation);
+    public void resetOdometry (Pose2d pose) {
+        IMU.tareIMU(pose.getRotation());
+        swerveOdometry.resetPosition(pose, new Rotation2d());
     }
 
     @Override
