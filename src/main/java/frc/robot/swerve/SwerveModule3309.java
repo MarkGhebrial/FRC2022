@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.WPI_CANCoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -56,7 +57,7 @@ public class SwerveModule3309 implements SwerveModule, Sendable {
     public String name; // Used for diplaying values on SmartDashboard
     private WPI_TalonFX driveMotor;
     private WPI_TalonFX steeringMotor;
-    private CANCoder steeringEncoder;
+    private WPI_CANCoder steeringEncoder;
 
     /** 
      * How many degrees the steering axis must be at (relative to its zeroed
@@ -90,7 +91,7 @@ public class SwerveModule3309 implements SwerveModule, Sendable {
         // Initialize the encoder
         // DO NOT configure the factory defaults. Doing so will reset the manually tuned
         // magnet offsets stored in the encoder's "custom slot"
-        steeringEncoder = new CANCoder(encoderID);
+        steeringEncoder = new WPI_CANCoder(encoderID);
         steeringEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
         steeringEncoder.configMagnetOffset(0);
 
