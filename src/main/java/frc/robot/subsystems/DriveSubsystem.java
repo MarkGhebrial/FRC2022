@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.IMU;
+import frc.robot.Vision;
 import frc.robot.swerve.SwerveModule3309;
 import friarLib2.hardware.SwerveModule;
 
@@ -125,5 +126,6 @@ public class DriveSubsystem extends SubsystemBase {
         field.setRobotPose(currentRobotPose);
 
         SmartDashboard.putNumber("Robot heading", IMU.getRobotYaw().getDegrees());
+        SmartDashboard.putNumber("Meters to target", Vision.getMetersFromTarget());
     }
 }
