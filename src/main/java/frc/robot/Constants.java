@@ -40,6 +40,23 @@ public final class Constants {
     public static class Climber {
         /********** Solenoid PCM Ports **********/
         public static final int CLIMBER_SOLENOID_ID = 4;
+
+        /********** CAN ID's **********/
+        public static final int LEADER_MOTOR_ID = 100; // TODO: Get the correct numbers (20?)
+        public static final int FOLLOWER_MOTOR_ID = 101;
+
+        /******** Physical Constants ********/
+        public static final double CLIMBER_GEAR_RATIO = 81.0 / 8.0;
+
+        /******** PID Gains & Motion Profile ********/
+        public static final double CLIMBER_MAX_ANGULAR_SPEED = 500; // Degrees/second
+        public static final double CLIMBER_MAX_ANGULAR_ACCELERATION = 200; // Degrees/second squared
+        public static final ProfiledPIDController CLIMBER_PID_CONTROLLER = new ProfiledPIDController(
+            0.1, 0, 0,
+            new TrapezoidProfile.Constraints(CLIMBER_MAX_ANGULAR_SPEED, CLIMBER_MAX_ANGULAR_ACCELERATION)
+        );
+
+        public static final double CLIMBER_STARTING_ANGLE = 0; // TODO: Find this number
     }
 
     /**
