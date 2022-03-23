@@ -105,8 +105,8 @@ public class RobotContainer {
             .whenActive(new InstantCommand(climber::retractClimber, climber));
 
         // Bind the oerator's D-pad to various shooting locations
-        //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0); // 0 is up, the values increase clockwise
-        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 0); //90
+        //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0 ); // 0 is up, the values increase clockwise
+        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 180); //90
         bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_FENDER, () -> OI.leftStickLeftCluster.get() || OI.rightStickRightCluster.get()); //180
         //bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_TARMAC, 270);
 
