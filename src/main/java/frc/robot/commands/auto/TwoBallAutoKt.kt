@@ -26,6 +26,9 @@ class TwoBallAutoKt (drive: DriveSubsystem, indexer: IndexerSubsystem, intake: I
                 +PrintCommand("Hello there")
                 +WaitCommand(1.0)
                 +PrintCommand("Hello from one second")
+                parallel {
+                    +PrintCommand("Nested parallel")
+                }
             }
         )
     }
