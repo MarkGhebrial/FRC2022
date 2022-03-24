@@ -101,8 +101,8 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void goToFiringSolution (FiringSolution solution) {
-        setFlywheelSpeed(solution.flywheelRPM);
-        setDeflector(solution.deflector);
+        setFlywheelSpeed(solution.getFlywheelRPM());
+        setDeflector(solution.getDeflector());
     }
 
     @Override

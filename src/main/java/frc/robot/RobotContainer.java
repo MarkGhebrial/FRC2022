@@ -14,6 +14,7 @@ import frc.robot.commands.ReverseShooter;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.auto.TaxiAndPreloadAuto;
 import frc.robot.commands.auto.TwoBallAuto;
+import frc.robot.commands.auto.TwoBallAutoKt;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.DriveTeleop;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
@@ -53,7 +54,7 @@ public class RobotContainer {
         autoChooser.addOption("No auto", new WaitUntilCommand(0));
         autoChooser.addOption("Preload auto (low goal)", new TaxiAndPreloadAuto(Constants.Shooter.LOW_HUB_FROM_FENDER, drive, indexer, shooter));
         autoChooser.setDefaultOption("Preload auto (high goal)", new TaxiAndPreloadAuto(new FiringSolution(2800, false), drive, indexer, shooter));
-        autoChooser.addOption("Two ball auto (hangar side)", new TwoBallAuto(drive, indexer, intake, shooter));
+        autoChooser.addOption("Two ball auto (hangar side)", new TwoBallAutoKt(drive, indexer, intake, shooter));
         SmartDashboard.putData(autoChooser);
 
         configureDefaultCommands();
