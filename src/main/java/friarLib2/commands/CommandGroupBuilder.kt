@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase
 import edu.wpi.first.wpilibj2.command.CommandGroupBase
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup
+import edu.wpi.first.wpilibj2.command.WaitCommand
 
 /**
  * Interface that requires overriding the unary plus operator for
@@ -37,6 +38,18 @@ class ParallelRaceGroup: edu.wpi.first.wpilibj2.command.ParallelRaceGroup(), Add
         addCommands(this)
 }
 
+class ParallelDeadlineGroup():
+    edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup(WaitCommand(0.0)),
+    AddCommand, SubtractCommand
+{
+    override operator fun Command.unaryPlus() =
+        addCommands(this)
+
+    /** Use the unary minus operator to add the deadline */
+    override operator fun Command.unaryMinus() =
+        setDeadline(this)
+}
+
 open class CommandGroupBuilder(): CommandBase() {
     // The command group that contains all other commands
     private var rootCommand: Command? = null;
@@ -62,6 +75,9 @@ open class CommandGroupBuilder(): CommandBase() {
     // Add a ParallelRaceGroup
     fun parallelRace(init: ParallelRaceGroup.() -> Unit): ParallelRaceGroup =
         initCommandGroup(ParallelRaceGroup(), init)
+
+    fun parallelDeadline(init: ParallelDeadlineGroup.() -> Unit): ParallelDeadlineGroup =
+        initCommandGroup(ParallelDeadlineGroup(), init)
 
     override fun initialize() {
         rootCommand?.initialize() ?: println("No commands have been added to the command group builder")
