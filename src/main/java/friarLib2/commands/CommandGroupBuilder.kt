@@ -6,6 +6,37 @@ import edu.wpi.first.wpilibj2.command.CommandGroupBase
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup
 
+/**
+ * Interface that requires overriding the unary plus operator for
+ * edu.wpi.first.wpilibj2.command.Command
+ */
+interface AddCommand {
+    operator fun Command.unaryPlus()
+}
+
+/**
+ * Interface that requires overriding the unary minus operator for
+ * edu.wpi.first.wpilibj2.command.Command
+ */
+interface SubtractCommand {
+    operator fun Command.unaryMinus()
+}
+
+class SequentialGroup: SequentialCommandGroup(), AddCommand {
+    override operator fun Command.unaryPlus() =
+        addCommands(this)
+}
+
+class ParallelGroup: ParallelCommandGroup(), AddCommand {
+    override operator fun Command.unaryPlus() =
+        addCommands(this)
+}
+
+class ParallelRaceGroup: edu.wpi.first.wpilibj2.command.ParallelRaceGroup(), AddCommand {
+    override operator fun Command.unaryPlus() =
+        addCommands(this)
+}
+
 open class CommandGroupBuilder(): CommandBase() {
     // The command group that contains all other commands
     private var rootCommand: Command? = null;
@@ -13,22 +44,24 @@ open class CommandGroupBuilder(): CommandBase() {
     private fun <T: CommandGroupBase> initCommandGroup(commandGroup: T, init: T.() -> Unit): T {
         commandGroup.init()
 
-        // If this is the first command to be added to the builder, then make it the root command
-        //if (rootCommand == null) {
-            println("Adding root command")
-            rootCommand = commandGroup;
-        //}
+        // Make this command the root command
+        println("Adding root command")
+        rootCommand = commandGroup;
 
         return commandGroup
     }
 
     // Add a SequentialCommandGroup
-    fun sequential(init: SequentialCommandGroup.() -> Unit) =
-        initCommandGroup(SequentialCommandGroup(), init)
+    fun sequential(init: SequentialGroup.() -> Unit): SequentialGroup =
+        initCommandGroup(SequentialGroup(), init)
 
     // Add a ParallelCommandGroup
-    fun parallel(init: ParallelCommandGroup.() -> Unit) =
-        initCommandGroup(ParallelCommandGroup(), init)
+    fun parallel(init: ParallelGroup.() -> Unit): ParallelGroup =
+        initCommandGroup(ParallelGroup(), init)
+
+    // Add a ParallelRaceGroup
+    fun parallelRace(init: ParallelRaceGroup.() -> Unit): ParallelRaceGroup =
+        initCommandGroup(ParallelRaceGroup(), init)
 
     override fun initialize() {
         rootCommand?.initialize() ?: println("No commands have been added to the command group builder")

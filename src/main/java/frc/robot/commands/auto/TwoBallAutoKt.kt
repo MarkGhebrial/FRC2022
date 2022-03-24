@@ -16,11 +16,11 @@ class TwoBallAutoKt (drive: DriveSubsystem, indexer: IndexerSubsystem, intake: I
             InstantCommand({ intake.extendIntake(IntakeSubsystem.Side.leftIntake) }, intake),
             FollowTrajectory(drive, "two-ball-auto-1"),
             InstantCommand(intake::retractIntake, intake),
-            RunForTime(Shoot(
+            Shoot(
                 { true },
                 Constants.Shooter.LOW_HUB_FROM_FENDER,
                 shooter, indexer
-            ), 5.0),
+            ).withTimeout(5.0),
 
             parallel {
                 +PrintCommand("Hello there")
