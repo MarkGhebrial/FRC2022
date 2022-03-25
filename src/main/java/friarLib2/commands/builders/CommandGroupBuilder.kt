@@ -1,51 +1,80 @@
 package friarLib2.commands.builders
 
+import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.*
 
-open class CommandGroupBuilder(): CommandBase() {
+fun group(init: CommandGroupBuilder.() -> Unit): CommandGroupBuilder {
+    val builder = CommandGroupBuilder()
+    builder.init()
+    return builder
+}
+
+/**
+ * A builder for command groups
+ */
+open class CommandGroupBuilder(): CommandBuilder {
     // The command group that contains all other commands
     private var rootCommand: Command? = null;
 
-    protected fun <B: CommandBuilder> initCommand(commandBuilder: B, init: B.() -> Unit): Command {
-        commandBuilder.init()
-
-        // Get the built command from the command builder
-        val built = commandBuilder.buildCommand();
-
-        // Make this command the root command
-        rootCommand = built
-
-        return built
+    /**
+     * A timer that starts counting when this command initializes
+     */
+    val timer: Timer = Timer()
+    init {
+        timer.stop()
+        timer.reset()
     }
 
-    // Add a SequentialCommandGroup
+    /**
+     * Set the root command using the unary plus operator
+     */
+    override fun Command.unaryPlus() {
+        rootCommand = this
+    }
+
+    private fun <B: CommandBuilder> initCommand(commandBuilder: B, init: B.() -> Unit): Command {
+        commandBuilder.init()
+        // Get the built command from the command builder
+        return commandBuilder.buildCommand();
+    }
+
+    /** Add a SequentialCommandGroup */
     fun sequential(init: SequentialCommandGroupBuilder.() -> Unit): Command =
         initCommand(SequentialCommandGroupBuilder(), init)
 
-    // Add a ParallelCommandGroup
+    /** Add a ParallelCommandGroup */
     fun parallel(init: ParallelCommandGroupBuilder.() -> Unit): Command =
         initCommand(ParallelCommandGroupBuilder(), init)
 
-    // Add a ParallelRaceGroup
-    fun parallelRace(init: ParallelRaceGroup.() -> Unit): Command =
+    /** Add a ParallelRaceGroup */
+    fun race(init: ParallelRaceGroup.() -> Unit): Command =
         initCommand(ParallelRaceGroupBuilder(), init)
 
-    fun parallelDeadline(init: ParallelDeadlineGroup.() -> Unit): Command =
+    /**
+     * Add a ParallelDeadlineGroup
+     *
+     * <p>Use the unary plus operator to add a command to the command
+     * group. Use the unary minus operator to add the deadline command
+     */
+    fun deadline(init: ParallelDeadlineGroup.() -> Unit): Command =
         initCommand(ParallelDeadlineGroupBuilder(), init)
 
-    override fun initialize() {
-        rootCommand?.initialize() ?: println("No commands have been added to the command group builder")
-    }
+    /**
+     * Use a TimedCommandBuilder to create a new TimedCommand
+     *
+     * <p>Use the unary plus operator to add a command to the timed
+     * parallel command group
+     */
+    fun timed(init: TimedCommandBuilder.() -> Unit): Command =
+        initCommand(TimedCommandBuilder(), init)
 
-    override fun execute() {
-        rootCommand?.execute() ?: println("No commands have been added to the command group builder")
-    }
-
-    override fun end(interrupted: Boolean) {
-        rootCommand?.end(interrupted) ?: println("No commands have been added to the command group builder")
-    }
-
-    override fun isFinished(): Boolean {
-        return rootCommand?.isFinished() ?: true // Finish immediately if there's no command to run
+    override fun buildCommand(): Command {
+        return sequential {
+            +InstantCommand({ // Reset the timer before starting the normally scheduled command
+                timer.reset()
+                timer.start()
+            })
+            +(rootCommand ?: PrintCommand("No commands have been added to the command group builder"))
+        }
     }
 }
