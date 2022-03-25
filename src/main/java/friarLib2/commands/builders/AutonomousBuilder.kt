@@ -2,9 +2,6 @@ package friarLib2.commands.builders
 
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.*
-import friarLib2.commands.CommandBuilder
-import friarLib2.commands.CommandGroupBuilder
-import friarLib2.commands.ParallelCommandGroupBuilder
 
 /**
  * A command that starts after a certain amount of time and ends after
@@ -13,7 +10,7 @@ import friarLib2.commands.ParallelCommandGroupBuilder
 class TimedCommand(
     startTime: Double,
     runTime: Double,
-    val command: Command
+    command: Command
 ): SequentialCommandGroup(
     WaitCommand(startTime),
     command.withTimeout(runTime)

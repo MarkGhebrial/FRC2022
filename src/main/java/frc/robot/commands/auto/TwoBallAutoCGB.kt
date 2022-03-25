@@ -1,8 +1,6 @@
 package frc.robot.commands.auto
 
-import edu.wpi.first.wpilibj2.command.InstantCommand
-import edu.wpi.first.wpilibj2.command.PrintCommand
-import edu.wpi.first.wpilibj2.command.RunCommand
+import edu.wpi.first.wpilibj2.command.StartEndCommand
 import frc.robot.Constants
 import frc.robot.commands.Shoot
 import frc.robot.commands.drive.FollowTrajectory
@@ -21,7 +19,6 @@ class TwoBallAutoCGB(
     init {
         parallel {
             +sequential {
-                +PrintCommand("Starting sequential")
                 +FollowTrajectory(drive,"two-ball-auto-1")
                 +Shoot(
                     { timer.get() >= 5 },
@@ -29,18 +26,14 @@ class TwoBallAutoCGB(
                     shooter, indexer
                 ).withTimeout(5.0)
             }
-            +PrintCommand("Root parallel is OK")
-            +RunCommand({ println("${timer.get()}") })
 
             // Extend and retract the intake
             +timed {
-                +InstantCommand({ intake.extendIntake(IntakeSubsystem.Side.leftIntake) }, intake)
-                    .andThen(
-                        InstantCommand(intake::retractIntake, intake),
-                        PrintCommand("Retracting intake at ${timer.get()}")
-                    )
-                +PrintCommand("Starting timed at ${timer.get()}")
-
+                +StartEndCommand(
+                    { intake.extendIntake(IntakeSubsystem.Side.leftIntake) },
+                    { intake.retractIntake() },
+                    intake
+                )
                 startTime = .2
                 endTime = 5.0
             }
