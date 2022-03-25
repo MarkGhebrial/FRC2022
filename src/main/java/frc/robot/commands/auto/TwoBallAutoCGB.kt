@@ -8,6 +8,7 @@ import frc.robot.subsystems.DriveSubsystem
 import frc.robot.subsystems.IndexerSubsystem
 import frc.robot.subsystems.IntakeSubsystem
 import frc.robot.subsystems.ShooterSubsystem
+import frc.robot.util.FiringSolution
 import friarLib2.commands.CommandCommand
 import friarLib2.commands.builders.group
 
@@ -23,7 +24,7 @@ class TwoBallAutoCGB(
                 +FollowTrajectory(drive,"two-ball-auto-1")
                 +AutonomousShoot(
                     0.3, 5.0,
-                    Constants.Shooter.LOW_HUB_FROM_FENDER,
+                    FiringSolution(2800.0, false),
                     shooter, indexer
                 )
             }
@@ -39,5 +40,5 @@ class TwoBallAutoCGB(
                 endTime = 5.0
             }
         }
-    }.buildCommand()
+    }
 )

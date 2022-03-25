@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.auto.TaxiAndPreloadAuto;
 import frc.robot.commands.auto.TwoBallAutoCGB;
+import frc.robot.commands.climb.BeginClimb;
+import frc.robot.commands.climb.RetractClimber;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.DriveTeleop;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
@@ -71,6 +73,12 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        new LambdaTrigger(() -> OI.rightStick.getTop())
+            .whenActive(new BeginClimb(climber, drive));
+
+        new LambdaTrigger(() -> OI.rightStick.getPOV() != -1)
+            .whenActive(new RetractClimber(climber));
+
         new LambdaTrigger(() -> OI.leftStick.getTrigger())
             .whileActiveContinuous(new PointInDirectionOfTravel(drive));
 
@@ -96,7 +104,7 @@ public class RobotContainer {
         new LambdaTrigger(() -> OI.operatorController.getRightTriggerAxis() >= 0.5)
             .whileActiveContinuous(new Outtake(intake));
 
-        // Bind the oerator's D-pad to various shooting locations
+        // Bind the operator's D-pad to various shooting locations
         //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0 ); // 0 is up, the values increase clockwise
         bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 180); //90
         bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_FENDER, () -> OI.leftStickLeftCluster.get() || OI.rightStickRightCluster.get()); //180

@@ -3,10 +3,10 @@ package friarLib2.commands.builders
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.*
 
-fun group(init: CommandGroupBuilder.() -> Unit): CommandGroupBuilder {
+fun group(init: CommandGroupBuilder.() -> Unit): Command {
     val builder = CommandGroupBuilder()
     builder.init()
-    return builder
+    return builder.buildCommand()
 }
 
 /**
@@ -38,6 +38,7 @@ open class CommandGroupBuilder(): CommandBuilder {
         return commandBuilder.buildCommand();
     }
 
+    // TODO: We can move these methods out of this class to make them available elsewhere
     /** Add a SequentialCommandGroup */
     fun sequential(init: SequentialCommandGroupBuilder.() -> Unit): Command =
         initCommand(SequentialCommandGroupBuilder(), init)

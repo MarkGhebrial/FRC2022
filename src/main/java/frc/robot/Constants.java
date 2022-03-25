@@ -56,7 +56,7 @@ public final class Constants {
             new TrapezoidProfile.Constraints(CLIMBER_MAX_ANGULAR_SPEED, CLIMBER_MAX_ANGULAR_ACCELERATION)
         );
 
-        public static final double CLIMBER_STARTING_ANGLE = 0; // TODO: Find this number
+        public static final double CLIMBER_STARTING_ANGLE = 15; // TODO: Find this number
     }
 
     /**

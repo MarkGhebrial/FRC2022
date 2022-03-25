@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
@@ -28,12 +30,22 @@ public class ClimberSubsystem extends ProfiledPIDSubsystem {
         followerMotor = new WPI_TalonFX(FOLLOWER_MOTOR_ID);
 
         leaderMotor.configFactoryDefault();
+        leaderMotor.setNeutralMode(NeutralMode.Coast);
+
+        followerMotor.configFactoryDefault();
+        followerMotor.setNeutralMode(NeutralMode.Coast);
+        followerMotor.follow(leaderMotor);
+
+        leaderMotor.setInverted(false);
+        followerMotor.setInverted(true);
 
         solenoid = new Solenoid(
             Constants.PCM_CAN_ID,
             Constants.PCM_TYPE,
             CLIMBER_SOLENOID_ID
         );
+
+        leaderMotor.setSelectedSensorPosition(UnitConversions.Climber.climberDegreesToEncoderTicks(CLIMBER_STARTING_ANGLE));
     }
 
     public boolean isExtended() {
@@ -45,18 +57,36 @@ public class ClimberSubsystem extends ProfiledPIDSubsystem {
     }
 
     /**
+     * Set the angle of the climber.
+     *
+     * <p>A position of zero would be horizontal to the ground. Looking
+     * from the right side of the robot, positive degrees are clockwise.
+     *
+     * @param degrees The new setpoint
+     */
+    public void setClimberPosition(double degrees) {
+        if (isExtended()) {
+            setGoal(degrees);
+        }
+    }
+
+    /**
      * @return The cliber's angle relative to the robot frame. Returns
      *         -1 if the climber is retracted.
      */
     public double getClimberPosition() {
-        if (isExtended()) {
+        if (!isExtended()) {
             return -1;
         }
         return UnitConversions.Climber.climberEncoderTicksToDegrees(leaderMotor.getSelectedSensorPosition());
     }
 
+    public boolean isClimberAtTargetPosition() {
+        return isExtended() && getController().getPositionError() <= 5;
+    }
+
     public double getClimberPositionRelativeToGround() {
-        if (isExtended()) {
+        if (!isExtended()) {
             return -1;
         }
         return getClimberPosition() + IMU.getRobotPitch().getDegrees();
