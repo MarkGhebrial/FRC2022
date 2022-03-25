@@ -6,6 +6,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.IMU;
@@ -15,6 +16,8 @@ import friarLib2.hardware.SwerveModule;
 import static frc.robot.Constants.Drive.*;
 
 public class DriveSubsystem extends SubsystemBase {
+
+    private final Field2d field = new Field2d();
 
     private SwerveModule frontLeftModule;
     private SwerveModule frontRightModule;
@@ -43,6 +46,8 @@ public class DriveSubsystem extends SubsystemBase {
         swerveOdometry = new SwerveDriveOdometry(swerveKinematics, IMU.getRobotYaw());
 
         IMU.zeroIMU();
+
+        SmartDashboard.putData("Odometry", field);
     }
 
     public void setModuleStates (SwerveModuleState[] states) {
@@ -96,8 +101,9 @@ public class DriveSubsystem extends SubsystemBase {
      * @param pose Pose to be written to odometry
      * @param rotation Roatation to be written to odometry
      */
-    public void resetOdometry (Pose2d pose, Rotation2d rotation) {
-        swerveOdometry.resetPosition(pose, rotation);
+    public void resetOdometry (Pose2d pose) {
+        IMU.tareIMU(pose.getRotation());
+        swerveOdometry.resetPosition(pose, new Rotation2d());
     }
 
     @Override
@@ -115,6 +121,8 @@ public class DriveSubsystem extends SubsystemBase {
         frontRightModule.outputToDashboard();
         backLeftModule.outputToDashboard();
         backRightModule.outputToDashboard();
+
+        field.setRobotPose(currentRobotPose);
 
         SmartDashboard.putNumber("Robot heading", IMU.getRobotYaw().getDegrees());
     }
