@@ -143,7 +143,7 @@ public final class Constants {
         public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(1850, true);
 
         public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(2900, false); //2400 //2520
-        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(2850, true);
+        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(2770, true);
         public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(3450, true);
     }
 }
