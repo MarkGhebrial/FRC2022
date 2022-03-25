@@ -115,7 +115,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void setLeftIntakeRoller (boolean on) {
-        setLeftIntakeRoller(INTAKE_MOTOR_POWER);
+        setLeftIntakeRoller(on ? INTAKE_MOTOR_POWER : 0);
     }
 
     /**
@@ -126,7 +126,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void setRightIntakeRoller (boolean on) {
-        setRightIntakeRoller(INTAKE_MOTOR_POWER);
+        setRightIntakeRoller(on ? INTAKE_MOTOR_POWER : 0);
     }
 
     /**

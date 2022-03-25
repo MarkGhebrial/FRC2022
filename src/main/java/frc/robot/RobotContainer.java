@@ -10,16 +10,16 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ReverseShooter;
-import frc.robot.commands.Shoot;
 import frc.robot.commands.auto.TaxiAndPreloadAuto;
-import frc.robot.commands.auto.TwoBallAuto;
+import frc.robot.commands.auto.TwoBallAutoCGB;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.DriveTeleop;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.commands.intake.IntakeAndIndex;
 import frc.robot.commands.intake.Outtake;
 import frc.robot.commands.intake.SpinIntakeRollers;
+import frc.robot.commands.shoot.ReverseShooter;
+import frc.robot.commands.shoot.Shoot;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -53,7 +53,7 @@ public class RobotContainer {
         autoChooser.addOption("No auto", new WaitUntilCommand(0));
         autoChooser.addOption("Preload auto (low goal)", new TaxiAndPreloadAuto(Constants.Shooter.LOW_HUB_FROM_FENDER, drive, indexer, shooter));
         autoChooser.setDefaultOption("Preload auto (high goal)", new TaxiAndPreloadAuto(new FiringSolution(2800, false), drive, indexer, shooter));
-        autoChooser.addOption("Two ball auto (hangar side)", new TwoBallAuto(drive, indexer, intake, shooter));
+        autoChooser.addOption("Two ball auto (hangar side)", new TwoBallAutoCGB(drive, indexer, intake, shooter));
         SmartDashboard.putData(autoChooser);
 
         configureDefaultCommands();
@@ -97,8 +97,8 @@ public class RobotContainer {
             .whileActiveContinuous(new Outtake(intake));
 
         // Bind the oerator's D-pad to various shooting locations
-        //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0); // 0 is up, the values increase clockwise
-        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 0); //90
+        //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0 ); // 0 is up, the values increase clockwise
+        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 180); //90
         bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_FENDER, () -> OI.leftStickLeftCluster.get() || OI.rightStickRightCluster.get()); //180
         //bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_TARMAC, 270);
 

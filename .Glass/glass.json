@@ -1,6 +1,20 @@
 {
   "NetworkTables": {
+    "LiveWindow": {
+      "DriveSubsystem": {
+        "open": true
+      }
+    },
     "SmartDashboard": {
+      "Holonomic target": {
+        "open": true
+      },
+      "Odometry": {
+        "open": true
+      },
+      "Swerve Drive PID": {
+        "open": true
+      },
       "open": true
     },
     "types": {
@@ -30,8 +44,12 @@
       "/LiveWindow/Ungrouped/Talon SRX [17]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon SRX [18]": "Motor Controller",
       "/SmartDashboard/Auto choices": "String Chooser",
+      "/SmartDashboard/Drivetrain acceleration": "String Chooser",
+      "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Flywheel PID": "PIDController",
       "/SmartDashboard/Gate wheel PID": "PIDController",
+      "/SmartDashboard/Holonomic target": "Field2d",
+      "/SmartDashboard/Odometry": "Field2d",
       "/SmartDashboard/SendableChooser[0]": "String Chooser",
       "/SmartDashboard/Swerve Drive PID": "PIDController",
       "/SmartDashboard/Swerve Steering PID": "PIDController"
@@ -49,7 +67,7 @@
               "max": 40.0
             }
           ],
-          "height": 415,
+          "height": -37,
           "series": [
             {
               "color": [
@@ -85,7 +103,7 @@
               "max": 5000.0
             }
           ],
-          "height": 332,
+          "height": -37,
           "series": [
             {
               "color": [
@@ -131,7 +149,7 @@
               "min": -360.0
             }
           ],
-          "height": 332,
+          "height": -37,
           "series": [
             {
               "color": [

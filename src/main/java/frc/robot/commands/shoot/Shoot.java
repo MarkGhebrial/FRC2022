@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.shoot;
 
 import java.util.function.BooleanSupplier;
 
@@ -12,7 +12,7 @@ import frc.robot.util.FiringSolution;
  */
 public class Shoot extends CommandBase {
 
-    private BooleanSupplier shootCondition;
+    protected BooleanSupplier shootCondition;
     private FiringSolution solution;
 
     private ShooterSubsystem shooter;
@@ -31,10 +31,6 @@ public class Shoot extends CommandBase {
     @Override
     public void initialize() {
         shooter.goToFiringSolution(solution);
-
-        /*intake.retractIntake();
-        intake.setLeftIntakeRoller(true, 0.2);
-        intake.setRightIntakeRoller(true, 0.2);*/
     }
 
     @Override
