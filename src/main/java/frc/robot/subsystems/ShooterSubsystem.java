@@ -84,7 +84,7 @@ public class ShooterSubsystem extends SubsystemBase {
      * @return True if the flywheel is on and at its target velocity
      */
     public boolean isFlywheelUpToSpeed () {
-        boolean isRunning = getFlywheelRPM() >= 50;
+        boolean isRunning = getFlywheelRPM() >= 50  && flywheelLeader.getMotorOutputPercent() >= 0.05;
 
         boolean isUpToSpeed = Math.abs(flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopError())) <= FLYWHEEL_SPEED_TOLERANCE;
 

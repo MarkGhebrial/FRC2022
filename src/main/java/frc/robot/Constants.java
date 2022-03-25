@@ -59,7 +59,7 @@ public final class Constants {
         public static final Translation2d BACK_RIGHT_MODULE_TRANSLATION = new Translation2d(-0.34671, -0.23241);
 
         /********** Autonomous Motion Envelope **********/
-        public static final double MAX_AUTON_SPEED = 1; // Meters/second
+        public static final double MAX_AUTON_SPEED = 2; // Meters/second
         public static final double MAX_AUTON_ACCELERATION = 2.5; // Meters/second squared
         public static final double MAX_AUTON_ANGULAR_SPEED = 400; // Degrees/second
         public static final double MAX_AUTON_ANGULAR_ACCELERATION = 200; // Degrees/second squared
@@ -70,7 +70,7 @@ public final class Constants {
         public static final ProfiledPIDController HOLONOMIC_CONTROLLER_PID_THETA = new ProfiledPIDController(5, 0, 0, new TrapezoidProfile.Constraints(MAX_AUTON_ANGULAR_SPEED, MAX_AUTON_ANGULAR_ACCELERATION));
 
         /******** PID Gains ********/
-        public static final PIDController VISION_AIM_PID = new PIDController(0.1, 0, 0);
+        public static final PIDController VISION_AIM_PID = new PIDController(0.3, 0, 0);
 
         /********** Teleop Control Adjustment **********/
         public static final double MAX_TELEOP_SPEED = 6; // Meters/second
@@ -114,7 +114,7 @@ public final class Constants {
         public static final int RIGHT_INTAKE_MOTOR_ID = 14;
 
         /********** Tuning Constants **********/
-        public static final double INTAKE_MOTOR_POWER = 0.5;
+        public static final double INTAKE_MOTOR_POWER = 0.50;
     }
 
     /** 

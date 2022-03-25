@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ReverseShooter;
-import frc.robot.commands.Shoot;
 import frc.robot.commands.auto.TaxiAndPreloadAuto;
 import frc.robot.commands.auto.TwoBallAuto;
 import frc.robot.commands.auto.TwoBallAutoCGB;
@@ -21,6 +19,8 @@ import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.commands.intake.IntakeAndIndex;
 import frc.robot.commands.intake.Outtake;
 import frc.robot.commands.intake.SpinIntakeRollers;
+import frc.robot.commands.shoot.ReverseShooter;
+import frc.robot.commands.shoot.Shoot;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -106,8 +106,8 @@ public class RobotContainer {
             .whenActive(new InstantCommand(climber::retractClimber, climber));
 
         // Bind the oerator's D-pad to various shooting locations
-        //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0); // 0 is up, the values increase clockwise
-        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 0); //90
+        //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0 ); // 0 is up, the values increase clockwise
+        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 180); //90
         bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_FENDER, () -> OI.leftStickLeftCluster.get() || OI.rightStickRightCluster.get()); //180
         //bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_TARMAC, 270);
 
