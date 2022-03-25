@@ -1,10 +1,9 @@
 package frc.robot.commands.auto
 
-import edu.wpi.first.wpilibj2.command.PrintCommand
 import edu.wpi.first.wpilibj2.command.StartEndCommand
 import frc.robot.Constants
-import frc.robot.commands.Shoot
 import frc.robot.commands.drive.FollowTrajectory
+import frc.robot.commands.shoot.AutonomousShoot
 import frc.robot.subsystems.DriveSubsystem
 import frc.robot.subsystems.IndexerSubsystem
 import frc.robot.subsystems.IntakeSubsystem
@@ -22,11 +21,11 @@ class TwoBallAutoCGB(
         +parallel {
             +sequential {
                 +FollowTrajectory(drive,"two-ball-auto-1")
-                +Shoot(
-                    { timer.get() >= 5 },
+                +AutonomousShoot(
+                    0.3, 5.0,
                     Constants.Shooter.LOW_HUB_FROM_FENDER,
                     shooter, indexer
-                ).withTimeout(5.0)
+                )
             }
 
             // Extend and retract the intake

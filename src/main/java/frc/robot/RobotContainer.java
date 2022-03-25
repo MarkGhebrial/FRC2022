@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.auto.TaxiAndPreloadAuto;
-import frc.robot.commands.auto.TwoBallAuto;
 import frc.robot.commands.auto.TwoBallAutoCGB;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.DriveTeleop;
