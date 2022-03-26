@@ -707,12 +707,12 @@
                 {
                   "_type": "Text View",
                   "_source0": "network_table:///LiveWindow/Ungrouped/Talon FX [9]/Value",
-                  "_title": "/LiveWindow/Ungrouped/Talon FX [9]/Value"
+                  "_title": "Talon FX [9]/Value"
                 },
                 {
                   "_type": "Text View",
                   "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[1,7]/Value",
-                  "_title": "/LiveWindow/Ungrouped/DoubleSolenoid[1,7]/Value"
+                  "_title": "DoubleSolenoid[1,7]/Value"
                 }
               ]
             }
