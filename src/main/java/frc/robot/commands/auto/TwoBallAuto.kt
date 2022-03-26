@@ -12,7 +12,7 @@ import frc.robot.util.FiringSolution
 import friarLib2.commands.CommandCommand
 import friarLib2.commands.builders.group
 
-class TwoBallAutoCGB(
+class TwoBallAuto(
     drive: DriveSubsystem,
     indexer: IndexerSubsystem,
     intake: IntakeSubsystem,
