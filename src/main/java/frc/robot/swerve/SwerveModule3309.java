@@ -51,8 +51,15 @@ public class SwerveModule3309 implements SwerveModule {
     public static final PIDParameters STEERING_PID_GAINS = new PIDParameters(.1, 0.002, 0, "Swerve Steering PID");
     public static final double ABSOLUTE_MAX_DRIVE_SPEED = 7; // meters/sec
 
+    public static final SupplyCurrentLimitConfiguration DRIVE_MOTOR_CURRENT_LIMIT = new SupplyCurrentLimitConfiguration(
+        true,
+        40,
+        60,
+        0.5
+    );
+
     /********** Member Variables **********/
-    public String name; // Used for diplaying values on SmartDashboard
+    public String name; // Used for displaying values on SmartDashboard
     private WPI_TalonFX driveMotor;
     private WPI_TalonFX steeringMotor;
     private CANCoder steeringEncoder;
@@ -118,14 +125,7 @@ public class SwerveModule3309 implements SwerveModule {
         DRIVE_PID_GAINS.configureMotorPID(driveMotor);
         driveMotor.config_IntegralZone(0, 500);
         driveMotor.setNeutralMode(NeutralMode.Brake);
-        driveMotor.configSupplyCurrentLimit(
-            new SupplyCurrentLimitConfiguration(
-                true,
-                40,
-                60,
-                0.5
-            )
-        );
+        driveMotor.configSupplyCurrentLimit(DRIVE_MOTOR_CURRENT_LIMIT);
 
         steeringMotor.configFactoryDefault();
         STEERING_PID_GAINS.configureMotorPID(steeringMotor);
