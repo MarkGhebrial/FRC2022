@@ -43,7 +43,7 @@ public class FollowTrajectory extends CommandBase {
             Constants.Drive.HOLONOMIC_CONTROLLER_PID_THETA
         );
         // Set the range where the holonomic controller considers itself at its target location
-        holonomicController.setTolerance(new Pose2d(new Translation2d(.09, .09), Rotation2d.fromDegrees(10)));
+        holonomicController.setTolerance(new Pose2d(new Translation2d(.09, .09), Rotation2d.fromDegrees(3)));
 
         trajectory = openTrajectoryFromJSON(trajectoryJSON); //Load the pathweaver trajectory
 
