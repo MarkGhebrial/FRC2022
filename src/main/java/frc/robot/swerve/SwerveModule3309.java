@@ -2,6 +2,7 @@ package frc.robot.swerve;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -117,6 +118,14 @@ public class SwerveModule3309 implements SwerveModule {
         DRIVE_PID_GAINS.configureMotorPID(driveMotor);
         driveMotor.config_IntegralZone(0, 500);
         driveMotor.setNeutralMode(NeutralMode.Brake);
+        driveMotor.configSupplyCurrentLimit(
+            new SupplyCurrentLimitConfiguration(
+                true,
+                40,
+                60,
+                0.5
+            )
+        );
 
         steeringMotor.configFactoryDefault();
         STEERING_PID_GAINS.configureMotorPID(steeringMotor);
