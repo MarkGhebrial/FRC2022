@@ -1,6 +1,5 @@
 package friarLib2.commands.builders
 
-import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.*
 
 fun group(init: CommandGroupBuilder.() -> Unit): Command {
@@ -15,15 +14,6 @@ fun group(init: CommandGroupBuilder.() -> Unit): Command {
 open class CommandGroupBuilder(): CommandBuilder {
     // The command group that contains all other commands
     private var rootCommand: Command? = null;
-
-    /**
-     * A timer that starts counting when this command initializes
-     */
-    val timer: Timer = Timer()
-    init {
-        timer.stop()
-        timer.reset()
-    }
 
     /**
      * Set the root command using the unary plus operator
@@ -68,13 +58,6 @@ open class CommandGroupBuilder(): CommandBuilder {
     fun timed(init: TimedCommandBuilder.() -> Unit): Command =
         initCommand(TimedCommandBuilder(), init)
 
-    override fun buildCommand(): Command {
-        return sequential {
-            +InstantCommand({ // Reset the timer before starting the normally scheduled command
-                timer.reset()
-                timer.start()
-            })
-            +(rootCommand ?: PrintCommand("No commands have been added to the command group builder"))
-        }
-    }
+    override fun buildCommand(): Command =
+        rootCommand ?: PrintCommand("No commands have been added to the command group builder")
 }
