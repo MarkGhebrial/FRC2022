@@ -1,7 +1,7 @@
 package frc.robot.commands.auto
 
+import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.StartEndCommand
-import frc.robot.Constants
 import frc.robot.commands.drive.FollowTrajectory
 import frc.robot.commands.shoot.AutonomousShoot
 import frc.robot.subsystems.DriveSubsystem
@@ -9,7 +9,6 @@ import frc.robot.subsystems.IndexerSubsystem
 import frc.robot.subsystems.IntakeSubsystem
 import frc.robot.subsystems.ShooterSubsystem
 import frc.robot.util.FiringSolution
-import friarLib2.commands.CommandCommand
 import friarLib2.commands.builders.group
 
 class TwoBallAuto(
@@ -17,8 +16,8 @@ class TwoBallAuto(
     indexer: IndexerSubsystem,
     intake: IntakeSubsystem,
     shooter: ShooterSubsystem
-): CommandCommand(
-    group {
+): Command by
+    group ({
         +parallel {
             +sequential {
                 +FollowTrajectory(drive,"two-ball-auto-1")
@@ -40,5 +39,4 @@ class TwoBallAuto(
                 runTime = 1.95
             }
         }
-    }.buildCommand()
-)
+    })
