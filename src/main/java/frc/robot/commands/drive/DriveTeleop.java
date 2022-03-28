@@ -30,24 +30,22 @@ public class DriveTeleop extends CommandBase {
 
     protected DriveSubsystem drive;
 
-    private DoubleSlewRateLimiter xAccelLimiter;
-    private DoubleSlewRateLimiter yAccelLimiter;
+    private static final DoubleSlewRateLimiter xAccelLimiter = new DoubleSlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION, Constants.Drive.MAX_TELEOP_DECELERATION);
+    private static final DoubleSlewRateLimiter yAccelLimiter = new DoubleSlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION, Constants.Drive.MAX_TELEOP_DECELERATION);
 
-    SendableChooser<Boolean> accelChooser; // Menu on the dashboard to toggle acceleration limits
+    /** Menu on the dashboard to toggle acceleration limits */
+    static SendableChooser<Boolean> accelChooser = new SendableChooser<>();
+    static {
+        // Configure the dashboard menu
+        accelChooser.setDefaultOption("Normal acceleration", true);
+        accelChooser.addOption("No acceleration limits", false);
+        SmartDashboard.putData("Drivetrain acceleration", accelChooser);
+    }
 
     public DriveTeleop(DriveSubsystem drive) {
         this.drive = drive;
 
-        xAccelLimiter = new DoubleSlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION, Constants.Drive.MAX_TELEOP_DECELERATION);
-        yAccelLimiter = new DoubleSlewRateLimiter(Constants.Drive.MAX_TELEOP_ACCELERATION, Constants.Drive.MAX_TELEOP_DECELERATION);
-
         addRequirements(drive);
-
-        // Configure the dashbaord menu
-        accelChooser = new SendableChooser<Boolean>();
-        accelChooser.setDefaultOption("Normal acceleration", true);
-        accelChooser.addOption("No accleration limits", false);
-        SmartDashboard.putData("Drivetrain acceleration", accelChooser);
     }
 
     @Override
