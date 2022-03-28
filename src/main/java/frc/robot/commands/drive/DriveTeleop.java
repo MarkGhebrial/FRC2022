@@ -49,10 +49,7 @@ public class DriveTeleop extends CommandBase {
     }
 
     @Override
-    public void initialize() {
-        xAccelLimiter.reset(0);
-        yAccelLimiter.reset(0);
-    }
+    public void initialize() { }
 
     @Override
     public void execute() {
