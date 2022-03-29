@@ -1,6 +1,7 @@
 package frc.robot.commands.climb
 
 import edu.wpi.first.wpilibj2.command.Command
+import edu.wpi.first.wpilibj2.command.PrintCommand
 import edu.wpi.first.wpilibj2.command.RunCommand
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand
 import frc.robot.subsystems.ClimberSubsystem
@@ -13,19 +14,23 @@ import friarLib2.commands.builders.group
  */
 class SetClimberPosition(position: Double, climber: ClimberSubsystem) : CommandCommand(
     group{
-        +deadline {
-            +RunCommand(
-                {
-                    climber.setClimberPower(
-                        if (position <= climber.climberPositionRelativeToGround) {
-                            0.3
-                        } else {
-                            -0.3
-                        }
-                    )
-                }, climber
-            )
-            -WaitUntilCommand{ position - climber.climberPositionRelativeToGround <= 2 }
+        if (climber.isExtended) {
+            +deadline {
+                +RunCommand(
+                    {
+                        climber.setClimberPower(
+                            if (position <= climber.climberPositionRelativeToGround) {
+                                0.3
+                            } else {
+                                -0.3
+                            }
+                        )
+                    }, climber
+                )
+                -WaitUntilCommand { position - climber.climberPositionRelativeToGround <= 2 }
+            }
+        } else {
+            +PrintCommand("Climber is not extended")
         }
     }
 )
