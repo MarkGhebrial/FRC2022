@@ -45,7 +45,7 @@ public class RobotContainer {
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
 
-    private SendableChooser<Command> autoChooser = new SendableChooser<Command>();
+    private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -104,7 +104,7 @@ public class RobotContainer {
         //new LambdaTrigger(() -> OI.rightStick.getTop())
         //    .whenActive(new InstantCommand(climber::retractClimber, climber));
 
-        // Bind the oerator's D-pad to various shooting locations
+        // Bind the operator's D-pad to various shooting locations
         //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0 ); // 0 is up, the values increase clockwise
         bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_TARMAC, 180); //90
         bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_FENDER, () -> OI.leftStickLeftCluster.get() || OI.rightStickRightCluster.get()); //180
@@ -143,7 +143,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
         return autoChooser.getSelected();
     }
 }

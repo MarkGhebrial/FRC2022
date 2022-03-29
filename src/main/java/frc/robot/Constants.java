@@ -146,7 +146,7 @@ public final class Constants {
         public static final double FLYWHEEL_IZONE = 700; // RPM
 
         /********** Tuning Constants **********/
-        public static final double FLYWHEEL_SPEED_TOLERANCE = 30; // RPM
+        public static final double FLYWHEEL_SPEED_TOLERANCE = 10; // RPM
 
         /******** Physical Constants ********/
         public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;
