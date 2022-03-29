@@ -9,6 +9,7 @@ import frc.robot.subsystems.IndexerSubsystem
 import frc.robot.subsystems.IntakeSubsystem
 import frc.robot.subsystems.ShooterSubsystem
 import frc.robot.util.FiringSolution
+import friarLib2.commands.CommandCommand
 import friarLib2.commands.builders.group
 
 class TwoBallAuto(
@@ -16,8 +17,8 @@ class TwoBallAuto(
     indexer: IndexerSubsystem,
     intake: IntakeSubsystem,
     shooter: ShooterSubsystem
-): Command by
-    group ({
+): CommandCommand(
+    group {
         +parallel {
             +sequential {
                 +FollowTrajectory(drive,"two-ball-auto-1")
@@ -39,4 +40,5 @@ class TwoBallAuto(
                 runTime = 1.95
             }
         }
-    })
+    }
+)

@@ -3,11 +3,11 @@ package friarLib2.commands.builders
 import edu.wpi.first.wpilibj2.command.Command
 import friarLib2.commands.TimedCommand
 
-class TimedCommandBuilder(
-        var startTime: Double = 0.0,
-        var runTime: Double = 0.0,
-        private val commandBuilder: ParallelCommandGroupBuilder = ParallelCommandGroupBuilder()
-): CommandBuilder {
+class TimedCommandBuilder: CommandBuilder {
+    private val commandBuilder: ParallelCommandGroupBuilder = ParallelCommandGroupBuilder()
+
+    var startTime: Double = 0.0
+    var runTime: Double = 0.0
     var endTime: Double
         get() = startTime + runTime
         set(value) {
@@ -19,5 +19,5 @@ class TimedCommandBuilder(
     }
 
     override fun buildCommand(): Command =
-            TimedCommand(startTime, runTime, commandBuilder.buildCommand())
+        TimedCommand(startTime, runTime, commandBuilder.buildCommand())
 }
