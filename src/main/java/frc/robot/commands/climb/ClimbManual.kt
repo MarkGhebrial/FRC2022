@@ -5,6 +5,10 @@ import frc.robot.OI
 import frc.robot.subsystems.ClimberSubsystem
 
 class ClimbManual(private val climber: ClimberSubsystem) : CommandBase() {
+    init {
+        addRequirements(climber)
+    }
+
     override fun execute() {
         climber.setClimberPower(OI.operatorController.leftYWithDeadband)
     }
