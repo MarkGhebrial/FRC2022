@@ -18,6 +18,8 @@ public class DriveAndAim extends DriveTeleop {
      */
     @Override
     protected double calculateRotationalSpeed (Vector3309 translationalSpeeds) {
+        Constants.Drive.VISION_AIM_PID.setSetpoint(1);
+
         if (Vision.shooterCamera.hasTargets()) {
             return Constants.Drive.VISION_AIM_PID.calculate(Vision.shooterCamera.getBestTarget().getX());
         }

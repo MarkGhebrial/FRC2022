@@ -97,12 +97,12 @@ public class RobotContainer {
             .whileActiveContinuous(new Outtake(intake));
 
         // Extend the climber
-        new LambdaTrigger(() -> OI.rightStick.getPOV() != -1)
-            .whenActive(new InstantCommand(climber::extendClimber, climber));
+        //new LambdaTrigger(() -> OI.rightStick.getPOV() != -1)
+        //    .whenActive(new InstantCommand(climber::extendClimber, climber));
 
         // Retract the climber
-        new LambdaTrigger(() -> OI.rightStick.getTop())
-            .whenActive(new InstantCommand(climber::retractClimber, climber));
+        //new LambdaTrigger(() -> OI.rightStick.getTop())
+        //    .whenActive(new InstantCommand(climber::retractClimber, climber));
 
         // Bind the oerator's D-pad to various shooting locations
         //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0 ); // 0 is up, the values increase clockwise
