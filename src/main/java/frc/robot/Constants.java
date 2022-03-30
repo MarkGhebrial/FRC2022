@@ -38,12 +38,9 @@ public final class Constants {
      * Constants for the Climber
      */
     public static class Climber {
-        /********** Solenoid PCM Ports **********/
-        public static final int CLIMBER_SOLENOID_ID = 4;
-
         /********** CAN ID's **********/
-        public static final int LEADER_MOTOR_ID = 100; // TODO: Get the correct numbers (20?)
-        public static final int FOLLOWER_MOTOR_ID = 101;
+        public static final int LEADER_MOTOR_ID = 30; // TODO: Get the correct numbers (20?)
+        public static final int FOLLOWER_MOTOR_ID = 31;
 
         /******** Physical Constants ********/
         public static final double CLIMBER_GEAR_RATIO = 81.0 / 8.0;

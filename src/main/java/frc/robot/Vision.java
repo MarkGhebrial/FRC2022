@@ -13,8 +13,8 @@ public class Vision {
     public static VisionCamera shooterCamera = new PhotonCameraWrapper("gloworm");
 
     private static final PixelToAngle ANGLE_CONVERTER = new PixelToAngle(320, 240, 54, 41); // Constants for the limelight 2
-    private static final double HEIGHT_OF_CAMERA = 0.5; // Meters
-    private static final double ANGLE_OF_CAMERA = 39.70; // Degrees
+    private static final double HEIGHT_OF_CAMERA = 0.7747; // Meters
+    private static final double ANGLE_OF_CAMERA = 34.8; // Degrees
 
     private static double lastDistance = 0; // Return this if the robot does not have a target
 

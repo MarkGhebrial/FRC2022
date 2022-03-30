@@ -10,6 +10,10 @@ class ClimbManual(private val climber: ClimberSubsystem) : CommandBase() {
     }
 
     override fun execute() {
-        climber.setClimberPower(OI.operatorController.leftYWithDeadband)
+        if (climber.isExtended) {
+            climber.setClimberPower(OI.operatorController.leftYWithDeadband)
+        } else {
+            climber.setClimberPower(0.0)
+        }
     }
 }

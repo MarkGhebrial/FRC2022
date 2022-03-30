@@ -11,7 +11,7 @@ import frc.robot.util.FiringSolution
 import friarLib2.commands.CommandCommand
 import friarLib2.commands.builders.group
 
-class TwoBallAuto(
+class ThreeBallAuto (
     drive: DriveSubsystem,
     indexer: IndexerSubsystem,
     intake: IntakeSubsystem,
@@ -26,27 +26,31 @@ class TwoBallAuto(
 
         +parallel {
             +sequential {
-                +parallel {
-                    +FollowTrajectory(drive, "two-ball-auto-1")
-                    // Extend and retract the intake
-                    +timed {
-                        +intakeCommand()
-                        startTime = 0.8
-                        runTime = 1.95
-                    }
-                }
-                +parallel {
-                    +AutonomousShoot(
-                        0.75, 5.0,
-                        FiringSolution(2900.0, true),
+                +FollowTrajectory(drive, "three-ball-auto-1") // Line up to shoot
+                +AutonomousShoot( // Shoot the preload
+                        0.75,
+                        2.0,
+                        FiringSolution(2800.0, true),
                         shooter, indexer
-                    )
-                    +timed {
-                        +intakeCommand()
-                        startTime = 2.0
-                        endTime = 3.0
-                    }
-                }
+                )
+                +FollowTrajectory(drive, "three-ball-auto-2") // Pick up two more balls
+                +AutonomousShoot( // Shoot the preload
+                    0.75,
+                    5.0,
+                    FiringSolution(2800.0, true),
+                    shooter, indexer
+                )
+            }
+
+            +timed { // Intake the first cargo
+                +intakeCommand()
+                startTime = 2.0
+                runTime = 1.75
+            }
+            +timed {
+                +intakeCommand()
+                startTime = 3.0
+                runTime = 2.0
             }
         }
     }

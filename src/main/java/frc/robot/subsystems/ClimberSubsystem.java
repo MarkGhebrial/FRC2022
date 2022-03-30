@@ -2,10 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.IMU;
 import frc.robot.UnitConversions;
 
@@ -15,10 +12,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class ClimberSubsystem extends SubsystemBase {
 
-    private final Solenoid solenoid;
-
     private final WPI_TalonFX leaderMotor;
     private final WPI_TalonFX followerMotor;
+
+    private boolean isExtended = false;
 
     public ClimberSubsystem() {
         leaderMotor = new WPI_TalonFX(LEADER_MOTOR_ID);
@@ -34,28 +31,22 @@ public class ClimberSubsystem extends SubsystemBase {
         leaderMotor.setInverted(false);
         followerMotor.setInverted(true);
 
-        solenoid = new Solenoid(
-            Constants.PCM_CAN_ID,
-            Constants.PCM_TYPE,
-            CLIMBER_SOLENOID_ID
-        );
-
         leaderMotor.setSelectedSensorPosition(UnitConversions.Climber.climberDegreesToEncoderTicks(CLIMBER_STARTING_ANGLE));
     }
 
     public boolean isExtended() {
-        return solenoid.get();
+        return isExtended;
     }
 
-    public void setPiston(boolean extended) {
-        solenoid.set(extended);
+    public void setIsExtended(boolean isExtended) {
+        this.isExtended = isExtended;
     }
 
     /**
      * Apply power to the climber, only if it's extended
      */
     public void setClimberPower(double percent) {
-        if (isExtended()) {
+        if (isExtended() || percent >= 0.0) {
             leaderMotor.set(ControlMode.PercentOutput, percent);
         }
     }

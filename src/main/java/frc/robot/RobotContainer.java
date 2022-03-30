@@ -14,7 +14,6 @@ import frc.robot.commands.auto.TaxiAndPreloadAuto;
 import frc.robot.commands.auto.TwoBallAuto;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.climb.DeployClimber;
-import frc.robot.commands.climb.RetractClimber;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.DriveTeleop;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
@@ -102,11 +101,7 @@ public class RobotContainer {
 
         // Extend the climber
         new LambdaTrigger(() -> OI.rightStick.getPOV() != -1)
-            .whenActive(new DeployClimber(climber));
-
-        // Retract the climber
-        new LambdaTrigger(() -> OI.rightStick.getTop())
-            .whenActive(new RetractClimber(climber));
+            .whileActiveOnce(new DeployClimber(climber));
 
         // Bind the operator's D-pad to various shooting locations
         //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0 ); // 0 is up, the values increase clockwise
