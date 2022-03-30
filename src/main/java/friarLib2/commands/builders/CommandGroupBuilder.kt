@@ -58,6 +58,9 @@ open class CommandGroupBuilder(): CommandBuilder {
     fun timed(init: TimedCommandBuilder.() -> Unit): Command =
         initCommand(TimedCommandBuilder(), init)
 
+    fun conditional(condition: () -> Boolean, init: ConditionalCommandBuilder.() -> Unit) =
+        initCommand(ConditionalCommandBuilder(condition), init)
+
     override fun buildCommand(): Command =
         rootCommand ?: PrintCommand("No commands have been added to the command group builder")
 }
