@@ -519,6 +519,17 @@
               "_source0": "network_table:///SmartDashboard/Drivetrain acceleration",
               "_title": "Drivetrain acceleration"
             }
+          },
+          "9,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Meters to target",
+              "_title": "Meters to target"
+            }
           }
         }
       }
@@ -713,6 +724,18 @@
                   "_type": "Text View",
                   "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[1,7]/Value",
                   "_title": "DoubleSolenoid[1,7]/Value"
+                },
+                {
+                  "_type": "Motor Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Talon FX [31]",
+                  "_title": "Talon FX [31]",
+                  "Visuals/Orientation": "HORIZONTAL"
+                },
+                {
+                  "_type": "Motor Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Talon FX [30]",
+                  "_title": "Talon FX [30]",
+                  "Visuals/Orientation": "HORIZONTAL"
                 }
               ]
             }
@@ -770,7 +793,7 @@
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "3,0": {
+          "2,0": {
             "size": [
               1,
               1
@@ -784,74 +807,22 @@
               "Visuals/Show value": true
             }
           },
-          "5,3": {
+          "3,0": {
             "size": [
               1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Back left has slipped",
-              "_title": "Back left OK",
-              "Colors/Color when true": "#FF0000FF",
-              "Colors/Color when false": "#00FF00FF"
-            }
-          },
-          "6,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Back right has slipped",
-              "_title": "Back right OK",
-              "Colors/Color when true": "#FF0000FF",
-              "Colors/Color when false": "#00FF00FF"
-            }
-          },
-          "4,0": {
-            "size": [
-              3,
               1
             ],
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/Compressor State",
-              "_title": "SmartDashboard/Compressor State",
+              "_title": "Compressor State",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "6,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Front right has slipped",
-              "_title": "Front right OK",
-              "Colors/Color when true": "#FF0000FF",
-              "Colors/Color when false": "#00FF00FF"
-            }
-          },
-          "5,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Front left has slipped",
-              "_title": "Front left OK",
-              "Colors/Color when true": "#FF0000FF",
-              "Colors/Color when false": "#00FF00FF"
-            }
-          },
           "0,0": {
             "size": [
-              3,
+              2,
               4
             ],
             "content": {
@@ -862,7 +833,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "3,1": {
+          "2,1": {
             "size": [
               2,
               3
@@ -875,7 +846,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "5,1": {
+          "4,0": {
             "size": [
               2,
               1
@@ -886,7 +857,7 @@
               "_title": "Auto Chooser"
             }
           },
-          "7,0": {
+          "6,0": {
             "size": [
               3,
               3
@@ -905,15 +876,58 @@
               "imageHeight": -1
             }
           },
-          "7,3": {
+          "4,1": {
             "size": [
               2,
               1
             ],
             "content": {
               "_type": "ComboBox Chooser",
-              "_source0": "network_table:///SmartDashboard/SendableChooser[1]",
-              "_title": "SmartDashboard/SendableChooser[1]"
+              "_source0": "network_table:///SmartDashboard/Drivetrain acceleration",
+              "_title": "/SmartDashboard/Drivetrain acceleration"
+            }
+          },
+          "4,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "Swerve Modules OK?",
+              "Layout/Number of columns": 2,
+              "Layout/Number of rows": 2,
+              "Layout/Label position": "HIDDEN",
+              "_children": {
+                "0,0": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Front left has slipped",
+                  "_title": "Front left OK",
+                  "Colors/Color when true": "#FF0000FF",
+                  "Colors/Color when false": "#00FF00FF"
+                },
+                "1,1": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Back right has slipped",
+                  "_title": "Back right OK",
+                  "Colors/Color when true": "#FF0000FF",
+                  "Colors/Color when false": "#00FF00FF"
+                },
+                "1,0": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Front right has slipped",
+                  "_title": "Front right OK",
+                  "Colors/Color when true": "#FF0000FF",
+                  "Colors/Color when false": "#00FF00FF"
+                },
+                "0,1": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Back left has slipped",
+                  "_title": "Back left OK",
+                  "Colors/Color when true": "#FF0000FF",
+                  "Colors/Color when false": "#00FF00FF"
+                }
+              }
             }
           }
         }
@@ -930,7 +944,7 @@
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "3,0": {
+          "0,0": {
             "size": [
               5,
               3
@@ -949,9 +963,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -7.199999809265137,
-    "y": -7.199999809265137,
-    "width": 1550.4000244140625,
-    "height": 838.4000244140625
+    "x": -7.0,
+    "y": -7.0,
+    "width": 1386.0,
+    "height": 788.0
   }
 }
