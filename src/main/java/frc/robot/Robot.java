@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
         
-        CameraServer.startAutomaticCapture();
+        //CameraServer.startAutomaticCapture();
         Pneumatics.COMPRESSOR.enableAnalog(100, 120);
     }
 
@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
-        m_autonomousCommand.schedule();
+            m_autonomousCommand.schedule();
         }
     }
 

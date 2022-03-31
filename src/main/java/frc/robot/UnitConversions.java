@@ -1,6 +1,16 @@
 package frc.robot;
 
 public class UnitConversions {
+    public static class Climber {
+        public static double climberEncoderTicksToDegrees (double encoderTicks) {
+            return (encoderTicks / 4096 * Constants.Climber.CLIMBER_GEAR_RATIO) * 360;
+        }
+
+        public static double climberDegreesToEncoderTicks (double degrees) {
+            return degrees / climberEncoderTicksToDegrees(1);
+        }
+    }
+
     public static class Indexer {
         public static double gateWheelEncoderTicksToDegrees (double encoderTicks) {
             return (encoderTicks / 4096 * Constants.Indexer.GATE_WHEEL_GEAR_RATIO) * 360;

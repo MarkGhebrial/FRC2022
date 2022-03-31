@@ -55,7 +55,11 @@ public class PhotonCameraWrapper implements VisionCamera {
      */
     @Override
     public VisionTarget getBestTarget() {
-        return getTargets()[0];
+        try {
+            return getTargets()[0];
+        } catch (IndexOutOfBoundsException e) {
+            return new VisionTarget();
+        }
     }
 
     /**

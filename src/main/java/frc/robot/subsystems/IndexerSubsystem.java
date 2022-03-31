@@ -78,6 +78,10 @@ public class IndexerSubsystem extends SubsystemBase {
         gateMotor.stopMotor();
     }
 
+    public double getGateWheelPosition() {
+        return UnitConversions.Indexer.gateWheelEncoderTicksToDegrees(gateMotor.getSelectedSensorPosition());
+    }
+
     /**
      * Roll the gate wheel by the specified amount
      * 
