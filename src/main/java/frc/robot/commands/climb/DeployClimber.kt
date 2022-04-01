@@ -16,7 +16,7 @@ class DeployClimber(private val climber: ClimberSubsystem) : CommandCommand(
                 },
                 climber
             )
-            +WaitCommand(1.5)
+            +WaitCommand(0.5)
             +InstantCommand({ climber.setClimberPower(0.0) }, climber)
         }
     }

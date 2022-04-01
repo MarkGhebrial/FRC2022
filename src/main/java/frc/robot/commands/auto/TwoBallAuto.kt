@@ -38,7 +38,7 @@ class TwoBallAuto(
                 +parallel {
                     +AutonomousShoot(
                         0.75, 5.0,
-                        FiringSolution(2900.0, true),
+                        FiringSolution(2850.0, true),
                         shooter, indexer
                     )
                     +timed {

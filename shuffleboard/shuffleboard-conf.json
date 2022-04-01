@@ -884,7 +884,7 @@
             "content": {
               "_type": "ComboBox Chooser",
               "_source0": "network_table:///SmartDashboard/Drivetrain acceleration",
-              "_title": "/SmartDashboard/Drivetrain acceleration"
+              "_title": "Drivetrain acceleration"
             }
           },
           "4,2": {
