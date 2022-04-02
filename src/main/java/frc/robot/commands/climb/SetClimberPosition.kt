@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand
 import frc.robot.subsystems.ClimberSubsystem
 import friarLib2.commands.CommandCommand
 import friarLib2.commands.builders.group
+import kotlin.math.abs
 
 /**
  * Runs a bang-bang controller on the climber until its ground-relative
@@ -14,23 +15,22 @@ import friarLib2.commands.builders.group
  */
 class SetClimberPosition(position: Double, climber: ClimberSubsystem) : CommandCommand(
     group{
-        if (climber.isExtended) {
+        +conditional({ climber.isExtended }) {
             +deadline {
                 +RunCommand(
                     {
                         climber.setClimberPower(
-                            if (position <= climber.climberPositionRelativeToGround) {
-                                0.3
+                            if (climber.climberPositionRelativeToGround <= position) {
+                                0.1
                             } else {
-                                -0.3
+                                -0.1
                             }
                         )
                     }, climber
                 )
-                -WaitUntilCommand { position - climber.climberPositionRelativeToGround <= 2 }
+                -WaitUntilCommand { abs(position - climber.climberPositionRelativeToGround) <= 5 }
             }
-        } else {
-            +PrintCommand("Climber is not extended")
+            -PrintCommand("Climber is not extended")
         }
     }
 )

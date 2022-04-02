@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.IMU;
 import frc.robot.UnitConversions;
@@ -31,6 +32,11 @@ public class ClimberSubsystem extends SubsystemBase {
         leaderMotor.setInverted(false);
         followerMotor.setInverted(true);
 
+        //leaderMotor.setSelectedSensorPosition(UnitConversions.Climber.climberDegreesToEncoderTicks(CLIMBER_STARTING_ANGLE));
+        initEncoder();
+    }
+
+    public void initEncoder() {
         leaderMotor.setSelectedSensorPosition(UnitConversions.Climber.climberDegreesToEncoderTicks(CLIMBER_STARTING_ANGLE));
     }
 
@@ -70,5 +76,8 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     @Override
-    public void periodic() { }
+    public void periodic() {
+        SmartDashboard.putNumber("Climber Angle", getClimberPosition());
+        SmartDashboard.putNumber("Climber Angle Relative to Ground", getClimberPositionRelativeToGround());
+    }
 }

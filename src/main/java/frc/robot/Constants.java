@@ -43,13 +43,13 @@ public final class Constants {
         public static final int FOLLOWER_MOTOR_ID = 31;
 
         /******** Physical Constants ********/
-        public static final double CLIMBER_GEAR_RATIO = 81.0 / 8.0;
+        public static final double CLIMBER_GEAR_RATIO = 1.0 / 120.0;
 
         /******** PID Gains & Motion Profile ********/
         public static final double CLIMBER_MAX_ANGULAR_SPEED = 500; // Degrees/second
         public static final double CLIMBER_MAX_ANGULAR_ACCELERATION = 200; // Degrees/second squared
 
-        public static final double CLIMBER_STARTING_ANGLE = 15; // TODO: Find this number
+        public static final double CLIMBER_STARTING_ANGLE = -42;
     }
 
     /**

@@ -14,6 +14,7 @@ import frc.robot.commands.auto.TaxiAndPreloadAuto;
 import frc.robot.commands.auto.TwoBallAuto;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.climb.DeployClimber;
+import frc.robot.commands.climb.SetClimberPosition;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.DriveTeleop;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
@@ -74,9 +75,7 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        new LambdaTrigger(() -> OI.leftStick.getTrigger())
-            .whileActiveContinuous(new PointInDirectionOfTravel(drive));
-
+        // Vision
         new LambdaTrigger(() -> OI.rightStick.getTrigger())
             .whileActiveContinuous(new DriveAndAim(drive));
 
@@ -100,8 +99,11 @@ public class RobotContainer {
             .whileActiveContinuous(new Outtake(intake));
 
         // Extend the climber
-        new LambdaTrigger(() -> OI.rightStick.getPOV() != -1)
+        new LambdaTrigger(() -> OI.leftStick.getTrigger())
             .whileActiveOnce(new DeployClimber(climber));
+
+        //new LambdaTrigger(() -> OI.operatorController.getBackButton())
+        //    .whenActive(new SetClimberPosition(0, climber));
 
         // Bind the operator's D-pad to various shooting locations
         //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_FENDER, 0 ); // 0 is up, the values increase clockwise
