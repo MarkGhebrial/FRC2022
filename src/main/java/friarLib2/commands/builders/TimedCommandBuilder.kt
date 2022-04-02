@@ -1,6 +1,7 @@
 package friarLib2.commands.builders
 
 import edu.wpi.first.wpilibj2.command.Command
+import edu.wpi.first.wpilibj2.command.ScheduleCommand
 import friarLib2.commands.TimedCommand
 
 class TimedCommandBuilder: CommandBuilder {
@@ -19,5 +20,5 @@ class TimedCommandBuilder: CommandBuilder {
     }
 
     override fun buildCommand(): Command =
-        TimedCommand(startTime, runTime, commandBuilder.buildCommand())
+        ScheduleCommand(TimedCommand(startTime, runTime, commandBuilder.buildCommand()))
 }

@@ -144,6 +144,7 @@ public final class Constants {
 
         /********** Tuning Constants **********/
         public static final double FLYWHEEL_SPEED_TOLERANCE = 10; // RPM
+        public static final double FLYWHEEL_ROC_TOLERANCE = 400; // RPM/second
 
         /******** Physical Constants ********/
         public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;

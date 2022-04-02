@@ -134,9 +134,9 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     /**
-     * Rpresents which intake(s) to deploy/retract
+     * Represents which intake(s) to deploy/retract
      */
-    public static enum Side {
+    public enum Side {
         leftIntake,
         rightIntake,
         bothIntakes
