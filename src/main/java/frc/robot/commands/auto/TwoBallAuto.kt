@@ -27,7 +27,7 @@ class TwoBallAuto(
         +parallel {
             +sequential {
                 +parallel {
-                    +FollowTrajectory(drive, "two-ball-auto-1")
+                    +FollowTrajectory(drive, "two-ball-auto-1").withTimeout(10.0)
                     // Extend and retract the intake
                     +timed {
                         +intakeCommand()
