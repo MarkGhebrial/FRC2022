@@ -4,12 +4,14 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.UnitConversions;
 import frc.robot.util.FiringSolution;
+import friarLib2.math.RateOfChangeCalculator;
 
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.UnitConversions.Shooter.*;
@@ -25,10 +27,14 @@ import static frc.robot.UnitConversions.Shooter.*;
 public class ShooterSubsystem extends SubsystemBase {
 
     // Flywheel motors
-    private WPI_TalonFX flywheelLeader;
-    private WPI_TalonFX flywheelFollower;
+    private final WPI_TalonFX flywheelLeader;
+    private final WPI_TalonFX flywheelFollower;
 
-    private Solenoid deflectorSolenoid;
+    private final Solenoid deflectorSolenoid;
+
+    private final RateOfChangeCalculator flywheelROC = new RateOfChangeCalculator();
+    private final LinearFilter ROCFilter = LinearFilter.movingAverage(7);
+    private double smoothedROC = 0;
 
     public ShooterSubsystem() {
         // Configure the flywheel motors
@@ -84,11 +90,13 @@ public class ShooterSubsystem extends SubsystemBase {
      * @return True if the flywheel is on and at its target velocity
      */
     public boolean isFlywheelUpToSpeed () {
-        boolean isRunning = getFlywheelRPM() >= 50;
+        boolean isRunning = getFlywheelRPM() >= 50  && flywheelLeader.getMotorOutputPercent() >= 0.05;
 
         boolean isUpToSpeed = Math.abs(flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopError())) <= FLYWHEEL_SPEED_TOLERANCE;
 
-        return isRunning && isUpToSpeed;
+        boolean isSpeedStable = Math.abs(smoothedROC) <= FLYWHEEL_ROC_TOLERANCE;
+
+        return isRunning && isUpToSpeed && isSpeedStable;
     }
 
     /**
@@ -101,13 +109,17 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void goToFiringSolution (FiringSolution solution) {
-        setFlywheelSpeed(solution.flywheelRPM);
-        setDeflector(solution.deflector);
+        setFlywheelSpeed(solution.getFlywheelRPM());
+        setDeflector(solution.getDeflector());
     }
 
     @Override
     public void periodic() {
+        flywheelROC.update(getFlywheelRPM());
+        smoothedROC = ROCFilter.calculate(flywheelROC.getRoC());
+
         SmartDashboard.putNumber("Flywheel Speed", getFlywheelRPM());
+        SmartDashboard.putNumber("Flywheel Speed RoC", smoothedROC);
         SmartDashboard.putNumber("Flywheel Setpoint", flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopTarget()));
         SmartDashboard.putNumber("Flywheel Error", flywheelEncoderTicksPer100msToRPM(flywheelLeader.getClosedLoopError()));
         SmartDashboard.putBoolean("Flywheel Up To Speed", isFlywheelUpToSpeed());

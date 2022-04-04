@@ -7,8 +7,8 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
  * acceleration and deceleration.
  */
 public class DoubleSlewRateLimiter {
-    private SlewRateLimiter accelLimiter;
-    private SlewRateLimiter decelLimiter;
+    private final SlewRateLimiter accelLimiter;
+    private final SlewRateLimiter decelLimiter;
 
     private double lastSpeed;
 

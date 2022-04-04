@@ -38,8 +38,18 @@ public final class Constants {
      * Constants for the Climber
      */
     public static class Climber {
-        /********** Solenoid PCM Ports **********/
-        public static final int CLIMBER_SOLENOID_ID = 4;
+        /********** CAN ID's **********/
+        public static final int LEADER_MOTOR_ID = 30; // TODO: Get the correct numbers (20?)
+        public static final int FOLLOWER_MOTOR_ID = 31;
+
+        /******** Physical Constants ********/
+        public static final double CLIMBER_GEAR_RATIO = 1.0 / 120.0;
+
+        /******** PID Gains & Motion Profile ********/
+        public static final double CLIMBER_MAX_ANGULAR_SPEED = 500; // Degrees/second
+        public static final double CLIMBER_MAX_ANGULAR_ACCELERATION = 200; // Degrees/second squared
+
+        public static final double CLIMBER_STARTING_ANGLE = -42;
     }
 
     /**
@@ -59,24 +69,24 @@ public final class Constants {
         public static final Translation2d BACK_RIGHT_MODULE_TRANSLATION = new Translation2d(-0.34671, -0.23241);
 
         /********** Autonomous Motion Envelope **********/
-        public static final double MAX_AUTON_SPEED = 4; // Meters/second
-        public static final double MAX_AUTON_ACCELERATION = 4; // Meters/second squared
+        public static final double MAX_AUTON_SPEED = 2; // Meters/second
+        public static final double MAX_AUTON_ACCELERATION = 2.5; // Meters/second squared
         public static final double MAX_AUTON_ANGULAR_SPEED = 400; // Degrees/second
         public static final double MAX_AUTON_ANGULAR_ACCELERATION = 200; // Degrees/second squared
 
         /********** Holonomic Controller Gains **********/
-        public static final PIDController HOLONOMIC_CONTROLLER_PID_X = new PIDController(9, 3, 0);
-        public static final PIDController HOLONOMIC_CONTROLLER_PID_Y = new PIDController(9, 3, 0);
-        public static final ProfiledPIDController HOLONOMIC_CONTROLLER_PID_THETA = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(MAX_AUTON_ANGULAR_SPEED, MAX_AUTON_ANGULAR_ACCELERATION));
+        public static final PIDController HOLONOMIC_CONTROLLER_PID_X = new PIDController(7, 1.5, 2); //9, 3, 0
+        public static final PIDController HOLONOMIC_CONTROLLER_PID_Y = new PIDController(7, 1.5, 2);
+        public static final ProfiledPIDController HOLONOMIC_CONTROLLER_PID_THETA = new ProfiledPIDController(5, 0, 0, new TrapezoidProfile.Constraints(MAX_AUTON_ANGULAR_SPEED, MAX_AUTON_ANGULAR_ACCELERATION));
 
         /******** PID Gains ********/
-        public static final PIDController VISION_AIM_PID = new PIDController(0.1, 0, 0);
+        public static final PIDController VISION_AIM_PID = new PIDController(0.3, 0, 0);
 
         /********** Teleop Control Adjustment **********/
         public static final double MAX_TELEOP_SPEED = 6; // Meters/second
         public static final double MAX_TELEOP_ROTATIONAL_SPEED = Math.toRadians(700); // Radians/second
-        public static final double MAX_TELEOP_ACCELERATION = 5; // Maters/second squared
-        public static final double MAX_TELEOP_DECELERATION = 9;
+        public static final double MAX_TELEOP_ACCELERATION = 7; // Maters/second squared
+        public static final double MAX_TELEOP_DECELERATION = 11;
     }
 
     /**
@@ -114,7 +124,7 @@ public final class Constants {
         public static final int RIGHT_INTAKE_MOTOR_ID = 14;
 
         /********** Tuning Constants **********/
-        public static final double INTAKE_MOTOR_POWER = 0.35;
+        public static final double INTAKE_MOTOR_POWER = 0.50;
     }
 
     /** 
@@ -133,7 +143,8 @@ public final class Constants {
         public static final double FLYWHEEL_IZONE = 700; // RPM
 
         /********** Tuning Constants **********/
-        public static final double FLYWHEEL_SPEED_TOLERANCE = 30; // RPM
+        public static final double FLYWHEEL_SPEED_TOLERANCE = 10; // RPM
+        public static final double FLYWHEEL_ROC_TOLERANCE = 400; // RPM/second
 
         /******** Physical Constants ********/
         public static final double MAIN_FLYWHEEL_GEAR_RATIO = 18.0 / 24.0;
@@ -143,7 +154,7 @@ public final class Constants {
         public static final FiringSolution LOW_HUB_FROM_TARMAC = new FiringSolution(1850, true);
 
         public static final FiringSolution HIGH_HUB_FROM_FENDER = new FiringSolution(2900, false); //2400 //2520
-        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(2850, true);
+        public static final FiringSolution HIGH_HUB_FROM_TARMAC = new FiringSolution(2770, true);
         public static final FiringSolution HIGH_HUB_FROM_LAUNCHPAD = new FiringSolution(3450, true);
     }
 }

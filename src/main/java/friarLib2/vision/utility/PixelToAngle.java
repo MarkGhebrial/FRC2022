@@ -23,8 +23,8 @@ public class PixelToAngle {
         this.verticalFOV = verticalFOV;
 
         // Compute viewplane size
-        viewplaneWidth = 2.0 * Math.tan(Math.toRadians(horizontalFOV) / 2);
-        viewplaneHeight = 2.0 * Math.tan(Math.toRadians(verticalFOV) / 2);
+        viewplaneWidth = 2.0 * Math.tan(Math.toRadians(horizontalFOV) / 2.0);
+        viewplaneHeight = 2.0 * Math.tan(Math.toRadians(verticalFOV) / 2.0);
     }
 
     public double calculateXAngle (VisionTarget target) {
@@ -35,7 +35,7 @@ public class PixelToAngle {
         double x = (viewplaneWidth / 2.0) * normalizedX;
 
         // Compute angles
-        return Math.atan2(1, x);
+        return Math.atan2(1.0, x);
     }
 
     public double calculateYAngle (VisionTarget target) {
@@ -46,6 +46,6 @@ public class PixelToAngle {
         double y = (viewplaneHeight / 2.0) * normalizedY;
 
         // Compute angles
-        return Math.atan2(1, y);
+        return Math.atan2(1.0, y);
     }
 }

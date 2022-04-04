@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import friarLib2.commands.RunUntilCommand;
@@ -14,7 +15,7 @@ import friarLib2.commands.RunUntilCommand;
  */
 public class IntakeAndIndex extends ParallelCommandGroup {
 
-    private Timer timer = new Timer();
+    private final Timer timer = new Timer();
 
     public IntakeAndIndex (IntakeSubsystem intake, IndexerSubsystem indexer) {
         timer.reset();
@@ -23,11 +24,9 @@ public class IntakeAndIndex extends ParallelCommandGroup {
         addCommands(
             new ScheduleCommand( // We schedule the indexer's command separately so that it can run after this one terminates
                 new RunUntilCommand(
-                    new FunctionalCommand(
+                    new StartEndCommand(
                         indexer::startConveyor,
-                        () -> {},
-                        interrupted -> indexer.stopConveyor(),
-                        () -> { return false; },
+                        indexer::stopConveyor,
                         indexer
                     ),
                     () -> {

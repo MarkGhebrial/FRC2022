@@ -475,6 +475,61 @@
               "_source0": "network_table:///SmartDashboard/SendableChooser[0]",
               "_title": "SendableChooser[0]"
             }
+          },
+          "5,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/SendableChooser[3]",
+              "_title": "SendableChooser[3]"
+            }
+          },
+          "6,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/SendableChooser[1]",
+              "_title": "SendableChooser[1]"
+            }
+          },
+          "7,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/SendableChooser[2]",
+              "_title": "SendableChooser[2]"
+            }
+          },
+          "8,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/Drivetrain acceleration",
+              "_title": "Drivetrain acceleration"
+            }
+          },
+          "9,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Meters to target",
+              "_title": "Meters to target"
+            }
           }
         }
       }
@@ -659,6 +714,28 @@
                   "_title": "Solenoid[1,4]/Value",
                   "Colors/Color when true": "#7CFC00FF",
                   "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Talon FX [9]/Value",
+                  "_title": "Talon FX [9]/Value"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[1,7]/Value",
+                  "_title": "DoubleSolenoid[1,7]/Value"
+                },
+                {
+                  "_type": "Motor Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Talon FX [31]",
+                  "_title": "Talon FX [31]",
+                  "Visuals/Orientation": "HORIZONTAL"
+                },
+                {
+                  "_type": "Motor Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Talon FX [30]",
+                  "_title": "Talon FX [30]",
+                  "Visuals/Orientation": "HORIZONTAL"
                 }
               ]
             }
@@ -698,7 +775,7 @@
               "_type": "Subsystem Layout",
               "_source0": "network_table:///LiveWindow/DriveSubsystem",
               "_title": "DriveSubsystem",
-              "Layout/Label position": "BOTTOM",
+              "Layout/Label position": "TOP",
               "_children": []
             }
           }
@@ -730,32 +807,6 @@
               "Visuals/Show value": true
             }
           },
-          "4,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Back left has slipped",
-              "_title": "Back left OK",
-              "Colors/Color when true": "#FF0000FF",
-              "Colors/Color when false": "#00FF00FF"
-            }
-          },
-          "5,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Back right has slipped",
-              "_title": "Back right OK",
-              "Colors/Color when true": "#FF0000FF",
-              "Colors/Color when false": "#00FF00FF"
-            }
-          },
           "3,0": {
             "size": [
               1,
@@ -767,32 +818,6 @@
               "_title": "Compressor State",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
-            }
-          },
-          "5,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Front right has slipped",
-              "_title": "Front right OK",
-              "Colors/Color when true": "#FF0000FF",
-              "Colors/Color when false": "#00FF00FF"
-            }
-          },
-          "4,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Front left has slipped",
-              "_title": "Front left OK",
-              "Colors/Color when true": "#FF0000FF",
-              "Colors/Color when false": "#00FF00FF"
             }
           },
           "0,0": {
@@ -832,6 +857,60 @@
               "_title": "Auto Chooser"
             }
           },
+          "4,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/Drivetrain acceleration",
+              "_title": "Drivetrain acceleration"
+            }
+          },
+          "4,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "Swerve Modules OK?",
+              "Layout/Number of columns": 2,
+              "Layout/Number of rows": 2,
+              "Layout/Label position": "HIDDEN",
+              "_children": {
+                "0,0": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Front left has slipped",
+                  "_title": "Front left OK",
+                  "Colors/Color when true": "#FF0000FF",
+                  "Colors/Color when false": "#00FF00FF"
+                },
+                "1,1": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Back right has slipped",
+                  "_title": "Back right OK",
+                  "Colors/Color when true": "#FF0000FF",
+                  "Colors/Color when false": "#00FF00FF"
+                },
+                "1,0": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Front right has slipped",
+                  "_title": "Front right OK",
+                  "Colors/Color when true": "#FF0000FF",
+                  "Colors/Color when false": "#00FF00FF"
+                },
+                "0,1": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Back left has slipped",
+                  "_title": "Back left OK",
+                  "Colors/Color when true": "#FF0000FF",
+                  "Colors/Color when false": "#00FF00FF"
+                }
+              }
+            }
+          },
           "6,0": {
             "size": [
               3,
@@ -839,27 +918,44 @@
             ],
             "content": {
               "_type": "Camera Stream",
-              "_source0": "camera_server://USB Camera 0",
-              "_title": "USB Camera 0",
+              "_source0": "camera_server://gloworm-output",
+              "_title": "gloworm-output",
               "Crosshair/Show crosshair": true,
               "Crosshair/Crosshair color": "#FFFFFFFF",
               "Controls/Show controls": true,
               "Controls/Rotation": "NONE",
               "compression": -1.0,
               "fps": -1,
-              "imageWidth": -1,
-              "imageHeight": -1
+              "imageWidth": 0,
+              "imageHeight": 0
             }
-          },
-          "4,3": {
+          }
+        }
+      }
+    },
+    {
+      "title": "Tab 4",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "0,0": {
             "size": [
-              2,
-              1
+              5,
+              3
             ],
             "content": {
-              "_type": "ComboBox Chooser",
-              "_source0": "network_table:///SmartDashboard/SendableChooser[1]",
-              "_title": "SmartDashboard/SendableChooser[1]"
+              "_type": "Field",
+              "_source0": "network_table:///SmartDashboard/Odometry",
+              "_title": "SmartDashboard/Odometry",
+              "Game/Game": "A2022_Rapid_React",
+              "Visuals/Robot Icon Size": 50.0,
+              "Visuals/Show Outside Circles": false
             }
           }
         }
@@ -868,8 +964,8 @@
   ],
   "windowGeometry": {
     "x": -7.0,
-    "y": 0.0,
-    "width": 1380.0,
-    "height": 735.0
+    "y": -7.0,
+    "width": 1386.0,
+    "height": 788.0
   }
 }
