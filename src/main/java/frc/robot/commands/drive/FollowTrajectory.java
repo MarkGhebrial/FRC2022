@@ -22,6 +22,8 @@ public class FollowTrajectory extends CommandBase {
 
     private final DriveSubsystem drive;
 
+    private final boolean resetOdometry;
+
     private HolonomicDriveController holonomicController;
     private Timer timer = new Timer();
     private PathPlannerTrajectory trajectory;
@@ -31,9 +33,11 @@ public class FollowTrajectory extends CommandBase {
     /**
      * @param drive The drive subsystem
      */
-    public FollowTrajectory (DriveSubsystem drive, String trajectoryJSON) {
+    public FollowTrajectory (DriveSubsystem drive, String trajectoryJSON, boolean resetOdometry) {
         this.drive = drive;
         addRequirements(drive);
+
+        this.resetOdometry = resetOdometry;
 
         // The holonomic controller uses the current robot pose and the target pose (from the trajectory) to calculate the required ChassisSpeeds to get to that location
         // See https://docs.wpilib.org/en/stable/docs/software/advanced-controls/trajectories/holonomic.html for more details
@@ -50,12 +54,18 @@ public class FollowTrajectory extends CommandBase {
         SmartDashboard.putData("Holonomic target", field);
     }
 
+    public FollowTrajectory (DriveSubsystem drive, String trajectoryJSON) {
+        this(drive, trajectoryJSON, true);
+    }
+
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         PathPlannerState initialState = (PathPlannerState) trajectory.sample(0);
 
-        drive.resetOdometry(new Pose2d(initialState.poseMeters.getTranslation(), initialState.holonomicRotation)); // Re-zero the robot's odometry
+        if (resetOdometry) {
+            drive.resetOdometry(new Pose2d(initialState.poseMeters.getTranslation(), initialState.holonomicRotation)); // Re-zero the robot's odometry
+        }
 
         timer.reset();
         timer.start();

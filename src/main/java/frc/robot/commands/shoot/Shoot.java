@@ -13,10 +13,10 @@ import frc.robot.util.FiringSolution;
 public class Shoot extends CommandBase {
 
     protected BooleanSupplier shootCondition;
-    private FiringSolution solution;
+    private final FiringSolution solution;
 
-    private ShooterSubsystem shooter;
-    private IndexerSubsystem indexer;
+    private final ShooterSubsystem shooter;
+    private final IndexerSubsystem indexer;
 
     public Shoot(BooleanSupplier shootCondition, FiringSolution solution, ShooterSubsystem shooter, IndexerSubsystem indexer) {
         this.shootCondition = shootCondition;
@@ -35,7 +35,7 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
-        // If the flywhheel is up to speed and the condition is true
+        // If the flywheel is up to speed and the condition is true
         if (shooter.isFlywheelUpToSpeed() && shootCondition.getAsBoolean()) {
             indexer.startConveyor();
             indexer.startGateWheelForShooting();

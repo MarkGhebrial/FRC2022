@@ -43,7 +43,7 @@
   },
   "NetworkTables": {
     "LiveWindow": {
-      "ClimberSubsystem": {
+      "DriveSubsystem": {
         "open": true
       },
       "Ungrouped": {
