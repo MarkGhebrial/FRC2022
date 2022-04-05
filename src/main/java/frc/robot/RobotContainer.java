@@ -15,6 +15,7 @@ import frc.robot.commands.auto.TwoBallAuto;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.climb.DeployClimber;
 import frc.robot.commands.climb.SetClimberPosition;
+import frc.robot.commands.climb.ToggleClimberExtension;
 import frc.robot.commands.drive.DriveAndAim;
 import frc.robot.commands.drive.DriveTeleop;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
@@ -98,9 +99,9 @@ public class RobotContainer {
         new LambdaTrigger(() -> OI.operatorController.getRightTriggerAxis() >= 0.5)
             .whileActiveContinuous(new Outtake(intake));
 
-        // Extend the climber
+        // Extend/retract the climber
         new LambdaTrigger(() -> OI.leftStick.getTrigger())
-            .whileActiveOnce(new DeployClimber(climber));
+            .whenActive(new ToggleClimberExtension(climber));
 
         //new LambdaTrigger(() -> OI.operatorController.getBackButton())
         //    .whenActive(new SetClimberPosition(0, climber));

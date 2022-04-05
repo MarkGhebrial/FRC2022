@@ -2,8 +2,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.IMU;
 import frc.robot.UnitConversions;
 
@@ -13,10 +15,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class ClimberSubsystem extends SubsystemBase {
 
+    private final Solenoid solenoid;
+
     private final WPI_TalonFX leaderMotor;
     private final WPI_TalonFX followerMotor;
-
-    private boolean isExtended = false;
 
     public ClimberSubsystem() {
         leaderMotor = new WPI_TalonFX(LEADER_MOTOR_ID);
@@ -32,39 +34,40 @@ public class ClimberSubsystem extends SubsystemBase {
         leaderMotor.setInverted(false);
         followerMotor.setInverted(true);
 
-        //leaderMotor.setSelectedSensorPosition(UnitConversions.Climber.climberDegreesToEncoderTicks(CLIMBER_STARTING_ANGLE));
         initEncoder();
+
+        solenoid = new Solenoid(
+            Constants.PCM_CAN_ID,
+            Constants.PCM_TYPE,
+            CLIMBER_SOLENOID_ID
+        );
     }
 
-    public void initEncoder() {
+    private void initEncoder() {
         leaderMotor.setSelectedSensorPosition(UnitConversions.Climber.climberDegreesToEncoderTicks(CLIMBER_STARTING_ANGLE));
     }
 
     public boolean isExtended() {
-        return isExtended;
+        return solenoid.get();
     }
 
-    public void setIsExtended(boolean isExtended) {
-        this.isExtended = isExtended;
+    public void setPiston(boolean extended) {
+        solenoid.set(extended);
     }
 
     /**
      * Apply power to the climber, only if it's extended
      */
     public void setClimberPower(double percent) {
-        if (isExtended() || percent >= 0.0) {
+        if (isExtended()) {
             leaderMotor.set(ControlMode.PercentOutput, percent);
         }
     }
 
     /**
-     * @return The cliber's angle relative to the robot frame. Returns
-     *         -1 if the climber is retracted.
+     * @return The climber's angle relative to the robot frame.
      */
     public double getClimberPosition() {
-        if (!isExtended()) {
-            return -1;
-        }
         return UnitConversions.Climber.climberEncoderTicksToDegrees(leaderMotor.getSelectedSensorPosition());
     }
 

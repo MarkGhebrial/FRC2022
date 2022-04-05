@@ -9,21 +9,21 @@ import friarLib2.commands.builders.group
 class DeployClimber(private val climber: ClimberSubsystem) : CommandCommand(
     group{
         +sequential {
-            +InstantCommand(
-                {
-                    climber.setIsExtended(true)
-                    climber.setClimberPower(0.25)
-                },
-                climber
-            )
+            +InstantCommand({ climber.setPiston(true) }, climber)
             +WaitCommand(0.5)
-            +InstantCommand({ climber.setClimberPower(0.0) }, climber)
         }
     }
-) {
-    override fun end(interrupted: Boolean) {
-        super.end(interrupted)
+)
 
-        if (interrupted) { climber.setClimberPower(0.0) }
+class RetractClimber(private val climber: ClimberSubsystem) : CommandCommand(
+    InstantCommand({ climber.setPiston(false) }, climber)
+)
+
+class ToggleClimberExtension(climber: ClimberSubsystem) : CommandCommand(
+    group {
+        +conditional({ climber.isExtended }) {
+            +RetractClimber(climber)
+            -DeployClimber(climber)
+        }
     }
-}
+)
