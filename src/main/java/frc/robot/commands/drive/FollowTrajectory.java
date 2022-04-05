@@ -24,11 +24,11 @@ public class FollowTrajectory extends CommandBase {
 
     private final boolean resetOdometry;
 
-    private HolonomicDriveController holonomicController;
-    private Timer timer = new Timer();
-    private PathPlannerTrajectory trajectory;
+    private final HolonomicDriveController holonomicController;
+    private final Timer timer = new Timer();
+    private final PathPlannerTrajectory trajectory;
 
-    private Field2d field = new Field2d();
+    private final Field2d field = new Field2d();
 
     /**
      * @param drive The drive subsystem
@@ -49,7 +49,7 @@ public class FollowTrajectory extends CommandBase {
         // Set the range where the holonomic controller considers itself at its target location
         holonomicController.setTolerance(new Pose2d(new Translation2d(.09, .09), Rotation2d.fromDegrees(3)));
 
-        trajectory = openTrajectoryFromJSON(trajectoryJSON); //Load the pathweaver trajectory
+        trajectory = openTrajectoryFromJSON(trajectoryJSON); //Load the Pathplanner trajectory
 
         SmartDashboard.putData("Holonomic target", field);
     }
@@ -76,7 +76,7 @@ public class FollowTrajectory extends CommandBase {
     public void execute() {
         PathPlannerState goal = (PathPlannerState) trajectory.sample(timer.get()); //Find the target pose for the current time
 
-        //Use the holonomic drive controller to calculate the requred chassis speeds to follow the trajectory
+        //Use the holonomic drive controller to calculate the required chassis speeds to follow the trajectory
         drive.setChassisSpeeds(holonomicController.calculate(
             drive.getRobotPose(), 
             goal, 
