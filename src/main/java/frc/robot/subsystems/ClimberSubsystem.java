@@ -20,6 +20,8 @@ public class ClimberSubsystem extends SubsystemBase {
     private final WPI_TalonFX leaderMotor;
     private final WPI_TalonFX followerMotor;
 
+    private boolean isExtended;
+
     public ClimberSubsystem() {
         leaderMotor = new WPI_TalonFX(LEADER_MOTOR_ID);
         followerMotor = new WPI_TalonFX(FOLLOWER_MOTOR_ID);
@@ -41,6 +43,8 @@ public class ClimberSubsystem extends SubsystemBase {
             Constants.PCM_TYPE,
             CLIMBER_SOLENOID_ID
         );
+
+        isExtended = solenoid.get();
     }
 
     private void initEncoder() {
@@ -48,10 +52,11 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public boolean isExtended() {
-        return solenoid.get();
+        return isExtended;
     }
 
     public void setPiston(boolean extended) {
+        isExtended = extended;
         solenoid.set(extended);
     }
 
