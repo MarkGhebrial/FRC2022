@@ -33,7 +33,13 @@ public class FollowTrajectory extends CommandBase {
     /**
      * @param drive The drive subsystem
      */
-    public FollowTrajectory (DriveSubsystem drive, String trajectoryJSON, boolean resetOdometry) {
+    public FollowTrajectory (
+        DriveSubsystem drive,
+        String trajectoryJSON,
+        double maxSpeed,
+        double maxAccel,
+        boolean resetOdometry
+    ) {
         this.drive = drive;
         addRequirements(drive);
 
@@ -49,9 +55,13 @@ public class FollowTrajectory extends CommandBase {
         // Set the range where the holonomic controller considers itself at its target location
         holonomicController.setTolerance(new Pose2d(new Translation2d(.09, .09), Rotation2d.fromDegrees(3)));
 
-        trajectory = openTrajectoryFromJSON(trajectoryJSON); //Load the Pathplanner trajectory
+        trajectory = openTrajectoryFromJSON(trajectoryJSON, maxSpeed, maxAccel); //Load the Pathplanner trajectory
 
         SmartDashboard.putData("Holonomic target", field);
+    }
+
+    public FollowTrajectory (DriveSubsystem drive, String trajectoryJSON, boolean resetOdometry) {
+        this(drive, trajectoryJSON, Constants.Drive.MAX_AUTON_SPEED, Constants.Drive.MAX_AUTON_ACCELERATION, resetOdometry);
     }
 
     public FollowTrajectory (DriveSubsystem drive, String trajectoryJSON) {
@@ -105,11 +115,22 @@ public class FollowTrajectory extends CommandBase {
     }
 
     /**
-     * Read the JSON output from pathweaver and convert it to a trajectory object
+     * Read the JSON output from pathweaver and convert it to a trajectory
+     * object using the specified speed limits
+     *
+     * @param JSONName the name of the JSON stored in the deploy/output directory, e.x. "bounceLeg1.wpilib.json"
+     */
+    private PathPlannerTrajectory openTrajectoryFromJSON (String JSONName, double maxSpeed, double maxAccel) {
+        return PathPlanner.loadPath(JSONName, maxSpeed, maxAccel);
+    }
+
+    /**
+     * Read the JSON output from pathweaver and convert it to a trajectory
+     * object using the default speed limits
      *
      * @param JSONName the name of the JSON stored in the deploy/output directory, e.x. "bounceLeg1.wpilib.json"
      */
     private PathPlannerTrajectory openTrajectoryFromJSON (String JSONName) {
-        return PathPlanner.loadPath(JSONName, Constants.Drive.MAX_AUTON_SPEED, Constants.Drive.MAX_AUTON_ACCELERATION);
+        return openTrajectoryFromJSON(JSONName, Constants.Drive.MAX_AUTON_SPEED, Constants.Drive.MAX_AUTON_ACCELERATION);
     }
 }

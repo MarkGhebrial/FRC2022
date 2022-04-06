@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.auto.TaxiAndPreloadAuto;
+import frc.robot.commands.auto.ThreeBallAuto;
 import frc.robot.commands.auto.TwoBallAuto;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.climb.DeployClimber;
@@ -58,6 +59,7 @@ public class RobotContainer {
         autoChooser.addOption("Preload auto (low goal)", new TaxiAndPreloadAuto(Constants.Shooter.LOW_HUB_FROM_FENDER, drive, indexer, shooter));
         autoChooser.setDefaultOption("Preload auto (high goal)", new TaxiAndPreloadAuto(new FiringSolution(2800, false), drive, indexer, shooter));
         autoChooser.addOption("Two ball auto (hangar side)", new TwoBallAuto(drive, indexer, intake, shooter));
+        autoChooser.addOption("Three ball auto (terminal side)", new ThreeBallAuto(drive, indexer, intake, shooter));
         SmartDashboard.putData(autoChooser);
 
         configureDefaultCommands();

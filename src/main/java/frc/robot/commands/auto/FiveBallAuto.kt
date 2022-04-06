@@ -1,7 +1,9 @@
 package frc.robot.commands.auto
 
 import edu.wpi.first.wpilibj2.command.InstantCommand
+import edu.wpi.first.wpilibj2.command.ScheduleCommand
 import edu.wpi.first.wpilibj2.command.StartEndCommand
+import edu.wpi.first.wpilibj2.command.WaitCommand
 import frc.robot.commands.drive.FollowTrajectory
 import frc.robot.commands.shoot.AutonomousShoot
 import frc.robot.subsystems.DriveSubsystem
@@ -12,7 +14,7 @@ import frc.robot.util.FiringSolution
 import friarLib2.commands.CommandCommand
 import friarLib2.commands.builders.group
 
-class ThreeBallAuto (
+class FiveBallAuto(
     drive: DriveSubsystem,
     indexer: IndexerSubsystem,
     intake: IntakeSubsystem,
@@ -25,41 +27,34 @@ class ThreeBallAuto (
         )
 
         +sequential {
-            // Spin up the flywheels now so that we don't have to wait for them when we are ready to shoot
-            +InstantCommand({ shooter.setFlywheelSpeed(2800.0) }, shooter)
+            +ThreeBallAuto(drive, indexer, intake, shooter)
 
-            +FollowTrajectory(drive, "three-ball-auto-1") // Line up to shoot
-            +AutonomousShoot( // Shoot the preload
-                0.75,
-                1.0,
-                FiringSolution(2800.0, true),
-                shooter, indexer
-            )
-            +InstantCommand({ shooter.setFlywheelSpeed(2800.0) }, shooter)
+            +parallel {
+                +FollowTrajectory(drive, "five-ball-auto-1", 7.0, 5.0, false)
 
-            +parallel { // Pick up two more balls
-                +FollowTrajectory(drive, "three-ball-auto-2", false)
-
-                +InstantCommand({ indexer.startConveyor() }, indexer)
-                +timed { // Intake the first cargo
-                    +intakeCommand(IntakeSubsystem.Side.rightIntake)
-                    startTime = 0.5; runTime = 1.75
-                }
-                +timed {
-                    +intakeCommand(IntakeSubsystem.Side.leftIntake)
-                    startTime = 1.75; runTime = 2.0
+                +sequential {
+                    +WaitCommand(1.5)
+                    +InstantCommand(indexer::startConveyor, indexer)
+                    +InstantCommand({ intake.extendIntake(IntakeSubsystem.Side.leftIntake) }, intake)
                 }
             }
+            +WaitCommand(1.0)
+            +InstantCommand(indexer::stopConveyor, indexer)
+            +InstantCommand({ intake.retractIntake(IntakeSubsystem.Side.leftIntake) }, intake)
+
+            +InstantCommand({ shooter.setFlywheelSpeed(2800.0) })
+            +FollowTrajectory(drive, "five-ball-auto-2", 7.0, 5.0, false)
+
             +parallel {
                 +AutonomousShoot(
-                    0.75,
+                    0.0,
                     5.0,
                     FiringSolution(2800.0, true),
                     shooter, indexer
                 )
                 // Extend and retract the intake to agitate the cargo
                 +timed {
-                    +intakeCommand()
+                    +intakeCommand(IntakeSubsystem.Side.leftIntake)
                     startTime = 2.0; runTime = 0.5
                 }
             }
