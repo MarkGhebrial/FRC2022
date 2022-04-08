@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.UnitConversions;
 import frc.robot.util.FiringSolution;
+import frc.robot.util.TalonStatusFrames;
 import friarLib2.math.RateOfChangeCalculator;
 
 import static frc.robot.Constants.Shooter.*;
@@ -50,6 +51,7 @@ public class ShooterSubsystem extends SubsystemBase {
         FLYWHEEL_MOTOR_PID.configureMotorPID(flywheelFollower);
         flywheelLeader.config_IntegralZone(0, UnitConversions.Shooter.flywheelRPMToEncoderTicksPer100ms(FLYWHEEL_IZONE));
         flywheelFollower.follow(flywheelLeader);
+        TalonStatusFrames.configFollowerFrames(flywheelFollower);
 
         flywheelLeader.setInverted(true);
         flywheelFollower.setInverted(false);

@@ -20,13 +20,13 @@ public class DriveSubsystem extends SubsystemBase {
 
     private final Field2d field = new Field2d();
 
-    private SwerveModule frontLeftModule;
-    private SwerveModule frontRightModule;
-    private SwerveModule backLeftModule;
-    private SwerveModule backRightModule;
+    private final SwerveModule frontLeftModule;
+    private final SwerveModule frontRightModule;
+    private final SwerveModule backLeftModule;
+    private final SwerveModule backRightModule;
 
-    private SwerveDriveOdometry swerveOdometry;
-    private SwerveDriveKinematics swerveKinematics;
+    private final SwerveDriveOdometry swerveOdometry;
+    private final SwerveDriveKinematics swerveKinematics;
     private Pose2d currentRobotPose = new Pose2d();
 
     /**
@@ -69,7 +69,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     /**
-     * Calculate and set the requred SwerveModuleStates for a given ChassisSpeeds
+     * Calculate and set the required SwerveModuleStates for a given ChassisSpeeds
      * 
      * @param speeds
      */
@@ -100,7 +100,6 @@ public class DriveSubsystem extends SubsystemBase {
      * Set the odometry readings
      * 
      * @param pose Pose to be written to odometry
-     * @param rotation Roatation to be written to odometry
      */
     public void resetOdometry (Pose2d pose) {
         IMU.tareIMU(pose.getRotation());

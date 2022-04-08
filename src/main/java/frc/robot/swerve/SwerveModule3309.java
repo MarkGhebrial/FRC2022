@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
@@ -60,9 +59,9 @@ public class SwerveModule3309 implements SwerveModule {
 
     /********** Member Variables **********/
     public String name; // Used for displaying values on SmartDashboard
-    private WPI_TalonFX driveMotor;
-    private WPI_TalonFX steeringMotor;
-    private CANCoder steeringEncoder;
+    private final WPI_TalonFX driveMotor;
+    private final WPI_TalonFX steeringMotor;
+    private final CANCoder steeringEncoder;
 
     /** 
      * How many degrees the steering axis must be at (relative to its zeroed

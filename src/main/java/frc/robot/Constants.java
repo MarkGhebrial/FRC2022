@@ -26,7 +26,7 @@ public final class Constants {
     /**
      * Constants that do not belong to a subsystem
      */
-    public static final double JOYSTICK_DEADBAND = 0.07;
+    public static final double JOYSTICK_DEADBAND = 0.09;
     public static final double XBOX_DEADBAND = 0.05;
 
     public static final int PCM_CAN_ID = 1;
@@ -105,9 +105,6 @@ public final class Constants {
         public static final double GATE_WHEEL_SHOOTING_POWER = .75;
         public static final double GATE_WHEEL_INDEXING_VOLTS = 3;
 
-        public static final double GATE_WHEEL_INDEXING_DEGREES = -120; // Rotate the gate by this much to index a cargo
-        public static final double GATE_WHEEL_CURRENT_THRESHOLD = 2.8; // Amps
-
         public static final PIDParameters GATE_WHEEL_PID = new PIDParameters(0.25, 0, 0, "Gate wheel PID");
 
         /******** Physical Constants ********/
@@ -127,7 +124,7 @@ public final class Constants {
         public static final int RIGHT_INTAKE_MOTOR_ID = 14;
 
         /********** Tuning Constants **********/
-        public static final double INTAKE_MOTOR_POWER = 0.50;
+        public static final double INTAKE_MOTOR_POWER = 0.65;
     }
 
     /** 

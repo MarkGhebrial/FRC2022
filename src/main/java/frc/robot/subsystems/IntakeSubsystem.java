@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Pneumatics;
+import frc.robot.util.TalonStatusFrames;
 
 import static frc.robot.Constants.Intake.*;
 
@@ -21,11 +22,11 @@ import static frc.robot.Constants.Intake.*;
  */
 public class IntakeSubsystem extends SubsystemBase {
 
-    private Solenoid leftIntakeSolenoid;
-    private Solenoid rightIntakeSolenoid;
+    private final Solenoid leftIntakeSolenoid;
+    private final Solenoid rightIntakeSolenoid;
 
-    private WPI_TalonSRX leftIntakeMotor;
-    private WPI_TalonSRX rightIntakeMotor;
+    private final WPI_TalonSRX leftIntakeMotor;
+    private final WPI_TalonSRX rightIntakeMotor;
     
     public IntakeSubsystem() {
         leftIntakeSolenoid = new Solenoid(
@@ -48,6 +49,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
         leftIntakeMotor.setInverted(true);
         rightIntakeMotor.setInverted(false);
+
+        TalonStatusFrames.configDumbFrames(leftIntakeMotor);
+        TalonStatusFrames.configDumbFrames(rightIntakeMotor);
     }
 
     /**

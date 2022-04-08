@@ -12,6 +12,7 @@ import frc.robot.UnitConversions;
 import static frc.robot.Constants.Climber.*;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import frc.robot.util.TalonStatusFrames;
 
 public class ClimberSubsystem extends SubsystemBase {
 
@@ -32,9 +33,13 @@ public class ClimberSubsystem extends SubsystemBase {
         followerMotor.configFactoryDefault();
         followerMotor.setNeutralMode(NeutralMode.Brake);
         followerMotor.follow(leaderMotor);
+        //TalonStatusFrames.configFollowerFrames(followerMotor);
 
         leaderMotor.setInverted(false);
         followerMotor.setInverted(true);
+
+        //TalonStatusFrames.configDumbFrames(leaderMotor);
+        //TalonStatusFrames.configDumbFrames(followerMotor);
 
         initEncoder();
 
