@@ -123,14 +123,4 @@ public class FollowTrajectory extends CommandBase {
     private PathPlannerTrajectory openTrajectoryFromJSON (String JSONName, double maxSpeed, double maxAccel) {
         return PathPlanner.loadPath(JSONName, maxSpeed, maxAccel);
     }
-
-    /**
-     * Read the JSON output from pathweaver and convert it to a trajectory
-     * object using the default speed limits
-     *
-     * @param JSONName the name of the JSON stored in the deploy/output directory, e.x. "bounceLeg1.wpilib.json"
-     */
-    private PathPlannerTrajectory openTrajectoryFromJSON (String JSONName) {
-        return openTrajectoryFromJSON(JSONName, Constants.Drive.MAX_AUTON_SPEED, Constants.Drive.MAX_AUTON_ACCELERATION);
-    }
 }

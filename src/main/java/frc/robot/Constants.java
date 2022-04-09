@@ -89,7 +89,7 @@ public final class Constants {
         public static final double MAX_TELEOP_SPEED = 6; // Meters/second
         public static final double MAX_TELEOP_ROTATIONAL_SPEED = Math.toRadians(700); // Radians/second
         public static final double MAX_TELEOP_ACCELERATION = 7; // Maters/second squared
-        public static final double MAX_TELEOP_DECELERATION = 11;
+        public static final double MAX_TELEOP_DECELERATION = 9;
     }
 
     /**
