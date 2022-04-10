@@ -114,7 +114,7 @@ public class RobotContainer {
         bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_FENDER, () -> OI.leftStickLeftCluster.get() || OI.rightStickRightCluster.get()); //180
         //bindShootingCommand(Constants.Shooter.LOW_HUB_FROM_TARMAC, 270);
 
-        //bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_LAUNCHPAD, 45);
+        bindShootingCommand(Constants.Shooter.HIGH_HUB_FROM_LAUNCHPAD, 0); //45
 
         // Spin the flywheel in reverse in case a cargo falls on our robot
         new LambdaTrigger(() -> OI.operatorController.getStartButton())
