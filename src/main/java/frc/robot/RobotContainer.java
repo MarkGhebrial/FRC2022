@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.auto.TaxiAndPreloadAuto;
 import frc.robot.commands.auto.ThreeBallAuto;
 import frc.robot.commands.auto.TwoBallAuto;
@@ -18,6 +19,7 @@ import frc.robot.commands.climb.DeployClimber;
 import frc.robot.commands.climb.SetClimberPosition;
 import frc.robot.commands.climb.ToggleClimberExtension;
 import frc.robot.commands.drive.DriveAndAim;
+import frc.robot.commands.drive.DriveGuest;
 import frc.robot.commands.drive.DriveTeleop;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.commands.intake.IntakeAndIndex;
@@ -148,5 +150,23 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
+    }
+
+    /**
+     * "Guest Mode" makes the robot easier and safer for untrained individuals
+     * to operate. It changes the following:
+     *      - Completely disables the climber
+     *      - Limits the drivetrain's maximum speed
+     */
+    public void enterGuestMode() {
+        CommandScheduler.getInstance().unregisterSubsystem(climber); // Disable the climber
+        CommandScheduler.getInstance().cancel(drive.getDefaultCommand());
+        drive.setDefaultCommand(new DriveTeleop(drive));
+    }
+
+    public void leaveGuestMode() {
+        CommandScheduler.getInstance().registerSubsystem(climber);
+        CommandScheduler.getInstance().cancel(drive.getDefaultCommand());
+        drive.setDefaultCommand(new DriveTeleop(drive));
     }
 }

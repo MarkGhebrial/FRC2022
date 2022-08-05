@@ -12,7 +12,6 @@ import frc.robot.UnitConversions;
 import static frc.robot.Constants.Climber.*;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import frc.robot.util.TalonStatusFrames;
 
 public class ClimberSubsystem extends SubsystemBase {
 
