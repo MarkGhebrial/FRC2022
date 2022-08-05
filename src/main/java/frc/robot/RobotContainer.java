@@ -160,11 +160,13 @@ public class RobotContainer {
      */
     public void enterGuestMode() {
         CommandScheduler.getInstance().unregisterSubsystem(climber); // Disable the climber
+        CommandScheduler.getInstance().cancel(drive.getDefaultCommand());
         drive.setDefaultCommand(new DriveGuest(drive));
     }
 
     public void leaveGuestMode() {
         CommandScheduler.getInstance().registerSubsystem(climber);
+        CommandScheduler.getInstance().cancel(drive.getDefaultCommand());
         drive.setDefaultCommand(new DriveTeleop(drive));
     }
 }
