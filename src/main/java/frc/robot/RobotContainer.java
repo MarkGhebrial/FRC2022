@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.auto.TaxiAndPreloadAuto;
 import frc.robot.commands.auto.ThreeBallAuto;
 import frc.robot.commands.auto.TwoBallAuto;
@@ -148,5 +149,20 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
+    }
+
+    /**
+     * "Guest Mode" makes the robot easier and safer for untrained individuals
+     * to operate. It changes the following:
+     *      - Completely disables the climber
+     *      - Limits the drivetrain's maximum speed
+     */
+    public void enterGuestMode() {
+        // Disable the climber
+        CommandScheduler.getInstance().unregisterSubsystem(climber);
+    }
+
+    public void leaveGuestMode() {
+        CommandScheduler.getInstance().registerSubsystem(climber);
     }
 }
