@@ -93,6 +93,16 @@ public final class Constants {
     }
 
     /**
+     * Speed limits for guest drivers
+     */
+    public static class GuestMode {
+        public static final double MAX_GUEST_SPEED = 3; // Meters/second
+        public static final double MAX_GUEST_ROTATIONAL_SPEED = Math.toRadians(350);
+        public static final double MAX_GUEST_ACCELERATION = 12; // Maters/second squared
+        public static final double MAX_GUEST_DECELERATION = 20;
+    }
+
+    /**
      * Constants for the Indexer
      */
     public static class Indexer {

@@ -19,6 +19,7 @@ import frc.robot.commands.climb.DeployClimber;
 import frc.robot.commands.climb.SetClimberPosition;
 import frc.robot.commands.climb.ToggleClimberExtension;
 import frc.robot.commands.drive.DriveAndAim;
+import frc.robot.commands.drive.DriveGuest;
 import frc.robot.commands.drive.DriveTeleop;
 import frc.robot.commands.drive.PointInDirectionOfTravel;
 import frc.robot.commands.intake.IntakeAndIndex;
@@ -158,11 +159,12 @@ public class RobotContainer {
      *      - Limits the drivetrain's maximum speed
      */
     public void enterGuestMode() {
-        // Disable the climber
-        CommandScheduler.getInstance().unregisterSubsystem(climber);
+        CommandScheduler.getInstance().unregisterSubsystem(climber); // Disable the climber
+        drive.setDefaultCommand(new DriveGuest(drive));
     }
 
     public void leaveGuestMode() {
         CommandScheduler.getInstance().registerSubsystem(climber);
+        drive.setDefaultCommand(new DriveTeleop(drive));
     }
 }
